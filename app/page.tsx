@@ -20,18 +20,19 @@ export default function Home() {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('visible', 'in-view', 'animate-in');
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'none';
+          const target = entry.target as HTMLElement;
+          target.classList.add('visible', 'in-view', 'animate-in');
+          target.style.opacity = '1';
+          target.style.transform = 'none';
         }
       });
     }, { threshold: 0.1 });
 
-    document.querySelectorAll('[style*="opacity: 0"], [style*="opacity:0"]').forEach(el => observer.observe(el));
+    document.querySelectorAll<HTMLElement>('[style*="opacity: 0"], [style*="opacity:0"]').forEach(el => observer.observe(el));
     
     // Attempt to reveal anything hidden by default
     setTimeout(() => {
-      document.querySelectorAll('[style*="opacity: 0"], [style*="opacity:0"]').forEach(el => {
+      document.querySelectorAll<HTMLElement>('[style*="opacity: 0"], [style*="opacity:0"]').forEach(el => {
         el.style.opacity = '1';
         el.style.transform = 'none';
         el.style.transition = 'all 0.8s ease-out';
