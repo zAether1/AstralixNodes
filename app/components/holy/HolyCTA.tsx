@@ -2,6 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 
 export default function HolyCTA() {
   return (
@@ -10,7 +11,13 @@ export default function HolyCTA() {
       <div className="absolute inset-0 bg-[url('/assets/images/bg-grid.png')] opacity-10 bg-repeat" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-[400px] bg-[#64189D]/20 rounded-full blur-[100px] pointer-events-none" />
 
-      <div className="relative z-10 max-w-5xl mx-auto text-center">
+      <motion.div 
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7 }}
+        className="relative z-10 max-w-5xl mx-auto text-center"
+      >
         <h2 className="text-4xl md:text-5xl lg:text-6xl font-black uppercase text-white mb-6 leading-tight">
           ¿LISTO PARA COMENZAR TU <br className="hidden md:block" />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C084FC] via-[#A855F7] to-[#64189D]">
@@ -44,7 +51,7 @@ export default function HolyCTA() {
             Comunidad de Discord
           </Link>
         </div>
-      </div>
+      </motion.div>
     </section>
   )
 }

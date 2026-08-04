@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
+import { motion } from 'framer-motion'
 
 export default function HolyFAQ() {
   const faqs = [
@@ -45,12 +46,25 @@ export default function HolyFAQ() {
           </h2>
         </div>
 
-        <div className="space-y-4">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
+          }}
+          className="space-y-4"
+        >
           {faqs.map((faq, idx) => {
             const isOpen = openIndex === idx
             return (
-              <div 
-                key={idx} 
+              <motion.div 
+                key={idx}
+                variants={{
+                  hidden: { opacity: 0, y: 15 },
+                  visible: { opacity: 1, y: 0 }
+                }}
                 className={`bg-[#13111a] border rounded-xl overflow-hidden transition-all duration-300 ${isOpen ? 'border-[#64189D]/50 shadow-lg shadow-[#64189D]/10' : 'border-white/5 hover:border-white/10'}`}
               >
                 <button 
@@ -73,10 +87,10 @@ export default function HolyFAQ() {
                     {faq.answer}
                   </div>
                 </div>
-              </div>
+              </motion.div>
             )
           })}
-        </div>
+        </motion.div>
 
         <div className="text-center mt-12">
           <p className="text-white/50 text-sm">

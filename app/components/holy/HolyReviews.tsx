@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import { motion } from 'framer-motion'
 
 export default function HolyReviews() {
   return (
@@ -13,7 +14,13 @@ export default function HolyReviews() {
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
           
           {/* Trustpilot CTA */}
-          <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
+          <motion.div 
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="flex flex-col items-center lg:items-start text-center lg:text-left"
+          >
             <p className="text-white/70 text-sm font-bold uppercase tracking-[0.2em] mb-3">
               ESTAMOS CALIFICADOS
             </p>
@@ -35,12 +42,27 @@ export default function HolyReviews() {
             <p className="text-white/80 text-sm">
               Basado en <span className="font-bold text-white underline decoration-[#00B67A] underline-offset-4">+1,000 reseñas</span> en Trustpilot
             </p>
-          </div>
+          </motion.div>
 
           {/* Testimonials */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 flex-1 max-w-4xl">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={{
+              hidden: { opacity: 0 },
+              visible: { opacity: 1, transition: { staggerChildren: 0.2 } }
+            }}
+            className="grid grid-cols-1 md:grid-cols-2 gap-6 flex-1 max-w-4xl"
+          >
             {/* Review 1 */}
-            <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-6 rounded-2xl hover:bg-white/10 transition-colors">
+            <motion.div 
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 }
+              }}
+              className="bg-white/5 backdrop-blur-sm border border-white/10 p-6 rounded-2xl hover:bg-white/10 transition-colors"
+            >
               <div className="flex items-center gap-1 text-[#00B67A] mb-4">
                 {[1, 2, 3, 4, 5].map(i => (
                   <svg key={i} className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
@@ -60,10 +82,16 @@ export default function HolyReviews() {
                   <span className="text-white font-medium">Miguel Ángel</span> • Hace 2 días
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Review 2 */}
-            <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-6 rounded-2xl hover:bg-white/10 transition-colors">
+            <motion.div 
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 }
+              }}
+              className="bg-white/5 backdrop-blur-sm border border-white/10 p-6 rounded-2xl hover:bg-white/10 transition-colors"
+            >
               <div className="flex items-center gap-1 text-[#00B67A] mb-4">
                 {[1, 2, 3, 4, 5].map(i => (
                   <svg key={i} className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
@@ -83,8 +111,8 @@ export default function HolyReviews() {
                   <span className="text-white font-medium">Lucas Dev</span> • Hace 1 semana
                 </div>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
           
         </div>
       </div>

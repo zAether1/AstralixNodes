@@ -3,6 +3,7 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { motion } from 'framer-motion'
 
 export default function HolyGames() {
   const creators = [
@@ -23,9 +24,25 @@ export default function HolyGames() {
           para llevar sus ideas al siguiente nivel.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
+          }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-6"
+        >
           {creators.map((creator, i) => (
-            <div key={i} className="bg-[#13111a] rounded-xl overflow-hidden flex flex-col border border-white/5 hover:border-[#64189D]/30 transition-all duration-300 card-hover">
+            <motion.div 
+              key={i}
+              variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0 }
+              }}
+              className="bg-[#13111a] rounded-xl overflow-hidden flex flex-col border border-white/5 hover:border-[#64189D]/30 transition-all duration-300 card-hover"
+            >
               <div className="bg-[#64189D] flex items-end justify-center h-44 md:h-52 lg:h-56 overflow-hidden relative">
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                 <div className="relative z-10 translate-y-4 hover:translate-y-0 transition-transform duration-300">
@@ -54,9 +71,9 @@ export default function HolyGames() {
                   </a>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )

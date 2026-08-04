@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import { motion } from 'framer-motion'
 
 export default function HolyHardware() {
   const stats = [
@@ -18,7 +19,13 @@ export default function HolyHardware() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           
           {/* Terminal / Hardware Details */}
-          <div className="rounded-xl overflow-hidden border border-white/10 shadow-2xl shadow-[#64189D]/5 bg-[#0a0a0a]">
+          <motion.div 
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="rounded-xl overflow-hidden border border-white/10 shadow-2xl shadow-[#64189D]/5 bg-[#0a0a0a]"
+          >
             <div className="bg-[#1a1a1a] px-5 py-3.5 flex items-center border-b border-white/5">
               <div className="flex gap-2">
                 <div className="w-3 h-3 rounded-full bg-[#ff5f57]" />
@@ -52,10 +59,15 @@ export default function HolyHardware() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Stats */}
-          <div>
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             <h2 className="text-4xl md:text-5xl font-black uppercase mb-4 text-white">
               NUESTRAS <span className="text-[#64189D]">ESTADÍSTICAS</span>
             </h2>
@@ -63,9 +75,25 @@ export default function HolyHardware() {
               Estos son solo algunos de nuestros increíbles números, y seguimos esforzándonos cada día para superarlos. Hardware de primer nivel para tus proyectos.
             </p>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <motion.div 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={{
+                hidden: { opacity: 0 },
+                visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
+              }}
+              className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+            >
               {stats.map((stat, i) => (
-                <div key={i} className="bg-[#13111a] rounded-xl p-4 flex items-center gap-4 border border-white/5 hover:border-[#64189D]/30 transition-colors">
+              <motion.div 
+                key={i} 
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 }
+                }}
+                className="bg-[#13111a] rounded-xl p-4 flex items-center gap-4 border border-white/5 hover:border-[#64189D]/30 transition-colors"
+              >
                   <div className="w-12 h-12 rounded-full bg-[#180228] border border-[#64189D]/20 flex items-center justify-center flex-shrink-0 text-[#A855F7]">
                     {stat.icon}
                   </div>
@@ -78,9 +106,10 @@ export default function HolyHardware() {
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
+              </motion.div>
+            ))}
+            </motion.div>
+          </motion.div>
 
         </div>
       </div>
