@@ -48,3 +48,4 @@ build_components.js
 build_navbar.js
 extract_sections.js
 format_html.js
+patch_holy_files.js
