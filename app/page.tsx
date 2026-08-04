@@ -1,32 +1,31 @@
-'use client'
-import HeroSection from "./components/HeroSection"
-import FeaturesSection from "./components/FeaturesSection"
-import PanelShowcase from "./components/PanelShowcase"
-import LocationsSection from "./components/LocationsSection"
-import FAQSection from "./components/FAQSection"
-import PricingSection from "./components/PricingSection"
-import Footer from "./components/Footer"
-import Navbar from "./components/Navbar"
-
-const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.8, ease: "easeOut" }
-}
+import HolyNavbar from "./components/holy/HolyNavbar"
+import HolyHero from "./components/holy/HolyHero"
+import HolyGames from "./components/holy/HolyGames"
+import HolyPricing from "./components/holy/HolyPricing"
+import HolyFeatures from "./components/holy/HolyFeatures"
+import HolyPanel from "./components/holy/HolyPanel"
+import HolyReviews from "./components/holy/HolyReviews"
+import HolyLocations from "./components/holy/HolyLocations"
+import HolyHardware from "./components/holy/HolyHardware"
+import HolyFAQ from "./components/holy/HolyFAQ"
+import HolyCTA from "./components/holy/HolyCTA"
+import HolyFooter from "./components/holy/HolyFooter"
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#0a0b0f] transition-colors duration-300">
-      <Navbar />
-        <HeroSection />
-        <FeaturesSection />
-        <LocationsSection />
-        <PricingSection />
-        <FAQSection />
-        <PanelShowcase />
-        <Footer />
+    <div className="min-h-screen bg-black transition-colors duration-300">
+      <HolyNavbar />
+      <HolyHero />
+      <HolyGames />
+      <HolyPricing />
+      <HolyFeatures />
+      <HolyPanel />
+      <HolyReviews />
+      <HolyLocations />
+      <HolyHardware />
+      <HolyFAQ />
+      <HolyCTA />
+      <HolyFooter />
     </div>
   )
 }
-
-// hey smexy, i love you bb :0-

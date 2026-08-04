@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/node_modules_trash*
 /.pnp
 .pnp.*
 .yarn/*
@@ -39,3 +40,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# reference files
+/www.holy.gg/
+holy_navbar.html
+build_components.js
+build_navbar.js
+extract_sections.js
+format_html.js
