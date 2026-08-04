@@ -1,7 +1,16 @@
 import React, { useEffect } from 'react';
 import HolyHeaderStatic from "./components/holy/HolyHeaderStatic";
 import HolyFooterStatic from "./components/holy/HolyFooterStatic";
-import HolySection1 from "./components/holy/HolySection1"\nimport HolySection2 from "./components/holy/HolySection2"\nimport HolySection3 from "./components/holy/HolySection3"\nimport HolySection4 from "./components/holy/HolySection4"\nimport HolySection5 from "./components/holy/HolySection5"\nimport HolySection6 from "./components/holy/HolySection6"\nimport HolySection7 from "./components/holy/HolySection7"\nimport HolySection8 from "./components/holy/HolySection8"\nimport HolySection9 from "./components/holy/HolySection9"\nimport HolySection10 from "./components/holy/HolySection10"
+import HolySection1 from "./components/holy/HolySection1";
+import HolySection2 from "./components/holy/HolySection2";
+import HolySection3 from "./components/holy/HolySection3";
+import HolySection4 from "./components/holy/HolySection4";
+import HolySection5 from "./components/holy/HolySection5";
+import HolySection6 from "./components/holy/HolySection6";
+import HolySection7 from "./components/holy/HolySection7";
+import HolySection8 from "./components/holy/HolySection8";
+import HolySection9 from "./components/holy/HolySection9";
+import HolySection10 from "./components/holy/HolySection10";
 
 export default function Home() {
   useEffect(() => {
@@ -33,7 +42,16 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#020202]">
       <HolyHeaderStatic />
-      <HolySection1 />\n      <HolySection2 />\n      <HolySection3 />\n      <HolySection4 />\n      <HolySection5 />\n      <HolySection6 />\n      <HolySection7 />\n      <HolySection8 />\n      <HolySection9 />\n      <HolySection10 />
+      <HolySection1 />
+      <HolySection2 />
+      <HolySection3 />
+      <HolySection4 />
+      <HolySection5 />
+      <HolySection6 />
+      <HolySection7 />
+      <HolySection8 />
+      <HolySection9 />
+      <HolySection10 />
       <HolyFooterStatic />
     </div>
   )
