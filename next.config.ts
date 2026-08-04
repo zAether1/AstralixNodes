@@ -5,19 +5,6 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ['lucide-react', 'react-icons'],
   },
 
-  // Rewrite root to serve the static holy.gg replica
-  async rewrites() {
-    return {
-      beforeFiles: [
-        {
-          source: '/',
-          destination: '/index.html',
-        },
-      ],
-      afterFiles: [],
-      fallback: [],
-    };
-  },
   
   images: {
     formats: ['image/webp', 'image/avif'],

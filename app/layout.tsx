@@ -101,6 +101,8 @@ export default function RootLayout({
       <head>
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
+        <link rel="stylesheet" href="/holy_assets/_next/static/css/cd25a3f32cac0dda.css" />
+        <link rel="stylesheet" href="/holy_assets/_next/static/css/ce926a5c9bbb91c0.css" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
