@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 export default function HolyPanel() {
   const panelFeatures = [
@@ -58,7 +59,13 @@ export default function HolyPanel() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#64189D]/5 rounded-full blur-[150px] pointer-events-none" />
 
       <div className="max-w-[87.5rem] mx-auto relative z-10">
-        <div className="text-center mb-12">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12"
+        >
           <h2 className="text-4xl md:text-5xl font-black uppercase leading-tight text-white">
             UN <span className="text-[#64189D]">PANEL</span> QUE SIMPLEMENTE{' '}
             <span className="inline-block bg-[#64189D] text-white px-5 py-1 rounded-lg ml-1 rotate-2 shadow-lg shadow-[#64189D]/20">
@@ -68,7 +75,7 @@ export default function HolyPanel() {
           <p className="text-white/50 text-center text-sm max-w-3xl mx-auto mt-6">
             Un panel de control rápido, claro y potente que te simplifica todo desde el primer clic. Construido sobre Pterodactyl, mejorado para ti.
           </p>
-        </div>
+        </motion.div>
 
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 mt-16">
           {/* Sidebar Tabs */}
@@ -99,7 +106,13 @@ export default function HolyPanel() {
           </div>
 
           {/* Content Area */}
-          <div className="flex-1 flex flex-col min-h-[400px]">
+          <motion.div 
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="flex-1 flex flex-col min-h-[400px]"
+          >
             <div className="bg-[#180228] rounded-2xl p-6 md:p-8 mb-8 border border-[#64189D]/20 shadow-xl shadow-[#64189D]/5">
               <div className="flex items-center gap-3 mb-4">
                 <span className="flex-shrink-0 text-[#A855F7]">
@@ -117,15 +130,21 @@ export default function HolyPanel() {
 
             {/* Image Showcase */}
             <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-white/10 bg-black/50 group shadow-2xl">
-              {/* Fallback to image if video not provided/found */}
-              <img 
-                src={activeTab.img} 
-                alt={activeTab.title}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
+              <AnimatePresence mode="wait">
+                <motion.img 
+                  key={activeTab.id}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 1.05 }}
+                  transition={{ duration: 0.4 }}
+                  src={activeTab.img} 
+                  alt={activeTab.title}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              </AnimatePresence>
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

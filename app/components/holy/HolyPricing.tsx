@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import Image from 'next/image'
+import { motion, AnimatePresence } from 'framer-motion'
 
 const plans = [
   {
@@ -98,9 +99,25 @@ export default function HolyPricing() {
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
+          }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16"
+        >
           {plans.map((plan, idx) => (
-            <div key={idx} className={`relative bg-[#13111a] rounded-2xl border ${plan.popular ? 'border-[#64189D] shadow-lg shadow-[#64189D]/20' : 'border-white/5'} p-6 flex flex-col transition-all duration-300 hover:-translate-y-2 hover:shadow-xl`}>
+            <motion.div 
+              key={idx} 
+              variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0 }
+              }}
+              className={`relative bg-[#13111a] rounded-2xl border ${plan.popular ? 'border-[#64189D] shadow-lg shadow-[#64189D]/20' : 'border-white/5'} p-6 flex flex-col transition-all duration-300 hover:-translate-y-2 hover:shadow-xl`}
+            >
               {plan.popular && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#64189D] to-[#A855F7] text-white text-xs font-bold px-4 py-1 rounded-full uppercase tracking-wider">
                   MÁS POPULAR
@@ -131,19 +148,36 @@ export default function HolyPricing() {
               <button className={`w-full py-3 rounded-lg font-bold uppercase tracking-wider text-sm transition-all ${plan.popular ? 'bg-gradient-to-r from-[#64189D] to-[#8B3DC4] text-white hover:opacity-90' : 'bg-white/5 text-white hover:bg-white/10'}`}>
                 Elegir Plan
               </button>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Game Selector Section */}
-        <div className="bg-[#13111a] rounded-3xl border border-white/5 p-6 md:p-8 flex flex-col lg:flex-row gap-8 items-center">
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="bg-[#13111a] rounded-3xl border border-white/5 p-6 md:p-8 flex flex-col lg:flex-row gap-8 items-center"
+        >
           <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left">
             <span className="bg-[#64189D]/20 text-[#A855F7] text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-4">
               JUEGOS DESTACADOS
             </span>
-            <h3 className="text-3xl md:text-4xl font-black text-white mb-4 uppercase">{activeGame.name}</h3>
-            <p className="text-white/60 mb-8 max-w-md">{activeGame.desc}</p>
-            <button className="bg-white text-black font-bold px-6 py-3 rounded-lg hover:bg-gray-200 transition-colors uppercase text-sm tracking-wider">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeGame.id}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ duration: 0.3 }}
+                className="flex flex-col items-center lg:items-start text-center lg:text-left"
+              >
+                <h3 className="text-3xl md:text-4xl font-black text-white mb-4 uppercase">{activeGame.name}</h3>
+                <p className="text-white/60 mb-8 max-w-md">{activeGame.desc}</p>
+              </motion.div>
+            </AnimatePresence>
+            <button className="bg-white text-black font-bold px-6 py-3 rounded-lg hover:bg-gray-200 transition-colors uppercase text-sm tracking-wider mt-2">
               Ver todos los juegos
             </button>
           </div>
@@ -161,7 +195,7 @@ export default function HolyPricing() {
               ))}
             </div>
           </div>
-        </div>
+        </motion.div>
 
       </div>
     </section>

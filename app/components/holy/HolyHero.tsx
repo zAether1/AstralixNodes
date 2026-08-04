@@ -2,6 +2,7 @@
 
 import React, { useRef, useEffect } from 'react'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 
 export default function HolyHero() {
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -118,17 +119,30 @@ export default function HolyHero() {
       <div className="relative z-10 max-w-[87.5rem] mx-auto px-6 py-20 md:py-28 lg:py-32">
         <div className="max-w-[43.75rem]">
           <div className="space-y-10">
-            <div className="space-y-4">
-              <p className="text-[#64189D] text-sm font-medium uppercase tracking-[0.15em] animate-fade-in">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="space-y-4"
+            >
+              <p className="text-[#64189D] text-sm font-medium uppercase tracking-[0.15em]">
                 PREMIUM GAME HOSTING
               </p>
-              <h1 className="text-white font-black text-5xl md:text-6xl lg:text-7xl uppercase tracking-[0.05em] leading-[1.1] animate-fade-in-up">
+              <h1 className="text-white font-black text-5xl md:text-6xl lg:text-7xl uppercase tracking-[0.05em] leading-[1.1]">
                 MINECRAFT<br />
                 <span className="text-[#64189D]">HOSTING</span>
               </h1>
-            </div>
+            </motion.div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
+            <motion.div 
+              initial="hidden"
+              animate="visible"
+              variants={{
+                hidden: { opacity: 0 },
+                visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.3 } }
+              }}
+              className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3"
+            >
               {features.map((feature, i) => {
                 const content = (
                   <div className={`flex items-center gap-3 ${feature.href ? 'group' : ''}`}>
@@ -143,14 +157,25 @@ export default function HolyHero() {
                     )}
                   </div>
                 )
-                if (feature.href) {
-                  return <Link key={i} href={feature.href} className="group">{content}</Link>
+                
+                const itemVariants = {
+                  hidden: { opacity: 0, y: 10 },
+                  visible: { opacity: 1, y: 0 }
                 }
-                return <div key={i}>{content}</div>
-              })}
-            </div>
 
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 pt-2">
+                if (feature.href) {
+                  return <motion.div key={i} variants={itemVariants}><Link href={feature.href} className="group">{content}</Link></motion.div>
+                }
+                return <motion.div key={i} variants={itemVariants}>{content}</motion.div>
+              })}
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="flex flex-col sm:flex-row items-start sm:items-center gap-6 pt-2"
+            >
               <Link
                 className="group flex items-center bg-[#64189D] hover:bg-[#7B22B8] transition-all duration-300 rounded-lg overflow-hidden shadow-lg shadow-[#64189D]/20 hover:shadow-[#64189D]/40"
                 href="/minecraft"
@@ -179,7 +204,7 @@ export default function HolyHero() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
                 </svg>
               </Link>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>

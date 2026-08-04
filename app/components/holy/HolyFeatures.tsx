@@ -2,6 +2,7 @@
 
 import React from 'react'
 import Image from 'next/image'
+import { motion } from 'framer-motion'
 
 export default function HolyFeatures() {
   const comparisons = [
@@ -27,13 +28,29 @@ export default function HolyFeatures() {
           El siguiente cuadro se calculó utilizando especificaciones de hardware similares a las ofrecidas por AstralixNodes.
         </p>
 
-        <div className="space-y-4">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
+          }}
+          className="space-y-4"
+        >
           {comparisons.map((comp, idx) => {
             const priceNum = parseFloat(comp.price.replace(',', '.'))
             const width = (priceNum / maxPrice) * 100
 
             return (
-              <div key={idx} className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 p-3 rounded-xl hover:bg-white/5 transition-colors">
+              <motion.div 
+                key={idx}
+                variants={{
+                  hidden: { opacity: 0, x: -20 },
+                  visible: { opacity: 1, x: 0 }
+                }}
+                className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 p-3 rounded-xl hover:bg-white/5 transition-colors"
+              >
                 <div className="flex items-center gap-3 sm:min-w-[16rem]">
                   <div className={`w-8 h-8 rounded-full overflow-hidden flex-shrink-0 flex items-center justify-center bg-black/20 ${comp.current ? '' : 'grayscale brightness-90'}`}>
                     <Image src={comp.logo} alt={comp.name} width={32} height={32} className="object-contain w-full h-full" />
@@ -48,19 +65,22 @@ export default function HolyFeatures() {
                 
                 <div className="flex-1 flex items-center gap-3">
                   <div className="flex-1 h-8 bg-black/40 rounded-md overflow-hidden relative">
-                    <div 
-                      className={`absolute top-0 left-0 h-full rounded-md transition-all duration-1000 ease-out ${comp.current ? 'bg-gradient-to-r from-[#64189D] to-[#A855F7]' : 'bg-white/10'}`}
-                      style={{ width: `${width}%` }}
+                    <motion.div 
+                      className={`absolute top-0 left-0 h-full rounded-md ${comp.current ? 'bg-gradient-to-r from-[#64189D] to-[#A855F7]' : 'bg-white/10'}`}
+                      initial={{ width: 0 }}
+                      whileInView={{ width: `${width}%` }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 1, delay: 0.2 + (idx * 0.1), ease: "easeOut" }}
                     />
                   </div>
                   <span className={`hidden sm:inline ${comp.current ? 'text-[#A855F7] font-black' : 'text-white/60 font-medium'} min-w-[5rem] text-right text-sm tracking-wider`}>
                     ${comp.price}
                   </span>
                 </div>
-              </div>
+              </motion.div>
             )
           })}
-        </div>
+        </motion.div>
 
         <p className="text-white/40 text-center mt-12 text-xs">
           Esta información fue revisada y actualizada por última vez en 2026.
