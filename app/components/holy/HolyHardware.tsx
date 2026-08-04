@@ -105,7 +105,6 @@ export default function HolyHardware() {
                       {stat.sub}
                     </div>
                   </div>
-                </div>
               </motion.div>
             ))}
             </motion.div>
