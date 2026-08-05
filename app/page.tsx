@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect } from 'react';
 import HolyHeaderStatic from "./components/holy/HolyHeaderStatic";
 import HolyFooterStatic from "./components/holy/HolyFooterStatic";
