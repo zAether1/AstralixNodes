@@ -53,7 +53,7 @@ export default function Navbar() {
                         <div className="text-white font-bold text-sm leading-tight">Minecraft Hosting</div>
                         <span className="bg-[#64189D] text-white text-[10px] font-bold px-1.5 py-0.5 rounded">POPULAR</span>
                       </div>
-                      <div className="text-[#999] text-xs mt-1">Comenzando en <span className="text-white font-bold">$4,24</span></div>
+                      <div className="text-[#999] text-xs mt-1">Comenzando en <span className="text-white font-bold">€4,24</span></div>
                     </div>
                   </Link>
 
@@ -65,7 +65,7 @@ export default function Navbar() {
                       <div className="flex items-center gap-2">
                         <div className="text-white font-bold text-sm leading-tight">Minecraft Dedicado</div>
                       </div>
-                      <div className="text-[#999] text-xs mt-1">Comenzando en <span className="text-white font-bold">$21,08</span></div>
+                      <div className="text-[#999] text-xs mt-1">Comenzando en <span className="text-white font-bold">€21,08</span></div>
                     </div>
                   </Link>
 
@@ -75,10 +75,10 @@ export default function Navbar() {
 
             {/* Game Hosting Mega Menu */}
             <div className="relative group">
-              <button className="flex items-center gap-1 py-6 text-white font-bold text-sm hover:text-[#64189D] transition-colors whitespace-nowrap">
+              <Link href="/juegos" className="flex items-center gap-1 py-6 text-white font-bold text-sm hover:text-[#64189D] transition-colors whitespace-nowrap">
                 Game Hosting
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-              </button>
+              </Link>
               
               <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-[52rem] opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity duration-300">
                 <div className="bg-[#1a1b1b] rounded-xl border border-white/[0.08] p-4 shadow-2xl">
@@ -86,51 +86,51 @@ export default function Navbar() {
                     
                     <Link href="/project-zomboid" className="flex items-center gap-3 p-3 rounded-lg bg-[#141414] hover:bg-[#1e1e1e] transition-colors">
                       <div className="w-[60px] h-[70px] relative flex-shrink-0 rounded-md overflow-hidden">
-                        <Image alt="Project Zomboid" fill className="object-cover" src="/banners/gmod-banner.webp" />
+                        <Image alt="Project Zomboid" fill className="object-cover" src="/assets/images/header-project-zomboid.avif" />
                       </div>
                       <div className="min-w-0">
                         <div className="text-white font-bold text-sm leading-tight">Project Zomboid</div>
-                        <div className="text-[#999] text-xs mt-1">Comenzando en <span className="text-white font-bold">$4,25</span></div>
+                        <div className="text-[#999] text-xs mt-1">Comenzando en <span className="text-white font-bold">€4,25</span></div>
                       </div>
                     </Link>
 
                     <Link href="/hytale" className="flex items-center gap-3 p-3 rounded-lg bg-[#141414] hover:bg-[#1e1e1e] transition-colors">
                       <div className="w-[60px] h-[70px] relative flex-shrink-0 rounded-md overflow-hidden">
-                        <Image alt="Hytale" fill className="object-cover" src="/banners/node.webp" />
+                        <Image alt="Hytale" fill className="object-cover" src="/assets/images/header-hytale.avif" />
                       </div>
                       <div className="min-w-0">
                         <div className="text-white font-bold text-sm leading-tight">Hytale</div>
-                        <div className="text-[#999] text-xs mt-1">Comenzando en <span className="text-white font-bold">$9,69</span></div>
+                        <div className="text-[#999] text-xs mt-1">Comenzando en <span className="text-white font-bold">€9,69</span></div>
                       </div>
                     </Link>
 
                     <Link href="/terraria" className="flex items-center gap-3 p-3 rounded-lg bg-[#141414] hover:bg-[#1e1e1e] transition-colors">
                       <div className="w-[60px] h-[70px] relative flex-shrink-0 rounded-md overflow-hidden">
-                        <Image alt="Terraria" fill className="object-cover" src="/banners/cs2-banner.webp" />
+                        <Image alt="Terraria" fill className="object-cover" src="/assets/images/header-terraria.avif" />
                       </div>
                       <div className="min-w-0">
                         <div className="text-white font-bold text-sm leading-tight">Terraria</div>
-                        <div className="text-[#999] text-xs mt-1">Comenzando en <span className="text-white font-bold">$2,13</span></div>
+                        <div className="text-[#999] text-xs mt-1">Comenzando en <span className="text-white font-bold">€2,13</span></div>
                       </div>
                     </Link>
 
                     <Link href="/palworld" className="flex items-center gap-3 p-3 rounded-lg bg-[#141414] hover:bg-[#1e1e1e] transition-colors">
                       <div className="w-[60px] h-[70px] relative flex-shrink-0 rounded-md overflow-hidden">
-                        <Image alt="Palworld" fill className="object-cover" src="/banners/valheim-banner.webp" />
+                        <Image alt="Palworld" fill className="object-cover" src="/assets/images/header-palworld.avif" />
                       </div>
                       <div className="min-w-0">
                         <div className="text-white font-bold text-sm leading-tight">Palworld</div>
-                        <div className="text-[#999] text-xs mt-1">Comenzando en <span className="text-white font-bold">$8,50</span></div>
+                        <div className="text-[#999] text-xs mt-1">Comenzando en <span className="text-white font-bold">€8,50</span></div>
                       </div>
                     </Link>
 
                     <Link href="/valheim" className="flex items-center gap-3 p-3 rounded-lg bg-[#141414] hover:bg-[#1e1e1e] transition-colors">
                       <div className="w-[60px] h-[70px] relative flex-shrink-0 rounded-md overflow-hidden">
-                        <Image alt="Valheim" fill className="object-cover" src="/banners/valheim-banner.webp" />
+                        <Image alt="Valheim" fill className="object-cover" src="/assets/images/header-valheim.avif" />
                       </div>
                       <div className="min-w-0">
                         <div className="text-white font-bold text-sm leading-tight">Valheim</div>
-                        <div className="text-[#999] text-xs mt-1">Comenzando en <span className="text-white font-bold">$3,19</span></div>
+                        <div className="text-[#999] text-xs mt-1">Comenzando en <span className="text-white font-bold">€3,19</span></div>
                       </div>
                     </Link>
 
@@ -151,10 +151,10 @@ export default function Navbar() {
 
             {/* Cloud Hosting */}
             <div className="relative group">
-              <button className="flex items-center gap-1 py-6 text-white font-bold text-sm hover:text-[#64189D] transition-colors whitespace-nowrap">
+              <Link href="/dedicados" className="flex items-center gap-1 py-6 text-white font-bold text-sm hover:text-[#64189D] transition-colors whitespace-nowrap">
                 Cloud Hosting
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-              </button>
+              </Link>
               <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-[22rem] opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity duration-300">
                 <div className="bg-[#1a1b1b] rounded-xl border border-white/[0.08] p-3 flex flex-col gap-2 shadow-2xl">
                   
@@ -164,7 +164,7 @@ export default function Navbar() {
                     </div>
                     <div className="min-w-0 flex-1">
                       <div className="text-white font-bold text-sm leading-tight">Registrar un Dominio</div>
-                      <div className="text-[#999] text-xs mt-1">Comenzando en <span className="text-white font-bold">$1,69</span></div>
+                      <div className="text-[#999] text-xs mt-1">Comenzando en <span className="text-white font-bold">€1,69</span></div>
                     </div>
                   </Link>
 
@@ -174,7 +174,7 @@ export default function Navbar() {
                     </div>
                     <div className="min-w-0 flex-1">
                       <div className="text-white font-bold text-sm leading-tight">VPS Hosting Premium</div>
-                      <div className="text-[#999] text-xs mt-1">Comenzando en <span className="text-white font-bold">$6,46</span></div>
+                      <div className="text-[#999] text-xs mt-1">Comenzando en <span className="text-white font-bold">€6,46</span></div>
                     </div>
                   </Link>
 
@@ -184,7 +184,7 @@ export default function Navbar() {
                     </div>
                     <div className="min-w-0 flex-1">
                       <div className="text-white font-bold text-sm leading-tight">Discord Bot Hosting</div>
-                      <div className="text-[#999] text-xs mt-1">Comenzando en <span className="text-white font-bold">$1,27</span></div>
+                      <div className="text-[#999] text-xs mt-1">Comenzando en <span className="text-white font-bold">€1,27</span></div>
                     </div>
                   </Link>
                 </div>
@@ -193,10 +193,10 @@ export default function Navbar() {
 
             {/* Nosotros Dropdown */}
             <div className="relative group">
-              <button className="flex items-center gap-1 py-6 text-white font-bold text-sm hover:text-[#64189D] transition-colors whitespace-nowrap">
+              <Link href="/nosotros" className="flex items-center gap-1 py-6 text-white font-bold text-sm hover:text-[#64189D] transition-colors whitespace-nowrap">
                 Nosotros
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-              </button>
+              </Link>
               
               <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-[40rem] opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity duration-300">
                 <div className="bg-[#1a1b1b] rounded-xl border border-white/[0.08] p-5 grid grid-cols-4 gap-6 shadow-2xl">

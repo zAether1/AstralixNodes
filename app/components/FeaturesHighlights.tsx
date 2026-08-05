@@ -9,7 +9,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const games = [
-  { id: 'minecraft', name: 'Minecraft', image: '/banners/minecraft-banners.webp', desc: 'Nuestros planes de Hosting para Servidores de Minecraft comienzan en $4.24, son compatibles con todos los mods y plugins. ¡Comienza tu aventura de Minecraft ahora!' },
+  { id: 'minecraft', name: 'Minecraft', image: '/banners/minecraft-banners.webp', desc: 'Nuestros planes de Hosting para Servidores de Minecraft comienzan en €4.24, son compatibles con todos los mods y plugins. ¡Comienza tu aventura de Minecraft ahora!' },
   { id: 'hytale', name: 'Hytale', image: '/banners/node.webp', desc: 'Prepárate para Hytale con nuestros servidores optimizados de alto rendimiento.' },
   { id: 'palworld', name: 'Palworld', image: '/banners/valheim-banner.webp', desc: 'Crea tu mundo de Palworld con la latencia más baja y la mejor estabilidad del mercado.' },
   { id: 'rust', name: 'Rust', image: '/banners/rust-banner.webp', desc: 'Servidores de Rust sin lag, con protección Anti-DDoS para que tu wipe sea perfecto.' },
@@ -45,8 +45,6 @@ export default function FeaturesHighlights() {
   const nextGame = () => setActiveIndex((prev) => (prev + 1) % games.length);
   const prevGame = () => setActiveIndex((prev) => (prev - 1 + games.length) % games.length);
 
-  // To create a continuous loop effect, we can duplicate the array or just render a subset.
-  // For simplicity, we just use the active index to determine the center.
   const getVisibleGames = () => {
     const result = [];
     for (let i = -1; i <= 5; i++) {
@@ -81,20 +79,46 @@ export default function FeaturesHighlights() {
             </div>
 
             <div className="flex flex-col gap-2.5">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="bg-[#282828]/60 rounded-xl border-2 border-white/10 px-4 py-4 flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-lg bg-[#141414] flex-shrink-0 flex items-center justify-center">
-                    <svg className="w-6 h-6 text-[#64189D]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-white font-bold text-sm">Plan {i === 1 ? 'Básico' : i === 2 ? 'Pro' : 'Ultra'}</div>
-                    <div className="text-[#888] text-xs">Ideal para comenzar</div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-white font-bold text-sm">${(i * 4.24).toFixed(2)}</div>
-                  </div>
+              
+              <div className="bg-[#282828]/60 rounded-xl border-2 border-white/10 px-4 py-4 flex items-center gap-3">
+                <div className="w-12 h-12 rounded-lg bg-[#141414] flex-shrink-0 flex items-center justify-center">
+                  <svg className="w-6 h-6 text-[#64189D]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                 </div>
-              ))}
+                <div className="flex-1 min-w-0">
+                  <div className="text-white font-bold text-sm">Plan Básico</div>
+                  <div className="text-[#888] text-xs">Ideal para comenzar</div>
+                </div>
+                <div className="text-right">
+                  <div className="text-white font-bold text-sm">€4.24</div>
+                </div>
+              </div>
+
+              <div className="bg-[#282828]/60 rounded-xl border-2 border-white/10 px-4 py-4 flex items-center gap-3">
+                <div className="w-12 h-12 rounded-lg bg-[#141414] flex-shrink-0 flex items-center justify-center">
+                  <svg className="w-6 h-6 text-[#64189D]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-white font-bold text-sm">Plan Pro</div>
+                  <div className="text-[#888] text-xs">Ideal para comenzar</div>
+                </div>
+                <div className="text-right">
+                  <div className="text-white font-bold text-sm">€8.48</div>
+                </div>
+              </div>
+
+              <div className="bg-[#282828]/60 rounded-xl border-2 border-white/10 px-4 py-4 flex items-center gap-3">
+                <div className="w-12 h-12 rounded-lg bg-[#141414] flex-shrink-0 flex items-center justify-center">
+                  <svg className="w-6 h-6 text-[#64189D]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-white font-bold text-sm">Plan Ultra</div>
+                  <div className="text-[#888] text-xs">Ideal para comenzar</div>
+                </div>
+                <div className="text-right">
+                  <div className="text-white font-bold text-sm">€12.72</div>
+                </div>
+              </div>
+
             </div>
 
             <Link href="/minecraft" className="block w-full bg-[#282828]/60 text-[#64189D] rounded-lg py-3.5 px-6 text-sm font-bold uppercase tracking-wide text-center transition-all hover:bg-[#1a1a1a] hover:-translate-y-0.5 mt-2">

@@ -1,146 +1,33 @@
-'use client';
-import React, { useRef } from 'react';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(useGSAP, ScrollTrigger);
-
-const locations = [
-  {
-    region: 'Norteamérica',
-    places: [
-      { name: 'Virginia', flag: 'us', ping: '10' },
-      { name: 'Quebec', flag: 'ca', ping: '25' },
-      { name: 'Oregon', flag: 'us', ping: '40' },
-      { name: 'New York', flag: 'us', ping: '15' },
-      { name: 'Utah', flag: 'us', ping: '45' },
-      { name: 'Texas', flag: 'us', ping: '35' },
-      { name: 'California', flag: 'us', ping: '50' }
-    ]
-  },
-  {
-    region: 'Europa',
-    places: [
-      { name: 'Alemania', flag: 'de', ping: '85' },
-      { name: 'Finlandia', flag: 'fi', ping: '105' },
-      { name: 'Francia', flag: 'fr', ping: '90' }
-    ]
-  },
-  {
-    region: 'Sudamérica',
-    places: [
-      { name: 'Argentina', flag: 'ar', ping: '130' },
-      { name: 'Chile', flag: 'cl', ping: '120' }
-    ]
-  },
-  {
-    region: 'Oceanía',
-    places: [
-      { name: 'Australia', flag: 'au', ping: '210' }
-    ]
-  }
-];
+import React, { useEffect } from 'react';
 
 export default function LocationsSection() {
-  const container = useRef<HTMLDivElement>(null);
-
-  useGSAP(() => {
-    gsap.fromTo('.loc-reveal',
-      { opacity: 0, y: 30 },
-      { 
-        opacity: 1, 
-        y: 0, 
-        duration: 0.8, 
-        stagger: 0.1,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: container.current,
-          start: 'top 80%'
+  useEffect(() => {
+    // If there is any JS logic for the map in the original, we can just execute standard holy.gg script here
+    // or let the CSS handle the map dots.
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible', 'in-view');
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'none';
         }
-      }
-    );
-  }, { scope: container });
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('#cobertura [style*="opacity: 0"], #cobertura [style*="opacity:0"]').forEach(el => observer.observe(el));
+    
+    setTimeout(() => {
+      document.querySelectorAll('#cobertura [style*="opacity: 0"], #cobertura [style*="opacity:0"]').forEach(el => {
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+        el.style.transition = 'all 0.8s ease-out';
+      });
+    }, 500);
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <section id="cobertura" ref={container} className="bg-[#191919] py-24 px-6">
-      <div className="max-w-7xl mx-auto">
-        <div className="loc-reveal">
-          <h2 className="text-4xl md:text-5xl font-black text-center uppercase mb-4">
-            <span className="text-white">TE TENEMOS CUBIERTO, </span>
-            <span className="text-[#64189D]">EN TODO EL MUNDO.</span>
-          </h2>
-          <p className="text-[#888] text-sm text-center mb-16 max-w-3xl mx-auto">
-            Hoy más 13 ubicaciones globales disponibles para hostear tu servidor al instante.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-[18.5rem_1fr] gap-8 items-start">
-          <div className="loc-reveal">
-            {locations.map((loc, idx) => (
-              <div key={loc.region}>
-                {idx > 0 && <hr className="border-[#333] my-3" />}
-                <div className="flex items-center justify-between mb-1.5">
-                  <h3 className="text-white/50 uppercase font-bold tracking-wider text-[12px]">{loc.region}</h3>
-                  <span className="text-white/30 uppercase tracking-wider text-[11px]">Latencia</span>
-                </div>
-                <div>
-                  {loc.places.map((place, i) => (
-                    <div key={i} className="flex items-center rounded-lg transition-colors cursor-pointer hover:bg-white/5" style={{ padding: '6px 10px', gap: '10px' }}>
-                      <img 
-                        alt={place.flag.toUpperCase()} 
-                        width={24} 
-                        height={17} 
-                        className="rounded-sm flex-shrink-0" 
-                        src={`https://flagcdn.com/w40/${place.flag}.png`} 
-                      />
-                      <span className="text-[#E8E6E6] flex-1 truncate text-[13px]">{place.name}</span>
-                      <div className="flex items-center gap-[6px] flex-shrink-0">
-                        <span className="text-[12px] font-mono text-white/50">{place.ping}ms</span>
-                        <div className="flex items-end gap-[2px]">
-                          <div className={`w-1 h-[6px] rounded-sm ${Number(place.ping) < 150 ? (Number(place.ping) < 50 ? 'bg-[#28ca42]' : 'bg-[#64189D]') : 'bg-white/20'}`}></div>
-                          <div className={`w-1 h-[10px] rounded-sm ${Number(place.ping) < 100 ? (Number(place.ping) < 50 ? 'bg-[#28ca42]' : 'bg-[#64189D]') : 'bg-white/20'}`}></div>
-                          <div className={`w-1 h-[14px] rounded-sm ${Number(place.ping) < 50 ? 'bg-[#28ca42]' : 'bg-white/20'}`}></div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="loc-reveal relative w-full aspect-[2/1] flex items-center justify-center">
-            <svg viewBox="0 0 1010 510" className="w-full h-full" preserveAspectRatio="xMidYMid meet">
-              <image x="0" y="0" width="1010" height="510" href="/holy_assets/assets/images/world-map.svg" opacity="0.5"></image>
-              {[
-                {cx: 230, cy: 175, label: 'Virginia'},
-                {cx: 220, cy: 140, label: 'Quebec'},
-                {cx: 140, cy: 165, label: 'Oregon'},
-                {cx: 225, cy: 160, label: 'New York'},
-                {cx: 165, cy: 170, label: 'Utah'},
-                {cx: 195, cy: 195, label: 'Texas'},
-                {cx: 130, cy: 180, label: 'California'},
-                {cx: 495, cy: 150, label: 'Alemania'},
-                {cx: 530, cy: 125, label: 'Finlandia'},
-                {cx: 480, cy: 160, label: 'Francia'},
-                {cx: 310, cy: 370, label: 'Argentina'},
-                {cx: 285, cy: 360, label: 'Chile'},
-                {cx: 870, cy: 370, label: 'Australia'}
-              ].map((pos, i) => (
-                <g key={i} className="cursor-pointer">
-                  <circle cx={pos.cx} cy={pos.cy} r="12" fill="rgba(100,24,157,0.25)">
-                    <animate attributeName="r" values="8;18;8" dur="3s" repeatCount="indefinite" begin={`${i * 0.2}s`}></animate>
-                    <animate attributeName="opacity" values="0.5;0;0.5" dur="3s" repeatCount="indefinite" begin={`${i * 0.2}s`}></animate>
-                  </circle>
-                  <circle cx={pos.cx} cy={pos.cy} r="4" fill="#64189D"></circle>
-                  <circle cx={pos.cx} cy={pos.cy} r="1.5" fill="#fff"></circle>
-                </g>
-              ))}
-            </svg>
-          </div>
-        </div>
-      </div>
-    </section>
+    <div dangerouslySetInnerHTML={{ __html: `<section id="cobertura" class="bg-[#191919] py-24 px-6"><div class="max-w-7xl mx-auto"><div class="reveal"><h2 class="text-4xl md:text-5xl font-black text-center uppercase mb-4"><span class="text-white">TE TENEMOS CUBIERTO,<!-- --> </span><span class="text-[#F0C800]">EN TODO EL MUNDO.</span></h2><p class="text-[#888] text-sm text-center mb-16 max-w-3xl mx-auto">Hoy más 13 ubicaciones globales disponibles para hostear tu servidor al instante.</p></div><div class="grid grid-cols-1 lg:grid-cols-[18.5rem_1fr] gap-8 items-start"><div><div><div class="flex items-center justify-between mb-1.5"><h3 class="text-white/50 uppercase font-bold tracking-wider" style="font-size:12px">Norteamérica</h3><span class="text-white/30 uppercase tracking-wider" style="font-size:11px">Latencia</span></div><div><div class="flex items-center rounded-lg transition-colors cursor-pointer hover:bg-white/5" style="padding:6px 10px;gap:10px"><img alt="US" loading="lazy" width="24" height="17" decoding="async" data-nimg="1" class="rounded-sm flex-shrink-0" style="color:transparent;width:24px;height:17px" src="https://flagcdn.com/w40/us.png"/><span class="text-[#E8E6E6] flex-1 truncate" style="font-size:13px">Virginia</span><div style="display:flex;align-items:center;gap:6px;flex-shrink:0"></div></div><div class="flex items-center rounded-lg transition-colors cursor-pointer hover:bg-white/5" style="padding:6px 10px;gap:10px"><img alt="CA" loading="lazy" width="24" height="17" decoding="async" data-nimg="1" class="rounded-sm flex-shrink-0" style="color:transparent;width:24px;height:17px" src="https://flagcdn.com/w40/ca.png"/><span class="text-[#E8E6E6] flex-1 truncate" style="font-size:13px">Quebec</span><div style="display:flex;align-items:center;gap:6px;flex-shrink:0"></div></div><div class="flex items-center rounded-lg transition-colors cursor-pointer hover:bg-white/5" style="padding:6px 10px;gap:10px"><img alt="US" loading="lazy" width="24" height="17" decoding="async" data-nimg="1" class="rounded-sm flex-shrink-0" style="color:transparent;width:24px;height:17px" src="https://flagcdn.com/w40/us.png"/><span class="text-[#E8E6E6] flex-1 truncate" style="font-size:13px">Oregon</span><div style="display:flex;align-items:center;gap:6px;flex-shrink:0"></div></div><div class="flex items-center rounded-lg transition-colors cursor-pointer hover:bg-white/5" style="padding:6px 10px;gap:10px"><img alt="US" loading="lazy" width="24" height="17" decoding="async" data-nimg="1" class="rounded-sm flex-shrink-0" style="color:transparent;width:24px;height:17px" src="https://flagcdn.com/w40/us.png"/><span class="text-[#E8E6E6] flex-1 truncate" style="font-size:13px">New York</span><div style="display:flex;align-items:center;gap:6px;flex-shrink:0"></div></div><div class="flex items-center rounded-lg transition-colors cursor-pointer hover:bg-white/5" style="padding:6px 10px;gap:10px"><img alt="US" loading="lazy" width="24" height="17" decoding="async" data-nimg="1" class="rounded-sm flex-shrink-0" style="color:transparent;width:24px;height:17px" src="https://flagcdn.com/w40/us.png"/><span class="text-[#E8E6E6] flex-1 truncate" style="font-size:13px">Utah</span><div style="display:flex;align-items:center;gap:6px;flex-shrink:0"></div></div><div class="flex items-center rounded-lg transition-colors cursor-pointer hover:bg-white/5" style="padding:6px 10px;gap:10px"><img alt="US" loading="lazy" width="24" height="17" decoding="async" data-nimg="1" class="rounded-sm flex-shrink-0" style="color:transparent;width:24px;height:17px" src="https://flagcdn.com/w40/us.png"/><span class="text-[#E8E6E6] flex-1 truncate" style="font-size:13px">Texas</span><div style="display:flex;align-items:center;gap:6px;flex-shrink:0"></div></div><div class="flex items-center rounded-lg transition-colors cursor-pointer hover:bg-white/5" style="padding:6px 10px;gap:10px"><img alt="US" loading="lazy" width="24" height="17" decoding="async" data-nimg="1" class="rounded-sm flex-shrink-0" style="color:transparent;width:24px;height:17px" src="https://flagcdn.com/w40/us.png"/><span class="text-[#E8E6E6] flex-1 truncate" style="font-size:13px">California</span><div style="display:flex;align-items:center;gap:6px;flex-shrink:0"></div></div></div></div><div><hr class="border-[#333] my-3"/><div class="flex items-center justify-between mb-1.5"><h3 class="text-white/50 uppercase font-bold tracking-wider" style="font-size:12px">Europa</h3><span class="text-white/30 uppercase tracking-wider" style="font-size:11px">Latencia</span></div><div><div class="flex items-center rounded-lg transition-colors cursor-pointer hover:bg-white/5" style="padding:6px 10px;gap:10px"><img alt="DE" loading="lazy" width="24" height="17" decoding="async" data-nimg="1" class="rounded-sm flex-shrink-0" style="color:transparent;width:24px;height:17px" src="https://flagcdn.com/w40/de.png"/><span class="text-[#E8E6E6] flex-1 truncate" style="font-size:13px">Alemania</span><div style="display:flex;align-items:center;gap:6px;flex-shrink:0"></div></div><div class="flex items-center rounded-lg transition-colors cursor-pointer hover:bg-white/5" style="padding:6px 10px;gap:10px"><img alt="FI" loading="lazy" width="24" height="17" decoding="async" data-nimg="1" class="rounded-sm flex-shrink-0" style="color:transparent;width:24px;height:17px" src="https://flagcdn.com/w40/fi.png"/><span class="text-[#E8E6E6] flex-1 truncate" style="font-size:13px">Finlandia</span><div style="display:flex;align-items:center;gap:6px;flex-shrink:0"></div></div><div class="flex items-center rounded-lg transition-colors cursor-pointer hover:bg-white/5" style="padding:6px 10px;gap:10px"><img alt="FR" loading="lazy" width="24" height="17" decoding="async" data-nimg="1" class="rounded-sm flex-shrink-0" style="color:transparent;width:24px;height:17px" src="https://flagcdn.com/w40/fr.png"/><span class="text-[#E8E6E6] flex-1 truncate" style="font-size:13px">Francia</span><div style="display:flex;align-items:center;gap:6px;flex-shrink:0"></div></div></div></div><div><hr class="border-[#333] my-3"/><div class="flex items-center justify-between mb-1.5"><h3 class="text-white/50 uppercase font-bold tracking-wider" style="font-size:12px">Sudamérica</h3><span class="text-white/30 uppercase tracking-wider" style="font-size:11px">Latencia</span></div><div><div class="flex items-center rounded-lg transition-colors cursor-pointer hover:bg-white/5" style="padding:6px 10px;gap:10px"><img alt="AR" loading="lazy" width="24" height="17" decoding="async" data-nimg="1" class="rounded-sm flex-shrink-0" style="color:transparent;width:24px;height:17px" src="https://flagcdn.com/w40/ar.png"/><span class="text-[#E8E6E6] flex-1 truncate" style="font-size:13px">Argentina</span><div style="display:flex;align-items:center;gap:6px;flex-shrink:0"></div></div><div class="flex items-center rounded-lg transition-colors cursor-pointer hover:bg-white/5" style="padding:6px 10px;gap:10px"><img alt="CL" loading="lazy" width="24" height="17" decoding="async" data-nimg="1" class="rounded-sm flex-shrink-0" style="color:transparent;width:24px;height:17px" src="https://flagcdn.com/w40/cl.png"/><span class="text-[#E8E6E6] flex-1 truncate" style="font-size:13px">Chile</span><div style="display:flex;align-items:center;gap:6px;flex-shrink:0"></div></div></div></div><div><hr class="border-[#333] my-3"/><div class="flex items-center justify-between mb-1.5"><h3 class="text-white/50 uppercase font-bold tracking-wider" style="font-size:12px">Oceanía</h3><span class="text-white/30 uppercase tracking-wider" style="font-size:11px">Latencia</span></div><div><div class="flex items-center rounded-lg transition-colors cursor-pointer hover:bg-white/5" style="padding:6px 10px;gap:10px"><img alt="AU" loading="lazy" width="24" height="17" decoding="async" data-nimg="1" class="rounded-sm flex-shrink-0" style="color:transparent;width:24px;height:17px" src="https://flagcdn.com/w40/au.png"/><span class="text-[#E8E6E6] flex-1 truncate" style="font-size:13px">Australia</span><div style="display:flex;align-items:center;gap:6px;flex-shrink:0"></div></div></div></div></div><div class="relative w-full aspect-[2/1]"><svg viewBox="95.85 62.19 827.61 423.74" class="w-full h-full" preserveAspectRatio="xMidYMid meet"><image x="95.85" y="62.19" width="827.61" height="423.74" href="/assets/images/world-map.svg"></image><g class="pointer-events-none"></g><g class="cursor-pointer"><circle cx="274" cy="175" r="8" fill="rgba(240,200,0,0.3)" class="transition-all duration-200"><animate attributeName="r" values="8;11;8" dur="2s" repeatCount="indefinite"></animate><animate attributeName="opacity" values="0.4;0.1;0.4" dur="2s" repeatCount="indefinite"></animate></circle><circle cx="274" cy="175" r="4" fill="#F0C800" class="transition-all duration-200"></circle></g><g class="cursor-pointer"><circle cx="269" cy="140" r="8" fill="rgba(240,200,0,0.3)" class="transition-all duration-200"><animate attributeName="r" values="8;11;8" dur="2s" repeatCount="indefinite"></animate><animate attributeName="opacity" values="0.4;0.1;0.4" dur="2s" repeatCount="indefinite"></animate></circle><circle cx="269" cy="140" r="4" fill="#F0C800" class="transition-all duration-200"></circle></g><g class="cursor-pointer"><circle cx="175" cy="160" r="8" fill="rgba(240,200,0,0.3)" class="transition-all duration-200"><animate attributeName="r" values="8;11;8" dur="2s" repeatCount="indefinite"></animate><animate attributeName="opacity" values="0.4;0.1;0.4" dur="2s" repeatCount="indefinite"></animate></circle><circle cx="175" cy="160" r="4" fill="#F0C800" class="transition-all duration-200"></circle></g><g class="cursor-pointer"><circle cx="269" cy="165" r="8" fill="rgba(240,200,0,0.3)" class="transition-all duration-200"><animate attributeName="r" values="8;11;8" dur="2s" repeatCount="indefinite"></animate><animate attributeName="opacity" values="0.4;0.1;0.4" dur="2s" repeatCount="indefinite"></animate></circle><circle cx="269" cy="165" r="4" fill="#F0C800" class="transition-all duration-200"></circle></g><g class="cursor-pointer"><circle cx="197" cy="172" r="8" fill="rgba(240,200,0,0.3)" class="transition-all duration-200"><animate attributeName="r" values="8;11;8" dur="2s" repeatCount="indefinite"></animate><animate attributeName="opacity" values="0.4;0.1;0.4" dur="2s" repeatCount="indefinite"></animate></circle><circle cx="197" cy="172" r="4" fill="#F0C800" class="transition-all duration-200"></circle></g><g class="cursor-pointer"><circle cx="230" cy="192" r="8" fill="rgba(240,200,0,0.3)" class="transition-all duration-200"><animate attributeName="r" values="8;11;8" dur="2s" repeatCount="indefinite"></animate><animate attributeName="opacity" values="0.4;0.1;0.4" dur="2s" repeatCount="indefinite"></animate></circle><circle cx="230" cy="192" r="4" fill="#F0C800" class="transition-all duration-200"></circle></g><g class="cursor-pointer"><circle cx="168" cy="185" r="8" fill="rgba(240,200,0,0.3)" class="transition-all duration-200"><animate attributeName="r" values="8;11;8" dur="2s" repeatCount="indefinite"></animate><animate attributeName="opacity" values="0.4;0.1;0.4" dur="2s" repeatCount="indefinite"></animate></circle><circle cx="168" cy="185" r="4" fill="#F0C800" class="transition-all duration-200"></circle></g><g class="cursor-pointer"><circle cx="502" cy="152" r="8" fill="rgba(240,200,0,0.3)" class="transition-all duration-200"><animate attributeName="r" values="8;11;8" dur="2s" repeatCount="indefinite"></animate><animate attributeName="opacity" values="0.4;0.1;0.4" dur="2s" repeatCount="indefinite"></animate></circle><circle cx="502" cy="152" r="4" fill="#F0C800" class="transition-all duration-200"></circle></g><g class="cursor-pointer"><circle cx="540" cy="132" r="8" fill="rgba(240,200,0,0.3)" class="transition-all duration-200"><animate attributeName="r" values="8;11;8" dur="2s" repeatCount="indefinite"></animate><animate attributeName="opacity" values="0.4;0.1;0.4" dur="2s" repeatCount="indefinite"></animate></circle><circle cx="540" cy="132" r="4" fill="#F0C800" class="transition-all duration-200"></circle></g><g class="cursor-pointer"><circle cx="477" cy="155" r="8" fill="rgba(240,200,0,0.3)" class="transition-all duration-200"><animate attributeName="r" values="8;11;8" dur="2s" repeatCount="indefinite"></animate><animate attributeName="opacity" values="0.4;0.1;0.4" dur="2s" repeatCount="indefinite"></animate></circle><circle cx="477" cy="155" r="4" fill="#F0C800" class="transition-all duration-200"></circle></g><g class="cursor-pointer"><circle cx="346" cy="391" r="8" fill="rgba(240,200,0,0.3)" class="transition-all duration-200"><animate attributeName="r" values="8;11;8" dur="2s" repeatCount="indefinite"></animate><animate attributeName="opacity" values="0.4;0.1;0.4" dur="2s" repeatCount="indefinite"></animate></circle><circle cx="346" cy="391" r="4" fill="#F0C800" class="transition-all duration-200"></circle></g><g class="cursor-pointer"><circle cx="293" cy="387" r="8" fill="rgba(240,200,0,0.3)" class="transition-all duration-200"><animate attributeName="r" values="8;11;8" dur="2s" repeatCount="indefinite"></animate><animate attributeName="opacity" values="0.4;0.1;0.4" dur="2s" repeatCount="indefinite"></animate></circle><circle cx="293" cy="387" r="4" fill="#F0C800" class="transition-all duration-200"></circle></g><g class="cursor-pointer"><circle cx="865" cy="368" r="8" fill="rgba(240,200,0,0.3)" class="transition-all duration-200"><animate attributeName="r" values="8;11;8" dur="2s" repeatCount="indefinite"></animate><animate attributeName="opacity" values="0.4;0.1;0.4" dur="2s" repeatCount="indefinite"></animate></circle><circle cx="865" cy="368" r="4" fill="#F0C800" class="transition-all duration-200"></circle></g></svg></div></div></div></section>` }} />
   );
 }

@@ -118,18 +118,4 @@ export default function RootLayout({
               "contactPoint": {
                 "@type": "ContactPoint",
                 "contactType": "customer service",
-                "availableLanguage": "English",
-              }
-            })
-          }}
-        />
-      </head>
-      <body className={`${poppins.variable} font-[family-name:var(--font-poppins)] antialiased min-h-screen bg-[#180228] text-white`}>
-        <LanguageProvider>
-          {children}
-          <Analytics />
-        </LanguageProvider>
-      </body>
-    </html>
-  );
-}
+      

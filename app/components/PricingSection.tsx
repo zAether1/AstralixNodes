@@ -169,7 +169,7 @@ export default function PricingSection() {
 
               <div className="mb-6">
                 <div className="flex items-baseline gap-1">
-                  <span className="text-white/40 text-lg">$</span>
+                  <span className="text-white/40 text-lg">€</span>
                   <span className="text-white font-black text-5xl">{getPrice(plan.price)}</span>
                   <span className="text-white/40 text-sm">/mo</span>
                 </div>
