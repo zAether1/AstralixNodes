@@ -1,8 +1,8 @@
 {
   "navbar": {
-    "logo": "/icons/AstralixNodes.png",
-    "brandName": "Astralix",
-    "brandAccent": "Nodes"
+    "logo": "/banners/Dezer-Banner.webp",
+    "brandName": "Dezer",
+    "brandAccent": "Host"
   },
   "hero": {
     "title": {
@@ -102,8 +102,8 @@
         "loading": "lazy"
       },
       {
-        "name": "AstralixNodes",
-        "src": "/icons/AstralixNodes.png",
+        "name": "DezerX",
+        "src": "/banners/Dezer-Banner.webp",
         "loading": "lazy"
       }
     ]

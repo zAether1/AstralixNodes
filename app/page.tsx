@@ -1,18 +1,14 @@
 "use client";
 
 import React, { useEffect } from 'react';
-import HolyHeaderStatic from "./components/holy/HolyHeaderStatic";
-import HolyFooterStatic from "./components/holy/HolyFooterStatic";
-import HolySection1 from "./components/holy/HolySection1";
-import HolySection2 from "./components/holy/HolySection2";
-import HolySection3 from "./components/holy/HolySection3";
-import HolySection4 from "./components/holy/HolySection4";
-import HolySection5 from "./components/holy/HolySection5";
-import HolySection6 from "./components/holy/HolySection6";
+import Navbar from "./components/template/Navbar";
+import HeroSection from "./components/template/HeroSection";
+import FeaturesSection from "./components/template/FeaturesSection";
 import HolySection7 from "./components/holy/HolySection7";
-import HolySection8 from "./components/holy/HolySection8";
-import HolySection9 from "./components/holy/HolySection9";
-import HolySection10 from "./components/holy/HolySection10";
+import PanelShowcase from "./components/template/PanelShowcase";
+import PricingSection from "./components/template/PricingSection";
+import FAQSection from "./components/template/FAQSection";
+import Footer from "./components/template/Footer";
 
 export default function Home() {
   useEffect(() => {
@@ -43,19 +39,15 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#020202]">
-      <HolyHeaderStatic />
-      <HolySection1 />
-      <HolySection2 />
-      <HolySection3 />
-      <HolySection4 />
-      <HolySection5 />
-      <HolySection6 />
+    <div className="min-h-screen bg-gray-50 dark:bg-[#180228] transition-colors duration-300">
+      <Navbar />
+      <HeroSection />
+      <FeaturesSection />
       <HolySection7 />
-      <HolySection8 />
-      <HolySection9 />
-      <HolySection10 />
-      <HolyFooterStatic />
+      <PanelShowcase />
+      <PricingSection />
+      <FAQSection />
+      <Footer />
     </div>
   )
 }

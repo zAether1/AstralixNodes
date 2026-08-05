@@ -60,15 +60,15 @@
   ],
   "clientSpace": {
     "name": "CLIENT SPACE",
-    "href": "#",
+    "href": "https://builtbybit.com/resources/all-in-one-hosting-template-dezernova.69325/",
     "icon": "User"
   },
   "banner": {
     "show": true,
-    "text": "Welcome to AstralixNodes - Premium Game Hosting",
-    "couponCode": "ASTRALIX",
+    "text": "Limited Time Offer: Save 10% on Game Servers",
+    "couponCode": "WELCOME",
     "useThemeColor": true,
-    "backgroundColor": "bg-purple-600",
-    "fallbackColor": "bg-purple-600"
+    "backgroundColor": "bg-blue-400",
+    "fallbackColor": "bg-blue-400"
   }
 }
