@@ -4,22 +4,21 @@ import React, { useEffect } from 'react';
 
 export default function LocationsSection() {
   useEffect(() => {
-    // If there is any JS logic for the map in the original, we can just execute standard holy.gg script here
-    // or let the CSS handle the map dots.
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('visible', 'in-view');
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'none';
+          const el = entry.target as HTMLElement;
+          el.classList.add('visible', 'in-view');
+          el.style.opacity = '1';
+          el.style.transform = 'none';
         }
       });
     }, { threshold: 0.1 });
 
-    document.querySelectorAll('#cobertura [style*="opacity: 0"], #cobertura [style*="opacity:0"]').forEach(el => observer.observe(el));
+    document.querySelectorAll<HTMLElement>('#cobertura [style*="opacity: 0"], #cobertura [style*="opacity:0"]').forEach(el => observer.observe(el));
     
     setTimeout(() => {
-      document.querySelectorAll('#cobertura [style*="opacity: 0"], #cobertura [style*="opacity:0"]').forEach(el => {
+      document.querySelectorAll<HTMLElement>('#cobertura [style*="opacity: 0"], #cobertura [style*="opacity:0"]').forEach(el => {
         el.style.opacity = '1';
         el.style.transform = 'none';
         el.style.transition = 'all 0.8s ease-out';
