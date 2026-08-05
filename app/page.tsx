@@ -20,8 +20,8 @@ export default function Home() {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible', 'in-view', 'animate-in');
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'none';
+          (entry.target as HTMLElement).style.opacity = '1';
+          (entry.target as HTMLElement).style.transform = 'none';
         }
       });
     }, { threshold: 0.1 });
@@ -31,9 +31,9 @@ export default function Home() {
     // Attempt to reveal anything hidden by default
     setTimeout(() => {
       document.querySelectorAll('[style*="opacity: 0"], [style*="opacity:0"]').forEach(el => {
-        el.style.opacity = '1';
-        el.style.transform = 'none';
-        el.style.transition = 'all 0.8s ease-out';
+        (el as HTMLElement).style.opacity = '1';
+        (el as HTMLElement).style.transform = 'none';
+        (el as HTMLElement).style.transition = 'all 0.8s ease-out';
       });
     }, 500);
 
