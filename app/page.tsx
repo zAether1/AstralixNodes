@@ -9,7 +9,7 @@ import HolyPanelShowcase from './components/HolyPanelShowcase';
 import ReviewsSection from './components/ReviewsSection';
 import LocationsSection from './components/LocationsSection';
 import StatsSection from './components/StatsSection';
-import FaqSection from './components/FaqSection';
+import FaqSection from './components/FAQSection';
 import CtaSection from './components/CtaSection';
 
 export default function Home() {
