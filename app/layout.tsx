@@ -118,4 +118,17 @@ export default function RootLayout({
               "contactPoint": {
                 "@type": "ContactPoint",
                 "contactType": "customer service",
-      
+              }
+            })
+          }}
+        />
+      </head>
+      <body className={`${poppins.variable} antialiased bg-[#020202] text-white`}>
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
+        <Analytics />
+      </body>
+    </html>
+  );
+}
