@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
+import { LanguageProvider } from "./contexts/LanguageContext";
 import { Analytics } from "@vercel/analytics/next"
 
 const poppins = Poppins({
@@ -124,8 +125,10 @@ export default function RootLayout({
         />
       </head>
       <body className={`${poppins.variable} font-[family-name:var(--font-poppins)] antialiased min-h-screen bg-[#180228] text-white`}>
-        {children}
-        <Analytics />
+        <LanguageProvider>
+          {children}
+          <Analytics />
+        </LanguageProvider>
       </body>
     </html>
   );
