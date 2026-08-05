@@ -5,22 +5,23 @@ import Image from 'next/image';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useCurrency } from '../contexts/CurrencyContext';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const games = [
-  { id: 'minecraft', name: 'Minecraft', image: '/banners/minecraft-banners.webp', desc: 'Nuestros planes de Hosting para Servidores de Minecraft comienzan en €4.24, son compatibles con todos los mods y plugins. ¡Comienza tu aventura de Minecraft ahora!' },
-  { id: 'hytale', name: 'Hytale', image: '/banners/node.webp', desc: 'Prepárate para Hytale con nuestros servidores optimizados de alto rendimiento.' },
-  { id: 'palworld', name: 'Palworld', image: '/banners/valheim-banner.webp', desc: 'Crea tu mundo de Palworld con la latencia más baja y la mejor estabilidad del mercado.' },
-  { id: 'rust', name: 'Rust', image: '/banners/rust-banner.webp', desc: 'Servidores de Rust sin lag, con protección Anti-DDoS para que tu wipe sea perfecto.' },
-  { id: 'ark', name: 'ARK: Survival Evolved', image: '/banners/ark-banners.webp', desc: 'Domina los dinosaurios en ARK con nuestros servidores de alto rendimiento.' },
-  { id: 'terraria', name: 'Terraria', image: '/banners/cs2-banner.webp', desc: 'Explora y construye en Terraria con tus amigos sin interrupciones.' },
-  { id: 'zomboid', name: 'Project Zomboid', image: '/banners/gmod-banner.webp', desc: 'Sobrevive al apocalipsis zombie en servidores estables y rápidos.' }
+  { id: 'minecraft', name: 'Minecraft', image: '/assets/images/header-minecraft.avif', desc: 'Nuestros planes de Hosting para Servidores de Minecraft comienzan en un precio inigualable, son compatibles con todos los mods y plugins. ¡Comienza tu aventura de Minecraft ahora!' },
+  { id: 'zomboid', name: 'Project Zomboid', image: '/assets/images/header-project-zomboid.avif', desc: 'Sobrevive al apocalipsis zombie en servidores estables y rápidos con máxima capacidad de RAM.' },
+  { id: 'palworld', name: 'Palworld', image: '/assets/images/header-palworld.avif', desc: 'Crea tu mundo de Palworld con la latencia más baja y la mejor estabilidad del mercado.' },
+  { id: 'hytale', name: 'Hytale', image: '/assets/images/header-hytale.avif', desc: 'Prepárate para Hytale con nuestros servidores optimizados de alto rendimiento.' },
+  { id: 'terraria', name: 'Terraria', image: '/assets/images/header-terraria.avif', desc: 'Explora y construye en Terraria con tus amigos sin interrupciones ni lag.' },
+  { id: 'valheim', name: 'Valheim', image: '/assets/images/header-valheim.avif', desc: 'Conquista a las deidades nórdicas en Valheim con un servidor siempre activo.' }
 ];
 
 export default function FeaturesHighlights() {
   const container = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const { formatPrice } = useCurrency();
 
   useGSAP(() => {
     // Reveal animations on scroll
@@ -45,15 +46,6 @@ export default function FeaturesHighlights() {
   const nextGame = () => setActiveIndex((prev) => (prev + 1) % games.length);
   const prevGame = () => setActiveIndex((prev) => (prev - 1 + games.length) % games.length);
 
-  const getVisibleGames = () => {
-    const result = [];
-    for (let i = -1; i <= 5; i++) {
-      let idx = (activeIndex + i + games.length) % games.length;
-      result.push({ ...games[idx], keyIndex: i });
-    }
-    return result;
-  };
-
   const activeGame = games[activeIndex];
 
   return (
@@ -71,7 +63,7 @@ export default function FeaturesHighlights() {
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 items-stretch">
           
           {/* Left Panel: Plans/Coupons */}
-          <div className="w-full lg:w-[23.75rem] lg:min-h-[30.625rem] flex-shrink-0 order-2 lg:order-1 flex flex-col gap-2.5 lg:max-h-[37.5rem] lg:overflow-y-auto lg:pr-2" style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(100, 24, 157, 0.7) rgba(0,0,0,0.4)' }}>
+          <div className="w-full lg:w-[23.75rem] lg:min-h-[30.625rem] flex-shrink-0 order-2 lg:order-1 flex flex-col gap-2.5 lg:max-h-[37.5rem] lg:overflow-y-auto lg:pr-2">
             
             <div className="bg-[#282828]/60 border-2 border-[#282828] rounded-xl px-5 py-4 flex items-center justify-center gap-2.5 mb-1">
               <span className="text-white text-lg font-extrabold">Usa el cupón</span>
@@ -89,7 +81,7 @@ export default function FeaturesHighlights() {
                   <div className="text-[#888] text-xs">Ideal para comenzar</div>
                 </div>
                 <div className="text-right">
-                  <div className="text-white font-bold text-sm">€4.24</div>
+                  <div className="text-white font-bold text-sm">{formatPrice(4.24)}</div>
                 </div>
               </div>
 
@@ -99,80 +91,98 @@ export default function FeaturesHighlights() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="text-white font-bold text-sm">Plan Pro</div>
-                  <div className="text-[#888] text-xs">Ideal para comenzar</div>
+                  <div className="text-[#888] text-xs">Para servidores medianos</div>
                 </div>
                 <div className="text-right">
-                  <div className="text-white font-bold text-sm">€8.48</div>
+                  <div className="text-white font-bold text-sm">{formatPrice(8.48)}</div>
                 </div>
               </div>
 
               <div className="bg-[#282828]/60 rounded-xl border-2 border-white/10 px-4 py-4 flex items-center gap-3">
                 <div className="w-12 h-12 rounded-lg bg-[#141414] flex-shrink-0 flex items-center justify-center">
-                  <svg className="w-6 h-6 text-[#64189D]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
+                  <svg className="w-6 h-6 text-[#64189D]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="text-white font-bold text-sm">Plan Ultra</div>
-                  <div className="text-[#888] text-xs">Ideal para comenzar</div>
+                  <div className="text-[#888] text-xs">Máximo rendimiento</div>
                 </div>
                 <div className="text-right">
-                  <div className="text-white font-bold text-sm">€12.72</div>
+                  <div className="text-white font-bold text-sm">{formatPrice(16.96)}</div>
                 </div>
               </div>
 
+              <Link href="/minecraft" className="mt-2 block w-full text-center bg-[#282828]/60 hover:bg-[#64189D] text-white border-2 border-[#282828] hover:border-[#64189D] rounded-xl py-3.5 font-bold transition-all duration-300">
+                Ver todos los planes
+              </Link>
             </div>
-
-            <Link href="/minecraft" className="block w-full bg-[#282828]/60 text-[#64189D] rounded-lg py-3.5 px-6 text-sm font-bold uppercase tracking-wide text-center transition-all hover:bg-[#1a1a1a] hover:-translate-y-0.5 mt-2">
-              VER TODOS LOS PLANES
-            </Link>
-
           </div>
 
-          {/* Right Panel: Game Slider */}
-          <div className="flex-1 order-1 lg:order-2 min-w-0 lg:flex">
-            <div className="bg-[#282828]/60 rounded-xl border-2 border-[#282828] p-5 md:p-6 lg:flex-1 lg:flex lg:flex-col lg:justify-center lg:min-h-[30.625rem] w-full">
-              
-              <div className="relative overflow-hidden rounded-xl py-2.5 select-none">
-                <button onClick={prevGame} aria-label="Juego anterior" className="absolute left-2 top-1/2 -translate-y-1/2 z-50 w-11 h-11 rounded-full bg-black/80 border-2 border-[#64189D]/40 text-white flex items-center justify-center transition-all hover:bg-[#64189D]/90 hover:border-[#64189D] hover:text-white">
-                  ‹
-                </button>
-                <button onClick={nextGame} aria-label="Juego siguiente" className="absolute right-2 top-1/2 -translate-y-1/2 z-50 w-11 h-11 rounded-full bg-black/80 border-2 border-[#64189D]/40 text-white flex items-center justify-center transition-all hover:bg-[#64189D]/90 hover:border-[#64189D] hover:text-white">
-                  ›
-                </button>
-                
-                <div className="flex gap-3 items-center px-2.5 transition-transform duration-500 ease-in-out overflow-x-auto no-scrollbar" style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}>
-                  {getVisibleGames().map((g) => {
-                    const isActive = g.keyIndex === 0;
-                    return (
-                      <div 
-                        key={`${g.id}-${g.keyIndex}`} 
-                        onClick={() => {
-                          if (g.keyIndex > 0) nextGame();
-                          else if (g.keyIndex < 0) prevGame();
-                        }}
-                        className="flex-shrink-0 cursor-pointer rounded-xl w-[84px] h-[124px] sm:w-[94px] sm:h-[137px] md:w-[112px] md:h-[162px] flex items-center justify-center"
-                      >
-                        <div className={`rounded-xl overflow-hidden transition-all duration-300 ${isActive ? 'opacity-100 w-full h-full border-2 border-[#64189D]' : 'opacity-40 grayscale-[20%] brightness-[0.7] w-[70px] h-[100px] sm:w-[80px] sm:h-[115px] md:w-[110px] md:h-[160px] hover:opacity-60 hover:scale-105'}`}>
-                          <Image alt={g.name} width={265} height={382} className="w-full h-full object-cover rounded-xl" src={g.image} />
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
+          {/* Right Panel: Game Display */}
+          <div className="flex-1 order-1 lg:order-2 flex flex-col justify-end relative rounded-2xl overflow-hidden min-h-[400px] lg:min-h-0 bg-[#242424]">
+            {/* Background Image */}
+            <div className="absolute inset-0">
+              <Image 
+                src={activeGame.image} 
+                alt={activeGame.name} 
+                fill 
+                className="object-cover transition-opacity duration-500"
+                style={{ opacity: 0.6 }}
+              />
+              {/* Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#101010] via-[#101010]/80 to-transparent"></div>
+            </div>
 
-              <div className="mt-5 animate-in fade-in slide-in-from-bottom-4 duration-500" key={activeGame.id}>
-                <div className="flex items-center gap-3 mb-4">
-                  <h3 className="text-2xl md:text-3xl font-extrabold text-white uppercase tracking-wide">{activeGame.name}</h3>
-                  {activeGame.id === 'minecraft' && (
-                    <span className="bg-[#64189D] text-white text-xs font-extrabold uppercase tracking-wide px-3 py-1 rounded-md">POPULAR</span>
-                  )}
-                </div>
-                <p className="text-sm md:text-base text-[#e0e0e0] leading-relaxed">
+            {/* Carousel Navigation Top Right */}
+            <div className="absolute top-4 right-4 z-10 flex gap-2">
+              <button 
+                onClick={prevGame}
+                className="w-10 h-10 rounded-lg bg-black/50 border border-white/10 flex items-center justify-center text-white hover:bg-[#64189D] hover:border-[#64189D] transition-all duration-300 backdrop-blur-sm"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
+              </button>
+              <button 
+                onClick={nextGame}
+                className="w-10 h-10 rounded-lg bg-black/50 border border-white/10 flex items-center justify-center text-white hover:bg-[#64189D] hover:border-[#64189D] transition-all duration-300 backdrop-blur-sm"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
+              </button>
+            </div>
+
+            <div className="relative z-10 p-6 lg:p-10 flex flex-col lg:flex-row gap-6 lg:gap-10 items-end justify-between">
+              
+              <div className="flex-1">
+                <h3 className="text-3xl lg:text-4xl font-black text-white uppercase tracking-tight mb-3">
+                  {activeGame.name}
+                </h3>
+                <p className="text-[#a1a1aa] text-sm lg:text-base leading-relaxed max-w-xl">
                   {activeGame.desc}
                 </p>
               </div>
-              
+
+              <div className="flex-shrink-0 w-full lg:w-auto">
+                <Link href={`/${activeGame.id}`} className="group relative inline-flex items-center justify-center w-full lg:w-auto px-8 py-4 font-bold text-white transition-all duration-300 bg-[#64189D] rounded-xl overflow-hidden shadow-[0_0_20px_rgba(100,24,157,0.3)] hover:shadow-[0_0_30px_rgba(100,24,157,0.5)] hover:-translate-y-1">
+                  <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-white rounded-full group-hover:w-64 group-hover:h-56 opacity-10"></span>
+                  <span className="relative flex items-center gap-2">
+                    COMENZAR AHORA
+                    <svg className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+                  </span>
+                </Link>
+              </div>
+
             </div>
+
+            {/* Dots */}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+              {games.map((_, idx) => (
+                <button 
+                  key={idx}
+                  onClick={() => setActiveIndex(idx)}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${activeIndex === idx ? 'bg-[#64189D] w-6' : 'bg-white/30 hover:bg-white/50'}`}
+                  aria-label={`Go to slide ${idx + 1}`}
+                />
+              ))}
+            </div>
+
           </div>
 
         </div>
