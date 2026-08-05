@@ -13,6 +13,9 @@ import HolySection8 from "./components/holy/HolySection8"
 import HolySection9 from "./components/holy/HolySection9"
 import HolySection10 from "./components/holy/HolySection10"
 
+import PanelShowcase from "./components/template/PanelShowcase"
+import FeaturesSection from "./components/template/FeaturesSection"
+
 export default function Home() {
   useEffect(() => {
     // Basic IntersectionObserver to trigger 'in-view' animations if they exist
@@ -52,6 +55,17 @@ export default function Home() {
       <HolySection8 />
       <HolySection9 />
       <HolySection10 />
+      
+      {/* Template Sections */}
+      <div className="pt-24 pb-12 border-t border-white/5 mt-12 relative z-10">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-white mb-4 uppercase">Explora Más de AstralixNodes</h2>
+          <p className="text-[#999] max-w-2xl mx-auto">Estas son algunas características adicionales que ofrecemos para asegurar el mejor rendimiento.</p>
+        </div>
+        <PanelShowcase />
+        <FeaturesSection />
+      </div>
+
       <HolyFooterStatic />
     </div>
   )
