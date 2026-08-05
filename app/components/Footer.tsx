@@ -1,161 +1,134 @@
-"use client"
-
-import { motion, useInView } from "framer-motion"
-import { useRef } from "react"
-import Image from "next/image"
-import { Mail, Phone, Gamepad2, ExternalLink } from "lucide-react"
-import DiscordBanner from "./DiscordBanner"
-import { useLanguage } from "../contexts/LanguageContext"
+import React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Footer() {
-  const { t } = useLanguage()
-
-  const quickLinks = [
-    { name: t('footer.clientArea'), href: "#" },
-    { name: t('footer.discord'), href: "#" },
-    { name: t('footer.vpsHosting'), href: "/vps" },
-    { name: t('footer.dedicatedServerHosting'), href: "/dedicated" },
-    { name: t('footer.gameServerHosting'), href: "/games" },
-  ]
-
-  const legalLinks = [
-    { name: t('navbar.termsOfService'), href: "/terms-of-services" },
-    { name: t('navbar.privacyPolicy'), href: "/privacy-policy" },
-  ]
-
-  const contactInfo = [
-    { icon: Mail, label: t('footer.email'), value: "support@dezerx.com", href: "mailto:support@dezerx.com" },
-    { icon: Phone, label: t('footer.phone'), value: "N/A", href: "tel:+15551234567" },
-    { icon: Gamepad2, label: t('footer.gamePanel'), value: "panel.dezerx.com", href: "https://panel.dezerx.com" },
-  ]
-
   return (
-    <div className="relative">
-      <div className="relative z-30 -mb-47">
-        <DiscordBanner />
-      </div>
-
-      <footer className="bg-gray-100 dark:bg-[#0a0b0f] border-t border-gray-200 dark:border-white/10 relative z-10 pt-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid grid-cols-1 mt-24  md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6 }}
-              className="lg:col-span-1"
-            >
-              <div className="mb-6">
-                <Image
-                  src="/meta/Logo.png"
-                  alt="Dezer Logo"
-                  width={200}
-                  height={60}
-                  className="h-12 w-auto"
-                />
-              </div>
-              <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-6">
-                {t('footer.description')}
-              </p>
-              <div className="text-xs text-gray-500 dark:text-gray-500">
-                {/* HEY, HOLD UR HORSES, EITHER FULLY REMOVE IT OR KEEP IT. IT WOULD BE A SHAME IF I BUSTED YOU FOR CLAIMING YOU DID SOMETHING THAT U DIDN'T, RIGHT?  */}
-                Made by <span className="icon-text-primary font-medium">Anthony S</span>
-              </div>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="lg:col-span-1"
-            >
-              <h3 className="text-gray-900 dark:text-white font-semibold text-lg mb-6 orbitron-font">{t('footer.quickLinks')}</h3>
-              <ul className="space-y-3">
-                {quickLinks.map((link, index) => (
-                  <li key={index}>
-                    <a
-                      href={link.href}
-                      className="text-gray-600 dark:text-gray-400 hover:text-icon-text-primary dark:hover:text-icon-text-primary transition-colors duration-300 text-sm flex items-center group"
-                    >
-                      <span>{link.name}</span>
-                      <ExternalLink className="w-3 h-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="lg:col-span-1"
-            >
-              <h3 className="text-gray-900 dark:text-white font-semibold text-lg mb-6 orbitron-font">{t('footer.legal')}</h3>
-              <ul className="space-y-3">
-                {legalLinks.map((link, index) => (
-                  <li key={index}>
-                    <a
-                      href={link.href}
-                      className="text-gray-600 dark:text-gray-400 hover:text-icon-text-primary dark:hover:text-icon-text-primary transition-colors duration-300 text-sm flex items-center group"
-                    >
-                      <span>{link.name}</span>
-                      <ExternalLink className="w-3 h-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="lg:col-span-1"
-            >
-              <h3 className="text-gray-900 dark:text-white font-semibold text-lg mb-6 orbitron-font">{t('footer.contactUs')}</h3>
-              <ul className="space-y-4">
-                {contactInfo.map((contact, index) => (
-                  <li key={index}>
-                    <a
-                      href={contact.href}
-                      className="text-gray-600 dark:text-gray-400 hover:text-icon-text-primary dark:hover:text-icon-text-primary transition-colors duration-300 text-sm flex items-center group"
-                    >
-                      <contact.icon className="w-4 h-4 mr-3 icon-text-primary" />
-                      <div>
-                        <div className="text-xs text-gray-500 dark:text-gray-500 uppercase tracking-wide">{contact.label}</div>
-                        <div className="group-hover:text-icon-text-primary dark:group-hover:text-icon-text-primary transition-colors duration-300">{contact.value}</div>
-                      </div>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="mt-12 pt-8 border-t border-gray-200 dark:border-white/10"
-          >
-            {/* HEY HEY HEY, WE CAN TALK ABOUT THIS PLEASE. DONT REMOVE IT, PLSSSS. think about it..  */}
-            {/* Look, remove the DezerNova add ur own hosting, but go above and change ur name to MY NAME AGAIN. come onn man, it would look like i worked for you. come on buddy, i know u want to keep it.  */}
-            <div className="flex flex-col md:flex-row justify-between items-center">
-              <div className="text-gray-500 dark:text-gray-500 text-sm mb-4 md:mb-0">
-                © {new Date().getFullYear()} DezerNova. All rights reserved.
-              </div>
-              <div className="flex items-center space-x-6">
-                <div className="flex items-center space-x-2">
-                </div>
+    <footer className="bg-[#1a1b1b] text-white">
+      <div className="max-w-[87.5rem] mx-auto px-6 pt-16 pb-8">
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 mb-12">
+          
+          <div className="lg:max-w-[26.25rem] flex-shrink-0">
+            <div className="flex items-center gap-3 mb-3">
+              <Image 
+                alt="AstralixNodes" 
+                width={42} 
+                height={40} 
+                className="rounded" 
+                src="/icons/AstralixNodes.png" 
+              />
+              <div>
+                <span className="text-[25px] font-black text-white leading-tight block">AstralixNodes</span>
+                <span className="text-sm font-light text-[#888] leading-tight block">Servidores potentes a precios económicos.</span>
               </div>
             </div>
-          </motion.div>
+            
+            <p className="text-[#666] text-xs mt-6 leading-relaxed">Copyright © 2025 HOLY SERVERS LLC, operando bajo el nombre de AstralixNodes.</p>
+            <p className="text-[#666] text-xs mt-2 leading-relaxed">REG. NO.: 001599788. Esta entidad comercial está registrada oficialmente en 30 N Gould St, Suite N, Sheridan, WY 82801, Wyoming, US.</p>
+            
+            <div className="flex items-center gap-4 mt-6">
+              <a target="_blank" rel="noopener noreferrer" className="text-[#888] hover:text-white transition-colors" aria-label="X (Twitter)" href="https://twitter.com/astralixnodes">
+                <svg className="w-[18px] h-[18px]" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+              </a>
+              <a target="_blank" rel="noopener noreferrer" className="text-[#888] hover:text-white transition-colors" aria-label="Instagram" href="https://instagram.com/astralixnodes">
+                <svg className="w-[18px] h-[18px]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg>
+              </a>
+              <a target="_blank" rel="noopener noreferrer" className="text-[#888] hover:text-white transition-colors" aria-label="Facebook" href="https://www.facebook.com/astralixnodes.es">
+                <svg className="w-[18px] h-[18px]" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg>
+              </a>
+              <a target="_blank" rel="noopener noreferrer" className="text-[#888] hover:text-white transition-colors" aria-label="Discord" href="https://discord.astralixnodes.com/">
+                <svg className="w-[18px] h-[18px]" fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"></path></svg>
+              </a>
+              <a target="_blank" rel="noopener noreferrer" className="text-[#888] hover:text-white transition-colors" aria-label="YouTube" href="https://www.youtube.com/@AstralixNodes">
+                <svg className="w-[18px] h-[18px]" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg>
+              </a>
+              <a target="_blank" rel="noopener noreferrer" className="text-[#888] hover:text-white transition-colors" aria-label="TikTok" href="https://www.tiktok.com/@astralixnodes">
+                <svg className="w-[18px] h-[18px]" fill="currentColor" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"></path></svg>
+              </a>
+            </div>
+
+            <button type="button" className="hidden lg:flex items-center gap-2 mt-6 text-white hover:text-[#64189D] transition-colors" aria-label="Preferences">
+              <span className="relative block h-[22px] w-[22px] overflow-hidden rounded-sm flex-shrink-0">
+                <Image alt="" fill className="object-cover" src="/holy_assets/assets/images/flag-es.png" />
+              </span>
+              <span className="text-[#555] text-sm">|</span>
+              <span className="text-sm font-bold">USD</span>
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+          </div>
+
+          <div className="flex-1 grid grid-cols-2 md:grid-cols-3 gap-8 lg:gap-12 relative">
+            <div className="min-w-0 break-words">
+              <h3 className="text-white font-black uppercase text-sm tracking-wider mb-5">POPULAR</h3>
+              <ul className="space-y-2.5">
+                <li><Link className="text-[#888] hover:text-white text-sm transition-colors" href="/minecraft">Minecraft</Link></li>
+                <li><Link className="text-[#888] hover:text-white text-sm transition-colors" href="/dedicados">Minecraft Dedicado Hosting</Link></li>
+                <li><Link className="text-[#888] hover:text-white text-sm transition-colors" href="/discord-bot">Discord Bot Hosting</Link></li>
+                <li><Link className="text-[#888] hover:text-white text-sm transition-colors" href="/juegos">Otros Juegos Hosting</Link></li>
+                <li><Link className="text-[#888] hover:text-white text-sm transition-colors" href="/ts3">Servidor de Voz Hosting</Link></li>
+                <li><a target="_blank" rel="noopener noreferrer" className="text-[#888] hover:text-white text-sm transition-colors" href="https://panel.astralixnodes.com/">Panel Servidores MC</a></li>
+                <li><a target="_blank" rel="noopener noreferrer" className="text-[#888] hover:text-white text-sm transition-colors" href="https://panel.astralixnodes.com/">Panel Servidores Juegos</a></li>
+              </ul>
+            </div>
+            
+            <div className="min-w-0 break-words">
+              <h3 className="text-white font-black uppercase text-sm tracking-wider mb-5">NOSOTROS</h3>
+              <ul className="space-y-2.5">
+                <li><Link className="text-[#888] hover:text-white text-sm transition-colors" href="/about">Acerca de nosotros</Link></li>
+                <li><a target="_blank" rel="noopener noreferrer" className="text-[#888] hover:text-white text-sm transition-colors" href="https://clientes.astralixnodes.com/">Área de clientes</a></li>
+                <li><Link className="text-[#888] hover:text-white text-sm transition-colors" href="/branding">Branding</Link></li>
+                <li><Link className="text-[#888] hover:text-white text-sm transition-colors" href="/metodos-de-pago">Métodos de pago</Link></li>
+                <li><Link className="text-[#888] hover:text-white text-sm transition-colors" href="/hardware">Hardware por ubicación</Link></li>
+              </ul>
+
+              <h3 className="text-white font-black uppercase text-sm tracking-wider mt-8 mb-5">LEGAL</h3>
+              <ul className="space-y-2.5">
+                <li><Link className="text-[#888] hover:text-white text-sm transition-colors" href="/legal/tos">Términos y condiciones</Link></li>
+                <li><Link className="text-[#888] hover:text-white text-sm transition-colors" href="/legal/privacy">Políticas de privacidad</Link></li>
+                <li><Link className="text-[#888] hover:text-white text-sm transition-colors" href="/legal/sla">Acuerdo de Nivel de Servicio</Link></li>
+                <li><Link className="text-[#888] hover:text-white text-sm transition-colors" href="/legal/copyright">Política de Copyright</Link></li>
+                <li><Link className="text-[#888] hover:text-white text-sm transition-colors" href="/legal/cookies">Política de Cookies</Link></li>
+              </ul>
+            </div>
+
+            <div className="col-span-2 md:col-span-1 text-center md:text-left min-w-0 break-words">
+              <h3 className="text-white font-black uppercase text-sm tracking-wider mb-5">SOPORTE</h3>
+              <ul className="space-y-2.5">
+                <li><a target="_blank" rel="noopener noreferrer" className="text-[#888] hover:text-white text-sm transition-colors" href="https://ticket.astralixnodes.com">Crea un ticket</a></li>
+                <li><Link className="text-[#888] hover:text-white text-sm transition-colors" href="/faq">Base de conocimientos</Link></li>
+                <li><a target="_blank" rel="noopener noreferrer" className="text-[#888] hover:text-white text-sm transition-colors" href="https://discord.astralixnodes.com/">Discord</a></li>
+                <li><a target="_blank" rel="noopener noreferrer" className="text-[#888] hover:text-white text-sm transition-colors" href="https://estado.astralixnodes.com">Estado de la red</a></li>
+                <li><Link className="text-[#888] hover:text-white text-sm transition-colors inline-flex items-center gap-2 md:justify-start justify-center" href="/afiliados">
+                    <span className="text-[#64189D] font-black text-[11px]">NUEVO</span>
+                    <span>Solicitar Afiliación</span>
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            
+            <button className="hidden md:flex absolute -right-2 bottom-0 w-10 h-10 rounded-full border-2 border-[#64189D] items-center justify-center text-[#64189D] hover:bg-[#64189D] hover:text-black transition-colors" aria-label="Volver arriba">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7"></path></svg>
+            </button>
+          </div>
         </div>
-      </footer>
-    </div>
-  )
+
+        <div className="border-t border-[#2d2e2e] pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="text-center md:text-left">
+            <p className="text-[#666] text-[12px] leading-relaxed">Copyright © 2025 HOLY SERVERS LLC, operando bajo el nombre registrado de AstralixNodes. Todos los derechos reservados.</p>
+            <p className="text-[#555] text-[11px] leading-relaxed mt-1">El proceso de pago puede estar gestionado por Tebex Limited, actuando como comerciante registrado y siendo responsable del cumplimiento del producto y la atención de consultas de facturación.</p>
+          </div>
+          <div className="flex-shrink-0">
+            <a href="https://www.dmca.com/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 border border-[#444] rounded px-3 py-1.5 hover:border-[#64189D] transition-colors">
+              <span className="text-[#64189D] font-bold text-[12px]">DMCA</span>
+              <div className="w-5 h-5 rounded-full bg-[#64189D] flex items-center justify-center">
+                <svg className="w-3 h-3" fill="black" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path></svg>
+              </div>
+              <span className="text-white font-bold text-[12px]">PROTECTED</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </footer>
+  );
 }

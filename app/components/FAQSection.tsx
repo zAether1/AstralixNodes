@@ -1,137 +1,176 @@
-"use client"
+'use client';
+import React, { useRef, useState } from 'react';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-import { motion, useInView } from "framer-motion"
-import { useRef } from "react"
-import { TbChevronUpRight, TbChevronDownRight } from "react-icons/tb"
-import { useState } from "react"
-import Image from "next/image"
-import { useLanguage } from "../contexts/LanguageContext"
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-interface FAQItem {
-  question: string
-  answer: string
-}
+const faqCategories = [
+  { id: 'general', label: 'General', icon: <svg className="w-4 h-4" viewBox="0 0 512 512" fill="currentColor"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336l24 0 0-64-24 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l48 0c13.3 0 24 10.7 24 24l0 88 8 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-80 0c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"></path></svg> },
+  { id: 'minecraft', label: 'Minecraft', icon: <svg className="w-4 h-4" viewBox="0 0 512 512" fill="currentColor"><path d="M234.5 5.7c13.9-5.3 29.2-5.3 43.1 0l192 73.1C493.5 87.3 512 109.4 512 134.9l0 242.2c0 25.5-18.5 47.6-42.4 56.1l-192 73.1c-13.9 5.3-29.2 5.3-43.1 0l-192-73.1C18.5 424.7 0 402.6 0 377.1l0-242.2c0-25.5 18.5-47.6 42.4-56.1l192-73.1zM256 66.2L96.8 126.9 256 187.6l159.2-60.7L256 66.2zM48 182.4l0 194.7l192 73.1 0-194.7L48 182.4zm256 267.8l192-73.1 0-194.7-192 73.1 0 194.7z"></path></svg> },
+  { id: 'juegos', label: 'Juegos', icon: <svg className="w-4 h-4" viewBox="0 0 640 512" fill="currentColor"><path d="M192 64C86 64 0 150 0 256S86 448 192 448l256 0c106 0 192-86 192-192s-86-192-192-192L192 64zM496 168a40 40 0 1 1 0 80 40 40 0 1 1 0-80zM392 304a40 40 0 1 1 80 0 40 40 0 1 1-80 0zM168 200c0-13.3 10.7-24 24-24s24 10.7 24 24l0 32 32 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-32 0 0 32c0 13.3-10.7 24-24 24s-24-10.7-24-24l0-32-32 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l32 0 0-32z"></path></svg> },
+  { id: 'dedicado', label: 'Minecraft Dedicado', icon: <svg className="w-4 h-4" viewBox="0 0 512 512" fill="currentColor"><path d="M64 32C28.7 32 0 60.7 0 96l0 64c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-64c0-35.3-28.7-64-64-64L64 32zm280 72a24 24 0 1 1 0 48 24 24 0 1 1 0-48zm48 24a24 24 0 1 1 48 0 24 24 0 1 1-48 0zM64 288c-35.3 0-64 28.7-64 64l0 64c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-64c0-35.3-28.7-64-64-64L64 288zm280 72a24 24 0 1 1 0 48 24 24 0 1 1 0-48zm48 24a24 24 0 1 1 48 0 24 24 0 1 1-48 0z"></path></svg> }
+];
 
-export default function FAQSection() {
-  const { t } = useLanguage()
-  const [openIndex, setOpenIndex] = useState<number | null>(null)
-
-  const faqs: FAQItem[] = [
+const faqs = {
+  general: [
     {
-      question: t('faq.question1'),
-      answer: t('faq.answer1')
+      q: '¿Qué métodos de pago aceptan?',
+      a: 'Aceptamos tarjetas de crédito/débito, PayPal, MercadoPago, transferencia bancaria, y criptomonedas. También aceptamos pagos en pesos argentinos (ARS) y dólares (USD).'
     },
     {
-      question: t('faq.question2'),
-      answer: t('faq.answer2')
+      q: 'Actualmente estoy con otro host, ¿Puedo migrarme a AstralixNodes?',
+      a: 'Por supuesto, ofrecemos migración gratuita. Nuestro equipo de soporte se encargará de transferir todos tus archivos, mundos, plugins y configuraciones sin tiempo de inactividad.'
     },
     {
-      question: t('faq.question3'),
-      answer: t('faq.answer3')
+      q: '¿Qué plan debería elegir?',
+      a: 'Depende de tus necesidades. Para un servidor vanilla con 5-10 jugadores, recomendamos 2GB. Para modpacks ligeros 4GB, y para modpacks pesados como ATM o RLCraft, 6-8GB. Nuestro soporte puede ayudarte a elegir.'
     },
     {
-      question: t('faq.question4'),
-      answer: t('faq.answer4')
+      q: '¿Podré subir o bajar mi plan luego de comprar?',
+      a: 'Absolutamente, todo desde el área de clientes. Simplemente abre un ticket de soporte si no encuentras la manera de hacerlo o necesitas una recomendación.'
     },
     {
-      question: t('faq.question5'),
-      answer: t('faq.answer5')
+      q: '¿Porque debería elegir AstralixNodes?',
+      a: 'Puedes elegir el proveedor que quieras, pero creemos que somos tu mejor opción: soporte en español con experiencia, precios accesibles sin publicidad, comunidad activa en Discord y hardware potente para un rendimiento fluido, alojando el servidor de cientos de creadores de contenido :)'
+    }
+  ],
+  minecraft: [
+    {
+      q: '¿Tienen soporte para Bedrock o Geyser?',
+      a: 'Sí, soportamos servidores Bedrock nativos y también puedes usar GeyserMC en servidores Java para permitir la conexión de jugadores de Bedrock (Crossplay).'
+    }
+  ],
+  juegos: [
+    {
+      q: '¿Ofrecen servidores para otros juegos?',
+      a: 'Sí, ofrecemos servidores para Rust, ARK, Terraria, Palworld, CS:GO, GMod, y muchos otros. Puedes ver la lista completa en la sección de juegos.'
+    }
+  ],
+  dedicado: [
+    {
+      q: '¿Cuál es la diferencia de los planes dedicados?',
+      a: 'Los planes dedicados ofrecen recursos garantizados (CPU y RAM) que no se comparten con otros usuarios, ideal para servidores grandes con cientos de jugadores.'
     }
   ]
+};
+
+export default function FaqSection() {
+  const container = useRef<HTMLDivElement>(null);
+  const [activeCategory, setActiveCategory] = useState('general');
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0); // first open by default
+
+  useGSAP(() => {
+    gsap.fromTo('.faq-reveal',
+      { opacity: 0, y: 20 },
+      { 
+        opacity: 1, 
+        y: 0, 
+        duration: 0.8, 
+        stagger: 0.1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: container.current,
+          start: 'top 80%'
+        }
+      }
+    );
+  }, { scope: container });
+
+  const toggleFaq = (idx: number) => {
+    if (openFaqIndex === idx) {
+      setOpenFaqIndex(null);
+    } else {
+      setOpenFaqIndex(idx);
+    }
+  };
+
+  const handleCategoryChange = (id: string) => {
+    setActiveCategory(id);
+    setOpenFaqIndex(null);
+  };
+
+  const currentFaqs = faqs[activeCategory as keyof typeof faqs] || [];
 
   return (
-    <div className="bg-gray-50 dark:bg-[#0a0b0f] relative py-16 px-4 sm:px-6 lg:px-8">
-      <div className="absolute inset-0 bg-gradient-to-b from-gray-50 via-gray-50/90 to-gray-50 dark:from-[#0a0b0f] dark:via-[#0a0b0f]/90 dark:to-[#0a0b0f]" />
+    <section ref={container} className="bg-[#191919] py-24 px-6">
+      <div className="max-w-4xl mx-auto">
+        
+        <div className="faq-reveal text-center mb-10">
+          <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-[0.03em] mb-3">
+            Preguntas <span className="text-[#64189D]">Frecuentes</span>
+          </h2>
+          <p className="text-[#888] text-sm">
+            Encuentra respuestas rápidas a las dudas más comunes
+          </p>
+        </div>
 
-      <div className="absolute top-20 -left-32 w-64 h-64 blob-primary rounded-full blur-3xl" />
-
-      <div className="relative z-10 max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-start">
-          <div className="hidden md:block">
-            <div className="sticky top-24">
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.8 }}
-              >
-                <div className="relative h-[300px] md:h-[500px] w-full">
-                  <Image
-                    src="/feature-9.webp"
-                    alt="Server Features"
-                    fill
-                    style={{ objectFit: "contain" }}
-                    className="rounded-lg"
-                  />
-                </div>
-              </motion.div>
-            </div>
-          </div>
-
-          <div>
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8 }}
-              className="mb-8"
+        <div className="faq-reveal flex justify-center gap-2 mb-10 flex-wrap">
+          {faqCategories.map(cat => (
+            <button 
+              key={cat.id}
+              onClick={() => handleCategoryChange(cat.id)}
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm transition-all ${
+                activeCategory === cat.id 
+                  ? 'bg-[#64189D] text-black font-semibold' 
+                  : 'bg-[#2a2a2a] text-[#999] hover:bg-[#333] hover:text-white'
+              }`}
             >
-              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-4 orbitron-font">
-                {t('faq.title').split(' ').slice(0, -1).join(' ')} <span className="icon-text-primary relative">
-                  {t('faq.title').split(' ').slice(-1)[0]}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 1729 149"
-                    className="absolute left-0 w-full text-icon-text-primary"
-                  >
-                    <path
-                      d="M1689.89 26.59a4479.17 4479.17 0 0 0-89.64-7.41C1354.1.45 1106.56-5.76 859.92 5.93c-227.31-4.25-454.79 8.96-681.36 27.95C121.94 38.9 65.1 40.2 8.38 42.12c-16.57 2.86-5.23 26.39 5.6 14.46 160.76-1.27 331.82-27.38 620.54-34.8A4574.9 4574.9 0 0 0 498.9 36.57C376.43 52.24 253.01 65.21 132.88 94.51c-36.16 8.94-71.67 20.31-106.69 32.95-7.14 4.4-27.74 3.63-24.98 15.62 1.99 7.19 13.63 7.05 18.04 2.59 143.67-54.58 297.49-70.64 448.88-90.24 129.01-16.82 258.61-28.01 388.46-34.27 285.02 6.07 570.13 38.15 848.22 100.65 3.84 1.09 8.24-1.32 9.23-5.24 1.98-7.31-5.66-9.96-11.42-10.6-48.05-10.76-96.18-21.26-144.56-30.43-160.68-28.2-322.86-46.78-485.4-60.19l-2.34-.16c161.55-1.33 323.21 4.35 484.31 15.71 37.11 2.65 125.06 8.85 164.97 13.96a7.58 7.58 0 0 0 8.45-6.41c.94-13.18-23.48-8.77-38.14-11.86Z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                </span>
-              </h2>
-              <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300">
-                {t('faq.subtitle')}
-              </p>
-            </motion.div>
+              {cat.icon}
+              {cat.label}
+            </button>
+          ))}
+        </div>
 
-            <div className="space-y-4">
-              {faqs.map((faq, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.6, delay: index * 0.2 }}
-                  className="bg-white dark:bg-gray-900/5 backdrop-blur-sm border border-secondary rounded-md overflow-hidden hover:bg-gray-50 dark:hover:bg-transparent hover:border-secondary dark:hover:border-secondary hover:hover-gradient dark:hover:hover-gradient hover:text-icon-text-primary dark:hover:text-icon-text-primary transition-all duration-300"
+        <div className="space-y-2 faq-reveal">
+          {currentFaqs.map((faq, idx) => {
+            const isOpen = openFaqIndex === idx;
+            return (
+              <div key={idx} className={`rounded-xl transition-colors ${isOpen ? 'bg-[#242424]' : 'bg-[#1e1e1e] hover:bg-[#242424]'}`}>
+                <button 
+                  onClick={() => toggleFaq(idx)}
+                  className="w-full px-6 py-5 flex justify-between items-center text-left gap-4"
                 >
-                  <button
-                    onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                    className="w-full px-4 sm:px-3 py-3 sm:py-3 flex items-center text-left gap-2 sm:gap-4"
-                  >
-                    <span className="orbitron-font flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 rounded-md card-primary dark:card-primary flex items-center justify-center icon-text-primary text-sm sm:text-base">
-                      {(index + 1).toString().padStart(2, '0')}
-                    </span>
-                    <span className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white group-hover:text-icon-text-primary dark:group-hover:text-icon-text-primary">{faq.question}</span>
-                    {openIndex === index ? (
-                      <TbChevronDownRight className="w-5 h-5 icon-text-primary dark:icon-text-primary ml-auto" />
-                    ) : (
-                      <TbChevronUpRight className="w-5 h-5 icon-text-primary dark:icon-text-primary ml-auto" />
-                    )}
-                  </button>
-                  <div
-                    className={`px-4 sm:px-6 transition-all duration-300 overflow-hidden ${openIndex === index ? "pb-3 sm:pb-4 pl-[52px] sm:pl-[72px]" : "h-0"
-                      }`}
-                  >
-                    <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">{faq.answer}</p>
+                  <div className="flex items-center gap-3">
+                    <h3 className={`font-semibold ${isOpen ? 'text-white' : 'text-[#ccc]'}`}>{faq.q}</h3>
                   </div>
-                </motion.div>
-              ))}
-            </div>
+                  <div className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center transition-all ${isOpen ? 'bg-[#64189D]' : 'bg-[#2d2e2e]'}`}>
+                    <svg className={`w-3.5 h-3.5 transition-colors ${isOpen ? 'text-black' : 'text-[#888]'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d={isOpen ? "M20 12H4" : "M12 4v16m8-8H4"}></path>
+                    </svg>
+                  </div>
+                </button>
+                <div 
+                  className={`overflow-hidden transition-all duration-300 ease-in-out`}
+                  style={{ maxHeight: isOpen ? '500px' : '0', opacity: isOpen ? 1 : 0 }}
+                >
+                  <p className="text-[#999] text-sm pb-5 px-6 pl-10 leading-relaxed">
+                    {faq.a}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="faq-reveal flex flex-col sm:flex-row items-center justify-center gap-4 mt-12 pt-8 border-t border-white/[0.06]">
+          <a className="inline-flex items-center gap-2.5 bg-[#64189D] hover:bg-[#3A0E5C] text-black font-bold px-6 py-3 rounded-lg transition-colors text-sm" href="/contacto#opciones">
+            <svg viewBox="0 0 512 512" fill="currentColor" className="w-4 h-4">
+              <path d="M214.7 169.5c12.5-6 26.5-9.5 41.3-9.5s28.8 3.5 41.3 9.5L412.8 53.9C369.5 20.3 315.2 0 256 0S142.5 20.3 99.2 53.9l115.5 115.6zm-45.2 127.8c-6-12.5-9.5-26.5-9.5-41.3s3.5-28.8 9.5-41.3L53.9 99.2C20.3 142.5 0 196.8 0 256s20.3 113.5 53.9 156.8l115.6-115.5zM458.1 99.2 342.5 214.7c6 12.5 9.5 26.5 9.5 41.3s-3.5 28.8-9.5 41.3l115.6 115.5C491.7 369.5 512 315.2 512 256s-20.3-113.5-53.9-156.8zM297.3 342.5c-12.5 6-26.5 9.5-41.3 9.5s-28.8-3.5-41.3-9.5L99.2 458.1C142.5 491.7 196.8 512 256 512s113.5-20.3 156.8-53.9L297.3 342.5z" opacity=".4"></path>
+              <path d="M57.4 57.4c-12.5 12.5-12.5 32.8 0 45.3l112 112a96.65 96.65 0 0 1 45.3-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm112 240-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112a96.65 96.65 0 0 1-45.3-45.3zm128 45.3 112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-112-112a96.65 96.65 0 0 1-45.3 45.3zm45.3-128 112-112c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-112 112a96.65 96.65 0 0 1 45.3 45.3z"></path>
+            </svg>
+            Entra en contacto
+          </a>
+          <div className="flex items-center gap-2">
+            <span className="text-white font-bold text-sm">Soporte <span className="text-[#64189D]">24/7/365</span></span>
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="absolute inline-flex h-full w-full rounded-full bg-[#28ca42] opacity-75 animate-ping"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#28ca42]"></span>
+            </span>
           </div>
         </div>
       </div>
-    </div>
-  )
+    </section>
+  );
 }
