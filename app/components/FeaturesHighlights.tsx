@@ -9,13 +9,13 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const games = [
-  { id: 'minecraft', name: 'Minecraft', image: '/holy_assets/assets/images/games/minecraft-cover-widget.png', desc: 'Nuestros planes de Hosting para Servidores de Minecraft comienzan en $4.24, son compatibles con todos los mods y plugins. ¡Comienza tu aventura de Minecraft ahora!' },
-  { id: 'hytale', name: 'Hytale', image: '/holy_assets/assets/images/games/hytale-cover-widget.png', desc: 'Prepárate para Hytale con nuestros servidores optimizados de alto rendimiento.' },
-  { id: 'palworld', name: 'Palworld', image: '/holy_assets/assets/images/games/palworld-cover-widget.webp', desc: 'Crea tu mundo de Palworld con la latencia más baja y la mejor estabilidad del mercado.' },
-  { id: 'rust', name: 'Rust', image: '/holy_assets/assets/images/games/rust-cover-widget.webp', desc: 'Servidores de Rust sin lag, con protección Anti-DDoS para que tu wipe sea perfecto.' },
-  { id: 'ark', name: 'ARK: Survival Evolved', image: '/holy_assets/assets/images/games/ark-cover-widget.png', desc: 'Domina los dinosaurios en ARK con nuestros servidores de alto rendimiento.' },
-  { id: 'terraria', name: 'Terraria', image: '/holy_assets/assets/images/games/terraria-cover-widget.jpg', desc: 'Explora y construye en Terraria con tus amigos sin interrupciones.' },
-  { id: 'zomboid', name: 'Project Zomboid', image: '/holy_assets/assets/images/games/project-zomboid-cover-widget.jpg', desc: 'Sobrevive al apocalipsis zombie en servidores estables y rápidos.' }
+  { id: 'minecraft', name: 'Minecraft', image: '/banners/minecraft-banners.webp', desc: 'Nuestros planes de Hosting para Servidores de Minecraft comienzan en $4.24, son compatibles con todos los mods y plugins. ¡Comienza tu aventura de Minecraft ahora!' },
+  { id: 'hytale', name: 'Hytale', image: '/banners/node.webp', desc: 'Prepárate para Hytale con nuestros servidores optimizados de alto rendimiento.' },
+  { id: 'palworld', name: 'Palworld', image: '/banners/valheim-banner.webp', desc: 'Crea tu mundo de Palworld con la latencia más baja y la mejor estabilidad del mercado.' },
+  { id: 'rust', name: 'Rust', image: '/banners/rust-banner.webp', desc: 'Servidores de Rust sin lag, con protección Anti-DDoS para que tu wipe sea perfecto.' },
+  { id: 'ark', name: 'ARK: Survival Evolved', image: '/banners/ark-banners.webp', desc: 'Domina los dinosaurios en ARK con nuestros servidores de alto rendimiento.' },
+  { id: 'terraria', name: 'Terraria', image: '/banners/cs2-banner.webp', desc: 'Explora y construye en Terraria con tus amigos sin interrupciones.' },
+  { id: 'zomboid', name: 'Project Zomboid', image: '/banners/gmod-banner.webp', desc: 'Sobrevive al apocalipsis zombie en servidores estables y rápidos.' }
 ];
 
 export default function FeaturesHighlights() {

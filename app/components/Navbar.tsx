@@ -86,7 +86,7 @@ export default function Navbar() {
                     
                     <Link href="/project-zomboid" className="flex items-center gap-3 p-3 rounded-lg bg-[#141414] hover:bg-[#1e1e1e] transition-colors">
                       <div className="w-[60px] h-[70px] relative flex-shrink-0 rounded-md overflow-hidden">
-                        <Image alt="Project Zomboid" fill className="object-cover" src="/holy_assets/assets/images/header-project-zomboid.avif" />
+                        <Image alt="Project Zomboid" fill className="object-cover" src="/banners/gmod-banner.webp" />
                       </div>
                       <div className="min-w-0">
                         <div className="text-white font-bold text-sm leading-tight">Project Zomboid</div>
@@ -96,7 +96,7 @@ export default function Navbar() {
 
                     <Link href="/hytale" className="flex items-center gap-3 p-3 rounded-lg bg-[#141414] hover:bg-[#1e1e1e] transition-colors">
                       <div className="w-[60px] h-[70px] relative flex-shrink-0 rounded-md overflow-hidden">
-                        <Image alt="Hytale" fill className="object-cover" src="/holy_assets/assets/images/header-hytale.avif" />
+                        <Image alt="Hytale" fill className="object-cover" src="/banners/node.webp" />
                       </div>
                       <div className="min-w-0">
                         <div className="text-white font-bold text-sm leading-tight">Hytale</div>
@@ -106,7 +106,7 @@ export default function Navbar() {
 
                     <Link href="/terraria" className="flex items-center gap-3 p-3 rounded-lg bg-[#141414] hover:bg-[#1e1e1e] transition-colors">
                       <div className="w-[60px] h-[70px] relative flex-shrink-0 rounded-md overflow-hidden">
-                        <Image alt="Terraria" fill className="object-cover" src="/holy_assets/assets/images/header-terraria.avif" />
+                        <Image alt="Terraria" fill className="object-cover" src="/banners/cs2-banner.webp" />
                       </div>
                       <div className="min-w-0">
                         <div className="text-white font-bold text-sm leading-tight">Terraria</div>
@@ -116,7 +116,7 @@ export default function Navbar() {
 
                     <Link href="/palworld" className="flex items-center gap-3 p-3 rounded-lg bg-[#141414] hover:bg-[#1e1e1e] transition-colors">
                       <div className="w-[60px] h-[70px] relative flex-shrink-0 rounded-md overflow-hidden">
-                        <Image alt="Palworld" fill className="object-cover" src="/holy_assets/assets/images/header-palworld.avif" />
+                        <Image alt="Palworld" fill className="object-cover" src="/banners/valheim-banner.webp" />
                       </div>
                       <div className="min-w-0">
                         <div className="text-white font-bold text-sm leading-tight">Palworld</div>
@@ -126,7 +126,7 @@ export default function Navbar() {
 
                     <Link href="/valheim" className="flex items-center gap-3 p-3 rounded-lg bg-[#141414] hover:bg-[#1e1e1e] transition-colors">
                       <div className="w-[60px] h-[70px] relative flex-shrink-0 rounded-md overflow-hidden">
-                        <Image alt="Valheim" fill className="object-cover" src="/holy_assets/assets/images/header-valheim.avif" />
+                        <Image alt="Valheim" fill className="object-cover" src="/banners/valheim-banner.webp" />
                       </div>
                       <div className="min-w-0">
                         <div className="text-white font-bold text-sm leading-tight">Valheim</div>

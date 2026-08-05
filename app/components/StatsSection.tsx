@@ -11,7 +11,7 @@ const stats = [
   {
     value: '99.995%',
     label: 'SLA Uptime 2026',
-    icon: <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="#C8A800" strokeWidth="1.5"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"></path></svg>
+    icon: <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="#64189D" strokeWidth="1.5"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"></path></svg>
   },
   {
     value: '+200',

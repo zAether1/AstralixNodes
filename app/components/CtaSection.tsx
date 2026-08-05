@@ -28,41 +28,47 @@ export default function CtaSection() {
   return (
     <section 
       ref={container}
-      className="w-full py-16 px-6"
-      style={{
-        background: `radial-gradient(circle at 90.4% 76.7%, #FFDA21 0%, rgba(255,218,33,0) 38%), 
-                     radial-gradient(circle at 72.5% 47.5%, #FFDA21 0%, rgba(255,218,33,0) 27%), 
-                     radial-gradient(circle at 0% 74.2%, rgba(255,218,33,0.99) 0%, rgba(255,218,33,0) 17%), 
-                     radial-gradient(circle at 18.3% 37.5%, #7556AB 0%, rgba(117,86,171,0) 100%), 
-                     radial-gradient(circle at 88.3% 40%, #8015E8 0%, rgba(128,21,232,0) 70%), 
-                     radial-gradient(circle at 48.9% 49.5%, #FFFFFF 0%, rgba(255,255,255,0) 100%)`
-      }}
+      className="w-full py-16 px-6 relative overflow-hidden"
     >
-      <div className="cta-reveal max-w-7xl mx-auto">
+      {/* Dynamic Astralix Background */}
+      <div className="absolute inset-0 opacity-80" style={{
+        background: `radial-gradient(circle at 90.4% 76.7%, rgba(100,24,157,0.4) 0%, rgba(100,24,157,0) 40%), 
+                     radial-gradient(circle at 20.5% 20.5%, rgba(100,24,157,0.3) 0%, rgba(100,24,157,0) 35%), 
+                     radial-gradient(circle at 0% 74.2%, rgba(20,2,40,0.99) 0%, rgba(20,2,40,0) 40%), 
+                     radial-gradient(circle at 50% 50%, rgba(100,24,157,0.15) 0%, rgba(2,2,2,0) 60%)`,
+        backgroundColor: '#05010a'
+      }}></div>
+      
+      {/* Decorative stars/particles could go here, but a subtle glass border adds the premium feel */}
+      <div className="cta-reveal max-w-7xl mx-auto relative z-10 border border-white/5 bg-white/[0.02] rounded-3xl p-8 md:p-12 backdrop-blur-sm shadow-[0_0_30px_rgba(100,24,157,0.1)]">
         <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-8 items-center">
           <div className="space-y-3">
-            <p className="text-sm uppercase tracking-wider text-[#64189D] font-normal">CREA TU SERVIDOR</p>
+            <p className="text-sm uppercase tracking-wider text-[#9d4edd] font-semibold flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#9d4edd] animate-pulse"></span>
+              CREA TU SERVIDOR
+            </p>
             <h2 className="text-3xl md:text-[40px] font-black uppercase text-white leading-tight">
-              ¿LISTO PARA <span className="text-[#FFF000]">COMENZAR</span>?
+              ¿LISTO PARA <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#9d4edd] to-[#e0aaff]">COMENZAR</span>?
             </h2>
-            <p className="text-base text-white/90 leading-relaxed">
-              ¡Comienza hoy y te ofreceremos un <span className="text-[#64189D] font-bold">descuento</span> en tu primera factura con nuestra promoción de nuevos clientes! Disponible por tiempo limitado.
+            <p className="text-base text-white/70 leading-relaxed max-w-2xl">
+              ¡Comienza hoy y te ofreceremos un <span className="text-white font-bold">descuento</span> en tu primera factura con nuestra promoción de nuevos clientes! Disponible por tiempo limitado.
             </p>
           </div>
-          <a className="group flex items-center bg-[#64189D] rounded-lg overflow-hidden hover:brightness-105 transition-all" href="/discounts">
-            <div className="flex items-center gap-3 px-5 py-4">
+          <a className="group flex items-center bg-gradient-to-r from-[#64189D] to-[#3A0E5C] border border-[#9d4edd]/30 rounded-xl overflow-hidden hover:shadow-[0_0_20px_rgba(100,24,157,0.4)] transition-all duration-300 transform hover:-translate-y-1" href="/discounts">
+            <div className="flex items-center gap-3 px-6 py-5">
               <div className="relative">
-                <div className="w-10 h-10 bg-black/15 rounded-lg"></div>
-                <svg className="w-6 h-6 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" fill="none" stroke="black" strokeWidth="2" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"></path>
-                </svg>
+                <div className="w-12 h-12 bg-white/10 rounded-xl backdrop-blur-md flex items-center justify-center border border-white/10 group-hover:bg-white/20 transition-colors">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"></path>
+                  </svg>
+                </div>
               </div>
               <div>
-                <p className="text-xs uppercase tracking-wide text-black/60 font-normal leading-tight">PROMOCIONES</p>
-                <p className="text-lg font-black text-black uppercase leading-tight">CUPONES ACTIVOS</p>
+                <p className="text-[10px] uppercase tracking-widest text-white/60 font-medium leading-tight mb-1">PROMOCIONES</p>
+                <p className="text-lg font-black text-white uppercase leading-tight tracking-wide">CUPONES ACTIVOS</p>
               </div>
             </div>
-            <div className="px-4 py-4 text-3xl font-mono text-black/80 group-hover:translate-x-1 transition-transform">»</div>
+            <div className="px-5 py-5 text-2xl font-mono text-white/50 group-hover:text-white group-hover:translate-x-2 transition-all bg-white/5 border-l border-white/5 h-full flex items-center">»</div>
           </a>
         </div>
       </div>
