@@ -2,12 +2,19 @@
 
 import React, { useEffect } from 'react';
 import Navbar from "./components/template/Navbar";
-import HeroSection from "./components/template/HeroSection";
+import HolySection1 from "./components/holy/HolySection1";
+import HolySection2 from "./components/holy/HolySection2";
+import HolySection3 from "./components/holy/HolySection3";
 import FeaturesSection from "./components/template/FeaturesSection";
-import HolySection7 from "./components/holy/HolySection7";
+import HolySection4 from "./components/holy/HolySection4";
+import HolySection5 from "./components/holy/HolySection5";
+import HolySection6 from "./components/holy/HolySection6";
 import PanelShowcase from "./components/template/PanelShowcase";
-import PricingSection from "./components/template/PricingSection";
+import HolySection7 from "./components/holy/HolySection7";
+import HolySection8 from "./components/holy/HolySection8";
+import HolySection9 from "./components/holy/HolySection9";
 import FAQSection from "./components/template/FAQSection";
+import HolySection10 from "./components/holy/HolySection10";
 import Footer from "./components/template/Footer";
 
 export default function Home() {
@@ -39,14 +46,21 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#180228] transition-colors duration-300">
+    <div className="min-h-screen bg-[#180228] text-white">
       <Navbar />
-      <HeroSection />
+      <HolySection1 />
+      <HolySection2 />
       <FeaturesSection />
-      <HolySection7 />
+      <HolySection3 />
+      <HolySection4 />
+      <HolySection5 />
       <PanelShowcase />
-      <PricingSection />
+      <HolySection6 />
+      <HolySection7 />
+      <HolySection8 />
+      <HolySection9 />
       <FAQSection />
+      <HolySection10 />
       <Footer />
     </div>
   )
