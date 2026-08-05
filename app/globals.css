@@ -330,7 +330,31 @@
   }
 }
 
+/* === AstralixNodes Brand Color Overrides for Holy.gg Components === */
 :root { --holy-primary: #64189D; --holy-secondary: #180228; }
-.text-[#f0df1e], .text-holy, [class*='text-[#f0df1e]'] { color: #64189D !important; }
-.bg-[#f0df1e], .bg-holy, [class*='bg-[#f0df1e]'] { background-color: #64189D !important; }
-.border-[#f0df1e], .border-holy, [class*='border-[#f0df1e]'] { border-color: #64189D !important; }
+
+/* Override Holy.gg yellow accent (#f0df1e) with brand purple */
+.text-\[\#f0df1e\], [class*='text-[#f0df1e]'] { color: #64189D !important; }
+.bg-\[\#f0df1e\], [class*='bg-[#f0df1e]'] { background-color: #64189D !important; }
+.border-\[\#f0df1e\], [class*='border-[#f0df1e]'] { border-color: #64189D !important; }
+
+/* Override Holy.gg dark backgrounds to dark purple */
+[class*='bg-[#020202]'] { background-color: #180228 !important; }
+[class*='bg-[#0a0a0a]'] { background-color: #1a0530 !important; }
+[class*='bg-[#141414]'] { background-color: #1e0735 !important; }
+[class*='bg-[#191919]'] { background-color: #20083a !important; }
+[class*='bg-[#1a1b1b]'] { background-color: #210940 !important; }
+[class*='bg-[#1e1e1e]'] { background-color: #280b45 !important; }
+[class*='bg-[#2d2e2e]'] { background-color: #3a0e5c !important; }
+
+/* Override hover states */
+[class*='hover:bg-[#1e1e1e]']:hover { background-color: #280b45 !important; }
+[class*='hover:bg-[#2d2e2e]']:hover { background-color: #3a0e5c !important; }
+[class*='hover:bg-[#3A0E5C]']:hover { background-color: #4a1270 !important; }
+
+/* Make sure white text stays white */
+.text-white { color: #ffffff !important; }
+
+/* Holy.gg bar fill animations */
+.bar-fill { transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1) !important; }
+

@@ -1,38 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Orbitron, Quicksand } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "./components/template/theme-provider";
-import { LanguageProvider } from "./contexts/LanguageContext";
 import { Analytics } from "@vercel/analytics/next"
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-  display: "swap",
-  preload: true,
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-  display: "swap",
-  preload: false,
-});
-
-const orbitron = Orbitron({
-  variable: "--font-orbitron",
+const poppins = Poppins({
+  variable: "--font-poppins",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800", "900"],
   display: "swap",
   preload: true,
-});
-
-const quicksand = Quicksand({
-  variable: "--font-quicksand",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  display: "swap",
-  preload: false,
 });
 
 export const viewport: Viewport = {
@@ -120,10 +96,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html lang="en" className="dark">
       <head>
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
+        <link rel="stylesheet" href="/holy_assets/_next/static/css/cd25a3f32cac0dda.css" />
+        <link rel="stylesheet" href="/holy_assets/_next/static/css/ce926a5c9bbb91c0.css" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -145,16 +123,9 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} ${orbitron.variable} ${quicksand.variable} antialiased min-h-screen bg-[#180228] text-white transition-colors duration-300`}
-        suppressHydrationWarning
-      >
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          <LanguageProvider>
-            {children}
-            <Analytics />
-          </LanguageProvider>
-        </ThemeProvider>
+      <body className={`${poppins.variable} font-[family-name:var(--font-poppins)] antialiased min-h-screen bg-[#180228] text-white`}>
+        {children}
+        <Analytics />
       </body>
     </html>
   );
