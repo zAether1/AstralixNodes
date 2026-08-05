@@ -108,10 +108,10 @@ export default function FeaturesHighlights() {
             <div className="bg-[#282828]/60 rounded-xl border-2 border-[#282828] p-5 md:p-6 lg:flex-1 lg:flex lg:flex-col lg:justify-center lg:min-h-[30.625rem] w-full">
               
               <div className="relative overflow-hidden rounded-xl py-2.5 select-none">
-                <button onClick={prevGame} aria-label="Juego anterior" className="absolute left-2 top-1/2 -translate-y-1/2 z-50 w-11 h-11 rounded-full bg-black/80 border-2 border-[#64189D]/40 text-white flex items-center justify-center transition-all hover:bg-[#64189D]/90 hover:border-[#64189D] hover:text-black">
+                <button onClick={prevGame} aria-label="Juego anterior" className="absolute left-2 top-1/2 -translate-y-1/2 z-50 w-11 h-11 rounded-full bg-black/80 border-2 border-[#64189D]/40 text-white flex items-center justify-center transition-all hover:bg-[#64189D]/90 hover:border-[#64189D] hover:text-white">
                   ‹
                 </button>
-                <button onClick={nextGame} aria-label="Juego siguiente" className="absolute right-2 top-1/2 -translate-y-1/2 z-50 w-11 h-11 rounded-full bg-black/80 border-2 border-[#64189D]/40 text-white flex items-center justify-center transition-all hover:bg-[#64189D]/90 hover:border-[#64189D] hover:text-black">
+                <button onClick={nextGame} aria-label="Juego siguiente" className="absolute right-2 top-1/2 -translate-y-1/2 z-50 w-11 h-11 rounded-full bg-black/80 border-2 border-[#64189D]/40 text-white flex items-center justify-center transition-all hover:bg-[#64189D]/90 hover:border-[#64189D] hover:text-white">
                   ›
                 </button>
                 
@@ -140,7 +140,7 @@ export default function FeaturesHighlights() {
                 <div className="flex items-center gap-3 mb-4">
                   <h3 className="text-2xl md:text-3xl font-extrabold text-white uppercase tracking-wide">{activeGame.name}</h3>
                   {activeGame.id === 'minecraft' && (
-                    <span className="bg-[#64189D] text-black text-xs font-extrabold uppercase tracking-wide px-3 py-1 rounded-md">POPULAR</span>
+                    <span className="bg-[#64189D] text-white text-xs font-extrabold uppercase tracking-wide px-3 py-1 rounded-md">POPULAR</span>
                   )}
                 </div>
                 <p className="text-sm md:text-base text-[#e0e0e0] leading-relaxed">

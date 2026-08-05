@@ -1,6 +1,5 @@
 'use client';
 import React, { useRef } from 'react';
-import Image from 'next/image';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -88,7 +87,7 @@ export default function LocationsSection() {
                 <div>
                   {loc.places.map((place, i) => (
                     <div key={i} className="flex items-center rounded-lg transition-colors cursor-pointer hover:bg-white/5" style={{ padding: '6px 10px', gap: '10px' }}>
-                      <Image 
+                      <img 
                         alt={place.flag.toUpperCase()} 
                         width={24} 
                         height={17} 
@@ -97,11 +96,11 @@ export default function LocationsSection() {
                       />
                       <span className="text-[#E8E6E6] flex-1 truncate text-[13px]">{place.name}</span>
                       <div className="flex items-center gap-[6px] flex-shrink-0">
-                        <span className="text-[12px] font-mono text-white/50 group-hover:text-white/80 transition-colors">{place.ping}ms</span>
-                        <div className="flex gap-[2px]">
-                          <div className={`w-1 h-2 rounded-full ${Number(place.ping) < 50 ? 'bg-[#28ca42]' : 'bg-[#64189D]'}`}></div>
-                          <div className={`w-1 h-3 rounded-full ${Number(place.ping) < 50 ? 'bg-[#28ca42]' : Number(place.ping) < 100 ? 'bg-[#64189D]' : 'bg-white/10'}`}></div>
-                          <div className={`w-1 h-4 rounded-full ${Number(place.ping) < 50 ? 'bg-[#28ca42]' : 'bg-white/10'}`}></div>
+                        <span className="text-[12px] font-mono text-white/50">{place.ping}ms</span>
+                        <div className="flex items-end gap-[2px]">
+                          <div className={`w-1 h-[6px] rounded-sm ${Number(place.ping) < 150 ? (Number(place.ping) < 50 ? 'bg-[#28ca42]' : 'bg-[#64189D]') : 'bg-white/20'}`}></div>
+                          <div className={`w-1 h-[10px] rounded-sm ${Number(place.ping) < 100 ? (Number(place.ping) < 50 ? 'bg-[#28ca42]' : 'bg-[#64189D]') : 'bg-white/20'}`}></div>
+                          <div className={`w-1 h-[14px] rounded-sm ${Number(place.ping) < 50 ? 'bg-[#28ca42]' : 'bg-white/20'}`}></div>
                         </div>
                       </div>
                     </div>
@@ -111,23 +110,31 @@ export default function LocationsSection() {
             ))}
           </div>
 
-          <div className="loc-reveal relative w-full aspect-[2/1]">
-            <svg viewBox="95.85 62.19 827.61 423.74" className="w-full h-full drop-shadow-[0_0_15px_rgba(100,24,157,0.3)]" preserveAspectRatio="xMidYMid meet">
-              <image x="95.85" y="62.19" width="827.61" height="423.74" href="/holy_assets/assets/images/world-map.svg" opacity="0.7"></image>
-              {/* Note: In a real component we'd map coordinates from the data, but for this reproduction we can just keep the exact SVG positions. */}
+          <div className="loc-reveal relative w-full aspect-[2/1] flex items-center justify-center">
+            <svg viewBox="0 0 1010 510" className="w-full h-full" preserveAspectRatio="xMidYMid meet">
+              <image x="0" y="0" width="1010" height="510" href="/holy_assets/assets/images/world-map.svg" opacity="0.5"></image>
               {[
-                {cx: 274, cy: 175}, {cx: 269, cy: 140}, {cx: 175, cy: 160}, {cx: 269, cy: 165},
-                {cx: 197, cy: 172}, {cx: 230, cy: 192}, {cx: 168, cy: 185}, {cx: 502, cy: 152},
-                {cx: 540, cy: 132}, {cx: 477, cy: 155}, {cx: 346, cy: 391}, {cx: 293, cy: 387},
-                {cx: 865, cy: 368}
+                {cx: 230, cy: 175, label: 'Virginia'},
+                {cx: 220, cy: 140, label: 'Quebec'},
+                {cx: 140, cy: 165, label: 'Oregon'},
+                {cx: 225, cy: 160, label: 'New York'},
+                {cx: 165, cy: 170, label: 'Utah'},
+                {cx: 195, cy: 195, label: 'Texas'},
+                {cx: 130, cy: 180, label: 'California'},
+                {cx: 495, cy: 150, label: 'Alemania'},
+                {cx: 530, cy: 125, label: 'Finlandia'},
+                {cx: 480, cy: 160, label: 'Francia'},
+                {cx: 310, cy: 370, label: 'Argentina'},
+                {cx: 285, cy: 360, label: 'Chile'},
+                {cx: 870, cy: 370, label: 'Australia'}
               ].map((pos, i) => (
                 <g key={i} className="cursor-pointer">
-                  <circle cx={pos.cx} cy={pos.cy} r="10" fill="rgba(100,24,157,0.4)" className="transition-all duration-200">
-                    <animate attributeName="r" values="6;16;6" dur="2.5s" repeatCount="indefinite" begin={`${i * 0.2}s`}></animate>
-                    <animate attributeName="opacity" values="0.6;0;0.6" dur="2.5s" repeatCount="indefinite" begin={`${i * 0.2}s`}></animate>
+                  <circle cx={pos.cx} cy={pos.cy} r="12" fill="rgba(100,24,157,0.25)">
+                    <animate attributeName="r" values="8;18;8" dur="3s" repeatCount="indefinite" begin={`${i * 0.2}s`}></animate>
+                    <animate attributeName="opacity" values="0.5;0;0.5" dur="3s" repeatCount="indefinite" begin={`${i * 0.2}s`}></animate>
                   </circle>
-                  <circle cx={pos.cx} cy={pos.cy} r="4" fill="#64189D" className="transition-all duration-200 shadow-[0_0_10px_#64189D]"></circle>
-                  <circle cx={pos.cx} cy={pos.cy} r="1.5" fill="#fff" className="transition-all duration-200"></circle>
+                  <circle cx={pos.cx} cy={pos.cy} r="4" fill="#64189D"></circle>
+                  <circle cx={pos.cx} cy={pos.cy} r="1.5" fill="#fff"></circle>
                 </g>
               ))}
             </svg>

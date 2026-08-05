@@ -132,14 +132,14 @@ export default function HeroSection() {
             <div className="flex flex-col sm:flex-row items-center gap-6 pt-2">
               <Link href="/minecraft" className="hero-btn opacity-0 group flex items-center bg-[#64189D] hover:bg-[#3A0E5C] transition-all duration-300 rounded-md overflow-hidden">
                 <span className="flex items-center justify-center bg-black/10 px-4 self-stretch">
-                  <svg className="w-6 h-6 text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M2 20h20v-4H2m2-2h16V6H4m4-4h8v2H8z"></path></svg>
+                  <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M2 20h20v-4H2m2-2h16V6H4m4-4h8v2H8z"></path></svg>
                 </span>
                 <span className="px-5 py-3 text-center sm:text-left">
-                  <span className="block text-black text-xs font-medium">Adquirir un</span>
-                  <span className="block text-black font-black text-sm uppercase tracking-wide">SERVIDOR DE MINECRAFT</span>
+                  <span className="block text-white/80 text-xs font-medium">Adquirir un</span>
+                  <span className="block text-white font-black text-sm uppercase tracking-wide">SERVIDOR DE MINECRAFT</span>
                 </span>
                 <span className="flex items-center justify-center px-4 self-stretch">
-                  <svg className="w-5 h-5 text-black group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M9 5l7 7-7 7"></path></svg>
+                  <svg className="w-5 h-5 text-white group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M9 5l7 7-7 7"></path></svg>
                 </span>
               </Link>
               

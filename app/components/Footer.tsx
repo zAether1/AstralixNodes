@@ -106,7 +106,7 @@ export default function Footer() {
               </ul>
             </div>
             
-            <button className="hidden md:flex absolute -right-2 bottom-0 w-10 h-10 rounded-full border-2 border-[#64189D] items-center justify-center text-[#64189D] hover:bg-[#64189D] hover:text-black transition-colors" aria-label="Volver arriba">
+            <button className="hidden md:flex absolute -right-2 bottom-0 w-10 h-10 rounded-full border-2 border-[#64189D] items-center justify-center text-[#64189D] hover:bg-[#64189D] hover:text-white transition-colors" aria-label="Volver arriba">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7"></path></svg>
             </button>
           </div>

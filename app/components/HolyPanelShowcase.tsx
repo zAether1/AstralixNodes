@@ -134,7 +134,7 @@ export default function HolyPanelShowcase() {
             <span className="text-white">UN </span>
             <span className="text-[#64189D]">PANEL</span>
             <span className="text-white"> QUE SIMPLEMENTE </span>
-            <span className="inline-block bg-[#64189D] text-black px-5 py-0.5 rounded-md ml-1">FUNCIONA</span>
+            <span className="inline-block bg-[#64189D] text-white px-5 py-0.5 rounded-md ml-1">FUNCIONA</span>
           </h2>
         </div>
         

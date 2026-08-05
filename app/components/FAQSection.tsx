@@ -113,7 +113,7 @@ export default function FaqSection() {
               onClick={() => handleCategoryChange(cat.id)}
               className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm transition-all ${
                 activeCategory === cat.id 
-                  ? 'bg-[#64189D] text-black font-semibold' 
+                  ? 'bg-[#64189D] text-white font-semibold' 
                   : 'bg-[#2a2a2a] text-[#999] hover:bg-[#333] hover:text-white'
               }`}
             >
@@ -136,7 +136,7 @@ export default function FaqSection() {
                     <h3 className={`font-semibold ${isOpen ? 'text-white' : 'text-[#ccc]'}`}>{faq.q}</h3>
                   </div>
                   <div className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center transition-all ${isOpen ? 'bg-[#64189D]' : 'bg-[#2d2e2e]'}`}>
-                    <svg className={`w-3.5 h-3.5 transition-colors ${isOpen ? 'text-black' : 'text-[#888]'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                    <svg className={`w-3.5 h-3.5 transition-colors ${isOpen ? 'text-white' : 'text-[#888]'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
                       <path strokeLinecap="round" strokeLinejoin="round" d={isOpen ? "M20 12H4" : "M12 4v16m8-8H4"}></path>
                     </svg>
                   </div>
@@ -155,7 +155,7 @@ export default function FaqSection() {
         </div>
 
         <div className="faq-reveal flex flex-col sm:flex-row items-center justify-center gap-4 mt-12 pt-8 border-t border-white/[0.06]">
-          <a className="inline-flex items-center gap-2.5 bg-[#64189D] hover:bg-[#3A0E5C] text-black font-bold px-6 py-3 rounded-lg transition-colors text-sm" href="/contacto#opciones">
+          <a className="inline-flex items-center gap-2.5 bg-[#64189D] hover:bg-[#3A0E5C] text-white font-bold px-6 py-3 rounded-lg transition-colors text-sm" href="/contacto#opciones">
             <svg viewBox="0 0 512 512" fill="currentColor" className="w-4 h-4">
               <path d="M214.7 169.5c12.5-6 26.5-9.5 41.3-9.5s28.8 3.5 41.3 9.5L412.8 53.9C369.5 20.3 315.2 0 256 0S142.5 20.3 99.2 53.9l115.5 115.6zm-45.2 127.8c-6-12.5-9.5-26.5-9.5-41.3s3.5-28.8 9.5-41.3L53.9 99.2C20.3 142.5 0 196.8 0 256s20.3 113.5 53.9 156.8l115.6-115.5zM458.1 99.2 342.5 214.7c6 12.5 9.5 26.5 9.5 41.3s-3.5 28.8-9.5 41.3l115.6 115.5C491.7 369.5 512 315.2 512 256s-20.3-113.5-53.9-156.8zM297.3 342.5c-12.5 6-26.5 9.5-41.3 9.5s-28.8-3.5-41.3-9.5L99.2 458.1C142.5 491.7 196.8 512 256 512s113.5-20.3 156.8-53.9L297.3 342.5z" opacity=".4"></path>
               <path d="M57.4 57.4c-12.5 12.5-12.5 32.8 0 45.3l112 112a96.65 96.65 0 0 1 45.3-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm112 240-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112a96.65 96.65 0 0 1-45.3-45.3zm128 45.3 112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-112-112a96.65 96.65 0 0 1-45.3 45.3zm45.3-128 112-112c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-112 112a96.65 96.65 0 0 1 45.3 45.3z"></path>
