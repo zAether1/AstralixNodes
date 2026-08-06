@@ -21,50 +21,42 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://astralixnodes.com"),
+  applicationName: "AstralixNodes",
   title: {
     default: "AstralixNodes - Premium Game Hosting & VPS Servers",
     template: "%s | AstralixNodes"
   },
-  description: "AstralixNodes offers premium game server hosting, VPS & dedicated servers. High-performance infrastructure with 99.9% uptime, DDoS protection & 24/7 support. Start your server today.",
+  description: "AstralixNodes ofrece game hosting premium, VPS y servidores dedicados. Infraestructura de alto rendimiento con 99.9% de uptime, protección DDoS y soporte 24/7.",
   keywords: [
     "game hosting",
     "minecraft hosting",
-    "game server hosting",
-    "VPS hosting",
-    "dedicated servers",
+    "servidores dedicados",
+    "vps hosting",
     "cloud servers",
-    "gaming servers",
     "AstralixNodes",
-    "low latency hosting",
-    "DDoS protection",
-    "24/7 support",
-    "modded game hosting",
+    "protección ddos",
+    "hosting latinoamerica",
+    "hosting de juegos"
   ],
-  authors: [{ name: "AstralixNodes" }],
+  authors: [{ name: "AstralixNodes", url: "https://astralixnodes.com" }],
   creator: "AstralixNodes",
   publisher: "AstralixNodes",
   category: "Game Hosting & Server Solutions",
   openGraph: {
     type: "website",
-    locale: "en_US",
+    locale: "es_ES",
     url: "https://astralixnodes.com",
     siteName: "AstralixNodes",
-    title: "AstralixNodes - Premium Game Hosting & VPS Servers",
-    description: "Premium game hosting, VPS, and dedicated server solutions. High-performance infrastructure for gaming communities with DDoS protection.",
-    images: [
-      {
-        url: "/icons/AstralixNodes.png",
-        width: 512,
-        height: 512,
-        alt: "AstralixNodes Logo",
-      }
-    ]
+    title: "AstralixNodes - Infraestructura Premium",
+    description: "Game hosting y servidores VPS de alto rendimiento. Experimenta la latencia ultrabaja, protección DDoS y hardware NVMe para tu comunidad.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "AstralixNodes - Premium Game Hosting & VPS Servers",
-    description: "Premium game hosting and server solutions. High-performance infrastructure for gaming communities with DDoS protection and 24/7 support.",
-    images: ["/icons/AstralixNodes.png"]
+    site: "@astralixnodes",
+    creator: "@astralixnodes",
+    title: "AstralixNodes - Infraestructura Premium",
+    description: "Game hosting y servidores VPS de alto rendimiento con protección DDoS y hardware NVMe.",
   },
   robots: {
     index: true,
