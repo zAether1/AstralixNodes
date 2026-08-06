@@ -21,7 +21,7 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://astralixnodes.com"),
+  metadataBase: new URL("https://astralixnodes.net"),
   applicationName: "AstralixNodes",
   title: {
     default: "AstralixNodes - Premium Game Hosting & VPS Servers",
@@ -39,14 +39,20 @@ export const metadata: Metadata = {
     "hosting latinoamerica",
     "hosting de juegos"
   ],
-  authors: [{ name: "AstralixNodes", url: "https://astralixnodes.com" }],
+  authors: [{ name: "AstralixNodes", url: "https://astralixnodes.net" }],
   creator: "AstralixNodes",
   publisher: "AstralixNodes",
   category: "Game Hosting & Server Solutions",
+  formatDetection: {
+    telephone: false,
+  },
+  appleWebApp: {
+    capable: true,
+  },
   openGraph: {
     type: "website",
     locale: "es_ES",
-    url: "https://astralixnodes.com",
+    url: "https://astralixnodes.net",
     siteName: "AstralixNodes",
     title: "AstralixNodes - Infraestructura Premium",
     description: "Game hosting y servidores VPS de alto rendimiento. Experimenta la latencia ultrabaja, protección DDoS y hardware NVMe para tu comunidad.",
@@ -80,7 +86,7 @@ export const metadata: Metadata = {
     shortcut: "/icons/AstralixNodes.png"
   },
   alternates: {
-    canonical: "https://astralixnodes.com"
+    canonical: "https://astralixnodes.net"
   },
 };
 
@@ -91,9 +97,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <head>
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="mobile-web-app-capable" content="yes" />
+      <body className={`${poppins.variable} antialiased bg-[#020202] text-white`}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -101,8 +105,8 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Organization",
               "name": "AstralixNodes",
-              "url": "https://astralixnodes.com",
-              "logo": "https://astralixnodes.com/icons/AstralixNodes.png",
+              "url": "https://astralixnodes.net",
+              "logo": "https://astralixnodes.net/icons/AstralixNodes.png",
               "description": "Premium game hosting, VPS, and dedicated server solutions for gaming communities",
               "serviceType": ["Game Server Hosting", "VPS Hosting", "Dedicated Servers"],
               "areaServed": "Worldwide",
@@ -113,8 +117,6 @@ export default function RootLayout({
             })
           }}
         />
-      </head>
-      <body className={`${poppins.variable} antialiased bg-[#020202] text-white`}>
         <CurrencyProvider>
           <LanguageProvider>
             {children}
