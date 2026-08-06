@@ -88,7 +88,7 @@ export default function Navbar() {
                     
                     <Link href="/project-zomboid" className="flex items-center gap-3 p-3 rounded-lg bg-[#141414] hover:bg-[#1e1e1e] transition-colors">
                       <div className="w-[60px] h-[70px] relative flex-shrink-0 rounded-md overflow-hidden">
-                        <Image alt="Project Zomboid" fill className="object-cover" src="/assets/images/header-project-zomboid.avif" />
+                        <Image alt="Project Zomboid" fill className="object-cover" src="/assets/games/project-zomboid.jpeg" />
                       </div>
                       <div className="min-w-0">
                         <div className="text-white font-bold text-sm leading-tight">Project Zomboid</div>
@@ -97,7 +97,9 @@ export default function Navbar() {
                     </Link>
 
                     <Link href="/palworld" className="flex items-center gap-3 p-3 rounded-lg bg-[#141414] hover:bg-[#1e1e1e] transition-colors">
-                      <div className="w-[60px] h-[70px] relative flex-shrink-0 rounded-md overflow-hidden bg-[#242424]" />
+                      <div className="w-[60px] h-[70px] relative flex-shrink-0 rounded-md overflow-hidden">
+                        <Image alt="Palworld" fill className="object-cover" src="/assets/games/palworld.jpeg" />
+                      </div>
                       <div className="min-w-0">
                         <div className="text-white font-bold text-sm leading-tight">Palworld</div>
                         <div className="text-[#999] text-xs mt-1">Comenzando en <span className="text-white font-bold">{formatPrice(8.50)}</span></div>
@@ -106,7 +108,7 @@ export default function Navbar() {
 
                     <Link href="/hytale" className="flex items-center gap-3 p-3 rounded-lg bg-[#141414] hover:bg-[#1e1e1e] transition-colors">
                       <div className="w-[60px] h-[70px] relative flex-shrink-0 rounded-md overflow-hidden">
-                        <Image alt="Hytale" fill className="object-cover" src="/assets/images/header-hytale.avif" />
+                        <Image alt="Hytale" fill className="object-cover" src="/assets/games/hytale-cover.png" />
                       </div>
                       <div className="min-w-0">
                         <div className="text-white font-bold text-sm leading-tight">Hytale</div>
@@ -115,7 +117,9 @@ export default function Navbar() {
                     </Link>
 
                     <Link href="/valheim" className="flex items-center gap-3 p-3 rounded-lg bg-[#141414] hover:bg-[#1e1e1e] transition-colors">
-                      <div className="w-[60px] h-[70px] relative flex-shrink-0 rounded-md overflow-hidden bg-[#242424]" />
+                      <div className="w-[60px] h-[70px] relative flex-shrink-0 rounded-md overflow-hidden">
+                        <Image alt="Valheim" fill className="object-cover" src="/assets/games/valheim.png" />
+                      </div>
                       <div className="min-w-0">
                         <div className="text-white font-bold text-sm leading-tight">Valheim</div>
                         <div className="text-[#999] text-xs mt-1">Comenzando en <span className="text-white font-bold">{formatPrice(5.50)}</span></div>
@@ -123,7 +127,9 @@ export default function Navbar() {
                     </Link>
 
                     <Link href="/terraria" className="flex items-center gap-3 p-3 rounded-lg bg-[#141414] hover:bg-[#1e1e1e] transition-colors">
-                      <div className="w-[60px] h-[70px] relative flex-shrink-0 rounded-md overflow-hidden bg-[#242424]" />
+                      <div className="w-[60px] h-[70px] relative flex-shrink-0 rounded-md overflow-hidden">
+                        <Image alt="Terraria" fill className="object-cover" src="/assets/games/terraria.jpeg" />
+                      </div>
                       <div className="min-w-0">
                         <div className="text-white font-bold text-sm leading-tight">Terraria</div>
                         <div className="text-[#999] text-xs mt-1">Comenzando en <span className="text-white font-bold">{formatPrice(3.50)}</span></div>

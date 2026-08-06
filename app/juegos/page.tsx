@@ -10,15 +10,14 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const games = [
-  { id: 'minecraft', name: 'Minecraft', price: '4,24', originalPrice: '4,99', image: '/assets/games/minecraft.jpg', tag: 'Más popular' },
-  { id: 'project-zomboid', name: 'Project Zomboid', price: '4,25', originalPrice: '5,00', image: '/assets/games/project-zomboid.jpg', tag: 'Supervivencia' },
-  { id: 'palworld', name: 'Palworld', price: '8,50', originalPrice: '10,00', image: '/assets/games/palworld.jpg', tag: 'Trending' },
-  { id: 'hytale', name: 'Hytale', price: '9,69', originalPrice: '11,40', image: '/assets/games/hytale.jpg', tag: 'Partner oficial' },
-  { id: 'valheim', name: 'Valheim', price: '3,19', originalPrice: '3,75', image: '/assets/games/valheim.jpg', tag: 'Sandbox' },
-  { id: 'terraria', name: 'Terraria', price: '2,13', originalPrice: '2,50', image: '/assets/games/terraria.jpg', tag: 'Sandbox' },
-  { id: 'rust', name: 'Rust', price: '8,50', originalPrice: '10,00', image: '/assets/games/rust.jpg', tag: 'Supervivencia' },
-  { id: 'ark', name: 'ARK: Survival Evolved', price: '10,63', originalPrice: '12,50', image: '/assets/games/ark-survival-evolved.jpg', tag: 'Supervivencia' },
-  { id: 'cs-source', name: 'Counter Strike Source', price: '2,13', originalPrice: '2,50', image: '/assets/games/counter-strike-source.jpg', tag: 'FPS' }
+  { id: 'minecraft', name: 'Minecraft', price: '4,24', originalPrice: '4,99', image: '/assets/games/minecraft.jpeg', tag: 'Más popular' },
+  { id: 'project-zomboid', name: 'Project Zomboid', price: '4,25', originalPrice: '5,00', image: '/assets/games/project-zomboid.jpeg', tag: 'Supervivencia' },
+  { id: 'palworld', name: 'Palworld', price: '8,50', originalPrice: '10,00', image: '/assets/games/palworld.jpeg', tag: 'Trending' },
+  { id: 'hytale', name: 'Hytale', price: '9,69', originalPrice: '11,40', image: '/assets/games/hytale-cover.png', tag: 'Partner oficial' },
+  { id: 'valheim', name: 'Valheim', price: '3,19', originalPrice: '3,75', image: '/assets/games/valheim.png', tag: 'Sandbox' },
+  { id: 'terraria', name: 'Terraria', price: '2,13', originalPrice: '2,50', image: '/assets/games/terraria.jpeg', tag: 'Sandbox' },
+  { id: 'rust', name: 'Rust', price: '8,50', originalPrice: '10,00', image: '/assets/games/rust.jpeg', tag: 'Supervivencia' },
+  { id: 'ark', name: 'ARK: Survival Evolved', price: '10,63', originalPrice: '12,50', image: '/assets/games/ark-survival-evolved.jpeg', tag: 'Supervivencia' }
 ];
 
 export default function JuegosPage() {

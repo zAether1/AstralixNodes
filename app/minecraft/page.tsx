@@ -33,11 +33,11 @@ export default function MinecraftPage() {
       <Navbar />
       <main>
         {/* HERO */}
-        <section className="relative bg-[#180228] pt-32 pb-20 overflow-hidden">
+         <section className="relative bg-[#180228] pt-32 pb-20 overflow-hidden">
           <div className="absolute inset-0 z-0">
              <div className="absolute inset-0 bg-[#020202]/80 z-10 mix-blend-multiply"></div>
              {/* Using standard Next image approach or just CSS for background */}
-             <div className="absolute inset-0 bg-[url('/assets/images/minecraft-custom-hero.jpeg')] bg-cover bg-center opacity-30"></div>
+             <div className="absolute inset-0 bg-[url('/assets/games/minecraft-custom-hero.jpeg')] bg-cover bg-center opacity-30"></div>
           </div>
           
           <div className="relative z-10 max-w-7xl mx-auto px-6">
@@ -45,7 +45,7 @@ export default function MinecraftPage() {
                <div className="hero-text shrink-0 w-64 rounded-xl overflow-hidden border border-[#64189D]/20 shadow-[0_0_30px_rgba(100,24,157,0.3)] bg-[#180228]">
                   <div className="bg-[#64189D] text-white text-xs font-black uppercase text-center py-2 tracking-widest">Servidor Estrella</div>
                   <div className="aspect-[3/4] relative bg-black">
-                     <Image src="/assets/images/minecraft-custom-cover.jpeg" alt="Minecraft" fill className="object-cover" />
+                     <Image src="/assets/games/minecraft-custom-cover.jpeg" alt="Minecraft" fill className="object-cover" />
                   </div>
                </div>
                
