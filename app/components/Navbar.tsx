@@ -20,16 +20,18 @@ export default function Navbar() {
   return (
     <header className={`sticky z-40 top-0 transition-colors duration-300 ${isScrolled ? 'bg-[#020202]/95 backdrop-blur-md border-b border-white/5' : 'bg-[#020202]'}`}>
       <div className="mx-auto max-w-[87.5rem] px-6">
-        <nav className="flex items-center justify-between h-20">
+        <nav className="flex items-center justify-between h-24 md:h-28">
           
           {/* Logo */}
-          <Link href="/" className="flex items-center">
+          <Link href="/" className="flex items-center group relative pl-2 md:pl-4">
+            <div className="absolute inset-0 bg-[#64189D]/20 blur-[25px] rounded-full opacity-50 group-hover:opacity-100 group-hover:bg-[#64189D]/30 transition-all duration-500 pointer-events-none"></div>
             <Image 
               alt="AstralixNodes" 
-              width={66} 
-              height={62} 
+              width={140} 
+              height={130} 
               src="/icons/AstralixNodes.png" 
-              className="w-auto h-12"
+              priority
+              className="w-auto h-[4.5rem] md:h-24 lg:h-[6.5rem] object-contain transition-all duration-500 group-hover:scale-105 relative z-10 drop-shadow-[0_0_15px_rgba(100,24,157,0.3)] group-hover:drop-shadow-[0_0_25px_rgba(100,24,157,0.7)]"
             />
           </Link>
 
