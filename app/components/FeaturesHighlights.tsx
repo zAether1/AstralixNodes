@@ -10,12 +10,12 @@ import { useCurrency } from '../contexts/CurrencyContext';
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const games = [
-  { id: 'minecraft', name: 'Minecraft', image: '/assets/images/hero-minecraft.jpeg', desc: 'Nuestros planes de Hosting para Servidores de Minecraft comienzan en un precio inigualable, son compatibles con todos los mods y plugins. ¡Comienza tu aventura de Minecraft ahora!' },
-  { id: 'project-zomboid', name: 'Project Zomboid', image: '/assets/images/header-project-zomboid.jpeg', desc: 'Sobrevive al apocalipsis zombie en servidores estables y rápidos con máxima capacidad de RAM.' },
-  { id: 'palworld', name: 'Palworld', image: '/assets/images/header-palworld.jpeg', desc: 'Crea tu mundo de Palworld con la latencia más baja y la mejor estabilidad del mercado.' },
-  { id: 'hytale', name: 'Hytale', image: '/assets/images/header-hytale.png', desc: 'Prepárate para Hytale con nuestros servidores optimizados de alto rendimiento.' },
-  { id: 'terraria', name: 'Terraria', image: '/assets/images/header-terraria.jpeg', desc: 'Explora y construye en Terraria con tus amigos sin interrupciones ni lag.' },
-  { id: 'valheim', name: 'Valheim', image: '/assets/images/header-valheim.png', desc: 'Conquista a las deidades nórdicas en Valheim con un servidor siempre activo.' }
+  { id: 'minecraft', name: 'Minecraft', image: '/assets/images/minecraft.jpeg', desc: 'Nuestros planes de Hosting para Servidores de Minecraft comienzan en un precio inigualable, son compatibles con todos los mods y plugins. ¡Comienza tu aventura de Minecraft ahora!' },
+  { id: 'project-zomboid', name: 'Project Zomboid', image: '/assets/images/project-zomboid.jpg', desc: 'Sobrevive al apocalipsis zombie en servidores estables y rápidos con máxima capacidad de RAM.' },
+  { id: 'palworld', name: 'Palworld', image: '/assets/images/palworld.jpeg', desc: 'Crea tu mundo de Palworld con la latencia más baja y la mejor estabilidad del mercado.' },
+  { id: 'hytale', name: 'Hytale', image: '/assets/images/hytale.jpeg', desc: 'Prepárate para Hytale con nuestros servidores optimizados de alto rendimiento.' },
+  { id: 'terraria', name: 'Terraria', image: '/assets/images/terraria-8.jpeg', desc: 'Explora y construye en Terraria con tus amigos sin interrupciones ni lag.' },
+  { id: 'valheim', name: 'Valheim', image: '/assets/images/valheim.jpeg', desc: 'Conquista a las deidades nórdicas en Valheim con un servidor siempre activo.' }
 ];
 
 export default function FeaturesHighlights() {

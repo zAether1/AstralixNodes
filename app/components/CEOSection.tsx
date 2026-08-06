@@ -36,8 +36,13 @@ export default function CEOSection() {
           <h2 className="text-4xl md:text-5xl font-black text-white mb-2 leading-tight">Carlos Jahir</h2>
           <p className="text-white/80 text-xl font-medium mb-6 italic">@_zAether</p>
           
-          <blockquote className="text-white/90 text-lg md:text-xl leading-relaxed italic border-l-4 border-[#180228] pl-6 py-2">
-            "Construimos AstralixNodes con un solo objetivo en mente: brindarte el rendimiento puro y la estabilidad que todo creador merece. Sin compromisos, sin ataduras, solo potencia y un soporte que sí entiende tus problemas porque hemos estado allí."
+          <div className="text-white/90 text-sm md:text-base leading-relaxed mb-6 space-y-4 text-left">
+            <p>El camino comenzó en 2023 con la visión de <strong>ZerithNodes</strong>. Aunque el proyecto fue pausado temporalmente, esa pausa nos permitió reinventarnos, escalar nuestra tecnología y planear algo mucho más grande.</p>
+            <p>En 2026 regresamos con una identidad renovada, infraestructura de última generación y un enfoque claro hacia Latinoamérica y Europa. Así nació <strong>AstralixNodes</strong>.</p>
+          </div>
+
+          <blockquote className="text-white text-lg md:text-xl font-medium italic border-l-4 border-[#180228] pl-6 py-2 text-left">
+            "Construimos AstralixNodes con un solo objetivo en mente: brindarte el rendimiento puro y la estabilidad que todo creador merece. Sin compromisos, sin ataduras, solo potencia y un soporte que sí entiende tus problemas."
           </blockquote>
         </div>
       </div>

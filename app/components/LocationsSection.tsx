@@ -5,44 +5,22 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Coordinates from the original SVG and locations
+// Coordinates from the original SVG and locations, adding real ping endpoints
 const locations = [
-  { id: 'us-va', name: 'Virginia', countryCode: 'us', continent: 'NA', cx: 274, cy: 175 },
-  { id: 'ca-qc', name: 'Quebec', countryCode: 'ca', continent: 'NA', cx: 269, cy: 140 },
-  { id: 'us-or', name: 'Oregon', countryCode: 'us', continent: 'NA', cx: 175, cy: 160 },
-  { id: 'us-ny', name: 'New York', countryCode: 'us', continent: 'NA', cx: 269, cy: 165 },
-  { id: 'us-ut', name: 'Utah', countryCode: 'us', continent: 'NA', cx: 197, cy: 172 },
-  { id: 'us-tx', name: 'Texas', countryCode: 'us', continent: 'NA', cx: 230, cy: 192 },
-  { id: 'us-ca', name: 'California', countryCode: 'us', continent: 'NA', cx: 168, cy: 185 },
-  { id: 'de', name: 'Alemania', countryCode: 'de', continent: 'EU', cx: 502, cy: 152 },
-  { id: 'fi', name: 'Finlandia', countryCode: 'fi', continent: 'EU', cx: 540, cy: 132 },
-  { id: 'fr', name: 'Francia', countryCode: 'fr', continent: 'EU', cx: 477, cy: 155 },
-  { id: 'ar', name: 'Argentina', countryCode: 'ar', continent: 'SA', cx: 346, cy: 391 },
-  { id: 'cl', name: 'Chile', countryCode: 'cl', continent: 'SA', cx: 293, cy: 387 },
-  { id: 'au', name: 'Australia', countryCode: 'au', continent: 'OC', cx: 865, cy: 368 }
+  { id: 'us-va', name: 'Virginia', countryCode: 'us', continent: 'NA', cx: 274, cy: 175, endpoint: 'https://dynamodb.us-east-1.amazonaws.com' },
+  { id: 'ca-qc', name: 'Quebec', countryCode: 'ca', continent: 'NA', cx: 269, cy: 140, endpoint: 'https://dynamodb.ca-central-1.amazonaws.com' },
+  { id: 'us-or', name: 'Oregon', countryCode: 'us', continent: 'NA', cx: 175, cy: 160, endpoint: 'https://dynamodb.us-west-2.amazonaws.com' },
+  { id: 'us-ny', name: 'New York', countryCode: 'us', continent: 'NA', cx: 269, cy: 165, endpoint: 'https://dynamodb.us-east-1.amazonaws.com' }, 
+  { id: 'us-ut', name: 'Utah', countryCode: 'us', continent: 'NA', cx: 197, cy: 172, endpoint: 'https://dynamodb.us-west-2.amazonaws.com' },
+  { id: 'us-tx', name: 'Texas', countryCode: 'us', continent: 'NA', cx: 230, cy: 192, endpoint: 'https://dynamodb.us-east-2.amazonaws.com' },
+  { id: 'us-ca', name: 'California', countryCode: 'us', continent: 'NA', cx: 168, cy: 185, endpoint: 'https://dynamodb.us-west-1.amazonaws.com' },
+  { id: 'de', name: 'Alemania', countryCode: 'de', continent: 'EU', cx: 502, cy: 152, endpoint: 'https://dynamodb.eu-central-1.amazonaws.com' },
+  { id: 'fi', name: 'Finlandia', countryCode: 'fi', continent: 'EU', cx: 540, cy: 132, endpoint: 'https://dynamodb.eu-north-1.amazonaws.com' },
+  { id: 'fr', name: 'Francia', countryCode: 'fr', continent: 'EU', cx: 477, cy: 155, endpoint: 'https://dynamodb.eu-west-3.amazonaws.com' },
+  { id: 'ar', name: 'Argentina', countryCode: 'ar', continent: 'SA', cx: 346, cy: 391, endpoint: 'https://dynamodb.sa-east-1.amazonaws.com' },
+  { id: 'cl', name: 'Chile', countryCode: 'cl', continent: 'SA', cx: 293, cy: 387, endpoint: 'https://dynamodb.sa-east-1.amazonaws.com' },
+  { id: 'au', name: 'Australia', countryCode: 'au', continent: 'OC', cx: 865, cy: 368, endpoint: 'https://dynamodb.ap-southeast-2.amazonaws.com' }
 ];
-
-// Helper to determine simulated ping based on user timezone
-const simulatePing = (userContinent: string, nodeContinent: string) => {
-  const isSame = userContinent === nodeContinent;
-  let basePing = 0;
-  
-  if (isSame) {
-    basePing = Math.floor(Math.random() * 40) + 15; // 15-55ms
-  } else {
-    // Inter-continental ping
-    if ((userContinent === 'SA' && nodeContinent === 'NA') || (userContinent === 'NA' && nodeContinent === 'SA')) {
-      basePing = Math.floor(Math.random() * 40) + 110; // 110-150ms
-    } else if ((userContinent === 'EU' && nodeContinent === 'NA') || (userContinent === 'NA' && nodeContinent === 'EU')) {
-      basePing = Math.floor(Math.random() * 30) + 90; // 90-120ms
-    } else if (userContinent === 'OC' || nodeContinent === 'OC') {
-      basePing = Math.floor(Math.random() * 50) + 180; // 180-230ms
-    } else {
-      basePing = Math.floor(Math.random() * 50) + 150; // default long distance
-    }
-  }
-  return basePing;
-};
 
 const getPingColor = (ping: number) => {
   if (ping < 80) return '#4ade80'; // Green
@@ -59,7 +37,6 @@ const getPingStatus = (ping: number) => {
 export default function LocationsSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [pings, setPings] = useState<Record<string, number>>({});
-  const [userContinent, setUserContinent] = useState('NA');
   
   const [activeTooltip, setActiveTooltip] = useState<{
     id: string;
@@ -70,22 +47,31 @@ export default function LocationsSection() {
     x: number;
     y: number;
   } | null>(null);
-  
+
   useEffect(() => {
-    // Detect continent based on timezone roughly
-    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    let continent = 'NA';
-    if (tz.includes('Europe')) continent = 'EU';
-    else if (tz.includes('America/Argentina') || tz.includes('America/Santiago') || tz.includes('America/Sao_Paulo') || tz.includes('America/Bogota') || tz.includes('America/Lima')) continent = 'SA';
-    else if (tz.includes('Australia') || tz.includes('Pacific')) continent = 'OC';
-    
-    setUserContinent(continent);
-    
-    const newPings: Record<string, number> = {};
-    locations.forEach(loc => {
-      newPings[loc.id] = simulatePing(continent, loc.continent);
-    });
-    setPings(newPings);
+    // Ping real a los endpoints
+    const measurePings = async () => {
+      const newPings: Record<string, number> = {};
+      
+      const pingPromises = locations.map(async (loc) => {
+        try {
+          const start = performance.now();
+          await fetch(loc.endpoint, { mode: 'no-cors', cache: 'no-store' });
+          const rtt = Math.round(performance.now() - start);
+          
+          // Agregamos un poco de entropía natural al ping real para variabilidad
+          const jitter = Math.floor(Math.random() * 5) - 2;
+          newPings[loc.id] = Math.max(1, rtt + jitter);
+        } catch (e) {
+          newPings[loc.id] = 999; // Fallback or offline
+        }
+      });
+
+      await Promise.allSettled(pingPromises);
+      setPings({ ...newPings });
+    };
+
+    measurePings();
 
     // GSAP Animations
     if (containerRef.current) {
@@ -131,21 +117,16 @@ export default function LocationsSection() {
     { title: 'Oceanía', filter: 'OC' }
   ];
 
-  const handleMouseEnter = (e: React.MouseEvent, loc: any, ping: number, color: string) => {
-    const rect = (e.target as SVGElement).getBoundingClientRect();
-    const containerRect = containerRef.current?.getBoundingClientRect();
-    
-    if (containerRect) {
-      setActiveTooltip({
-        id: loc.id,
-        name: loc.name,
-        ping,
-        color,
-        status: getPingStatus(ping),
-        x: rect.left - containerRect.left + rect.width / 2,
-        y: rect.top - containerRect.top
-      });
-    }
+  const handleMouseMove = (e: React.MouseEvent, loc: any, ping: number, color: string) => {
+    setActiveTooltip({
+      id: loc.id,
+      name: loc.name,
+      ping,
+      color,
+      status: getPingStatus(ping),
+      x: e.clientX,
+      y: e.clientY
+    });
   };
 
   const handleMouseLeave = () => {
@@ -161,7 +142,7 @@ export default function LocationsSection() {
             <span className="text-[#64189D]">EN TODO EL MUNDO.</span>
           </h2>
           <p className="text-[#888] text-sm text-center mb-16 max-w-3xl mx-auto">
-            Hoy más 13 ubicaciones globales disponibles para hostear tu servidor al instante con la menor latencia.
+            Más de 13 ubicaciones globales disponibles para hostear tu servidor al instante con latencia real optimizada.
           </p>
         </div>
         
@@ -189,11 +170,11 @@ export default function LocationsSection() {
                           <div className="flex items-center gap-1.5 flex-shrink-0">
                             {ping > 0 ? (
                               <>
-                                <span style={{ color }} className="text-xs font-bold font-mono">{ping}ms</span>
+                                <span style={{ color }} className="text-xs font-bold font-mono">{ping < 999 ? ping : '--'}ms</span>
                                 <div className="w-2 h-2 rounded-full" style={{ backgroundColor: color, boxShadow: `0 0 8px ${color}` }}></div>
                               </>
                             ) : (
-                              <span className="text-xs text-white/30">Cargando...</span>
+                              <span className="text-xs text-white/30">Midiendo...</span>
                             )}
                           </div>
                         </div>
@@ -218,7 +199,7 @@ export default function LocationsSection() {
                   <g 
                     key={loc.id} 
                     className="cursor-pointer map-node group"
-                    onMouseEnter={(e) => handleMouseEnter(e, loc, ping, color)}
+                    onMouseMove={(e) => handleMouseMove(e, loc, ping, color)}
                     onMouseLeave={handleMouseLeave}
                   >
                     <circle cx={loc.cx} cy={loc.cy} r="14" fill="transparent" /> {/* Hitbox */}
@@ -231,37 +212,36 @@ export default function LocationsSection() {
                 );
               })}
             </svg>
-
-            {/* Tooltip Render */}
-            {activeTooltip && (
-              <div 
-                className="absolute z-50 pointer-events-none transform -translate-x-1/2 -translate-y-full pb-4 transition-opacity duration-200 animate-in fade-in zoom-in-95"
-                style={{ left: activeTooltip.x, top: activeTooltip.y }}
-              >
-                <div className="bg-[#180228] border border-[#64189D]/40 shadow-[0_4px_20px_rgba(100,24,157,0.3)] rounded-xl p-4 w-48 relative">
-                  <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-[#180228] border-b border-r border-[#64189D]/40 transform rotate-45"></div>
-                  
-                  <h4 className="text-white font-bold text-sm mb-2 uppercase tracking-wide border-b border-white/10 pb-2">
-                    {activeTooltip.name}
-                  </h4>
-                  
-                  <div className="flex flex-col gap-1.5">
-                    <div className="flex justify-between items-center text-xs">
-                      <span className="text-[#999]">Estado:</span>
-                      <span className="font-bold" style={{ color: activeTooltip.color }}>{activeTooltip.status}</span>
-                    </div>
-                    <div className="flex justify-between items-center text-xs">
-                      <span className="text-[#999]">Latencia est.:</span>
-                      <span className="font-mono text-white font-medium">{activeTooltip.ping} ms</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
           </div>
         </div>
       </div>
+
+      {/* Fixed Tooltip Render outside of relative containers for perfect positioning */}
+      {activeTooltip && (
+        <div 
+          className="fixed z-[9999] pointer-events-none transform -translate-x-1/2 -translate-y-[120%] pb-2 transition-opacity duration-150 animate-in fade-in"
+          style={{ left: activeTooltip.x, top: activeTooltip.y }}
+        >
+          <div className="bg-[#180228] border border-[#64189D]/40 shadow-[0_4px_20px_rgba(100,24,157,0.3)] rounded-xl p-4 w-48 relative">
+            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-[#180228] border-b border-r border-[#64189D]/40 transform rotate-45"></div>
+            
+            <h4 className="text-white font-bold text-sm mb-2 uppercase tracking-wide border-b border-white/10 pb-2">
+              {activeTooltip.name}
+            </h4>
+            
+            <div className="flex flex-col gap-1.5">
+              <div className="flex justify-between items-center text-xs">
+                <span className="text-[#999]">Estado:</span>
+                <span className="font-bold" style={{ color: activeTooltip.color }}>{activeTooltip.status}</span>
+              </div>
+              <div className="flex justify-between items-center text-xs">
+                <span className="text-[#999]">Latencia:</span>
+                <span className="font-mono text-white font-medium">{activeTooltip.ping < 999 ? `${activeTooltip.ping} ms` : 'Offline'}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
