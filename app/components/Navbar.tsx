@@ -65,7 +65,7 @@ export default function Navbar() {
                     </div>
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2">
-                        <div className="text-white font-bold text-sm leading-tight">Minecraft Dedicado</div>
+                        <div className="text-white font-bold text-sm leading-tight">Servidor Dedicado</div>
                       </div>
                       <div className="text-[#999] text-xs mt-1">Comenzando en <span className="text-white font-bold">{formatPrice(21.08)}</span></div>
                     </div>

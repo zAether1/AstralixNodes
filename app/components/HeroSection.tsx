@@ -154,7 +154,7 @@ export default function HeroSection() {
             </div>
 
             <div className="flex flex-col sm:flex-row items-center gap-6 pt-4">
-              <Link href="/minecraft-dedicado" className="hero-btn opacity-0 group flex items-center bg-[#64189D] hover:bg-[#3A0E5C] transition-all duration-300 rounded-lg overflow-hidden shadow-[0_0_30px_rgba(100,24,157,0.3)] hover:shadow-[0_0_40px_rgba(100,24,157,0.5)] border border-[#64189D]/50 hover:border-[#64189D]">
+              <Link href="/minecraft" className="hero-btn opacity-0 group flex items-center bg-[#64189D] hover:bg-[#3A0E5C] transition-all duration-300 rounded-lg overflow-hidden shadow-[0_0_30px_rgba(100,24,157,0.3)] hover:shadow-[0_0_40px_rgba(100,24,157,0.5)] border border-[#64189D]/50 hover:border-[#64189D]">
                 <span className="flex items-center justify-center bg-black/20 px-5 self-stretch">
                   <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M2 20h20v-4H2m2-2h16V6H4m4-4h8v2H8z"></path></svg>
                 </span>

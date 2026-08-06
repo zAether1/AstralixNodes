@@ -37,7 +37,7 @@ export default function DiscordBanner() {
                         <div className="text-center md:text-left">
                             <div className="flex items-center justify-center md:justify-start gap-3 mb-4">
                                 <a
-                                    href="https://discord.gg/Qrzn2enUP2"
+                                    href="https://discord.gg/zmc2VbFCCp"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="flex items-center justify-center md:justify-start gap-3 "
@@ -59,7 +59,7 @@ export default function DiscordBanner() {
 
                         <div className="flex-shrink-0">
                             <a
-                                href="https://discord.gg/Qrzn2enUP2"
+                                href="https://discord.gg/zmc2VbFCCp"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="block transition-all duration-300 hover:scale-105"

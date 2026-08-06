@@ -1,9 +1,9 @@
 export const metadata = {
-  title: 'Minecraft Dedicado | AstralixNodes',
-  description: 'Servidores de Minecraft completamente dedicados con recursos garantizados, NVMe SSDs y procesadores de última generación.',
+  title: 'Servidor Dedicado | AstralixNodes',
+  description: 'Infraestructura premium y alto rendimiento para proyectos profesionales. Hardware dedicado 100% exclusivo.',
   openGraph: {
-    title: 'Minecraft Dedicado | AstralixNodes',
-    description: 'Servidores de Minecraft completamente dedicados con recursos garantizados, NVMe SSDs y procesadores de última generación.',
+    title: 'Servidor Dedicado | AstralixNodes',
+    description: 'Infraestructura premium y alto rendimiento para proyectos profesionales. Hardware dedicado 100% exclusivo.',
     url: 'https://astralixnodes.com/minecraft-dedicado',
     siteName: 'AstralixNodes',
     images: [
@@ -18,8 +18,8 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Minecraft Dedicado | AstralixNodes',
-    description: 'Servidores de Minecraft completamente dedicados con recursos garantizados, NVMe SSDs y procesadores de última generación.',
+    title: 'Servidor Dedicado | AstralixNodes',
+    description: 'Infraestructura premium y alto rendimiento para proyectos profesionales. Hardware dedicado 100% exclusivo.',
     images: ['/assets/branding/og-image.png'],
   },
 };

@@ -44,7 +44,7 @@ export default function DedicadosPage() {
              </div>
              
              <h1 className="hero-text text-5xl md:text-7xl lg:text-8xl font-black text-white leading-none tracking-tight">
-                MINECRAFT <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-[#64189D]">DEDICADO</span>
+                SERVIDOR <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-[#64189D]">DEDICADO</span>
              </h1>
              
              <p className="hero-text mt-8 text-[#999] text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
@@ -72,7 +72,7 @@ export default function DedicadosPage() {
                     <div className="relative z-10">
                        <div className="inline-block px-4 py-2 bg-[#64189D]/20 text-[#64189D] font-bold tracking-widest uppercase text-xs rounded-lg mb-6">Procesadores Ryzen</div>
                        <h3 className="text-3xl font-black text-white mb-4">Poder Extremo</h3>
-                       <p className="text-[#888] leading-relaxed mb-8">Nuestra infraestructura está construida exclusivamente sobre procesadores AMD Ryzen serie 9000, garantizando el mejor rendimiento de un solo hilo para servidores de Minecraft Dedicado exigentes.</p>
+                       <p className="text-[#888] leading-relaxed mb-8">Nuestra infraestructura está construida exclusivamente sobre procesadores AMD Ryzen serie 9000, garantizando el mejor rendimiento de un solo hilo para servidores de Servidor Dedicado exigentes.</p>
                        <div className="flex items-center gap-4">
                           <div className="flex-1 bg-black/40 rounded-lg p-4 border border-white/5">
                              <div className="text-white font-bold mb-1">Ryzen 9 9900X</div>
