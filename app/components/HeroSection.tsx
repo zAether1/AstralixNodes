@@ -71,54 +71,45 @@ export default function HeroSection() {
 
   return (
     <section ref={container} className="relative bg-[#020202] overflow-hidden min-h-[31.25rem] md:min-h-[40rem] lg:min-h-[45rem] flex flex-col justify-center">
-      {/* Background with Cinematic Zoom Container */}
+      {/* 1. Imagen de Minecraft (fondo) */}
       <div className="absolute inset-0 hero-bg opacity-0 z-0 overflow-hidden">
-        <div className="absolute inset-0 w-full h-full hero-image-zoom transform-origin-center">
+        <div className="absolute inset-0 w-full h-full hero-image-zoom origin-center">
           <Image 
             alt="Minecraft servers - AstralixNodes" 
             fill 
-            className="object-cover object-[75%_center] md:object-[80%_center] w-full h-full" 
+            className="object-cover object-[65%_center] md:object-[70%_center] w-full h-full" 
             src="/assets/images/Minecraft-Principio-pagina.jpg" 
             priority
           />
         </div>
 
-        {/* Base Layer: Soft Vignette & Shadow */}
-        <div className="absolute inset-0 bg-[#020202]/20 shadow-[inset_0_0_150px_rgba(2,2,2,0.8)] pointer-events-none"></div>
+        {/* 2. Overlay oscuro */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent pointer-events-none"></div>
+        <div className="absolute inset-0 bg-black/30 pointer-events-none"></div>
         
-        {/* Dark Gradient from left for Text Readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#020202] via-[#020202]/80 to-transparent w-full md:w-[75%] pointer-events-none"></div>
-        
-        {/* Subtle Purple Gradient from right */}
-        <div className="absolute inset-0 bg-gradient-to-l from-[#64189D]/20 via-transparent to-transparent mix-blend-screen pointer-events-none"></div>
-        
-        {/* Central Purple Glow behind Title */}
-        <div className="absolute top-1/2 left-[15%] md:left-[25%] -translate-y-1/2 w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-[#64189D]/25 blur-[150px] rounded-full pointer-events-none mix-blend-screen"></div>
+        {/* 3. Glow púrpura */}
+        <div className="absolute top-1/2 left-[15%] md:left-[25%] -translate-y-1/2 w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-[#64189D]/30 blur-[120px] rounded-full pointer-events-none mix-blend-screen"></div>
+        <div className="absolute top-1/2 right-[10%] md:right-[15%] -translate-y-1/2 w-[300px] md:w-[500px] h-[400px] md:h-[600px] bg-[#64189D]/15 blur-[100px] rounded-full pointer-events-none mix-blend-screen"></div>
+        <div className="absolute inset-x-0 bottom-0 h-[40%] bg-gradient-to-t from-black via-black/50 to-transparent pointer-events-none"></div>
 
-        {/* Ambient Lighting around Character (Right Third) */}
-        <div className="absolute top-1/2 right-[10%] md:right-[15%] -translate-y-1/2 w-[300px] md:w-[500px] h-[400px] md:h-[600px] bg-white/10 blur-[120px] rounded-full pointer-events-none mix-blend-overlay"></div>
-        
-        {/* Bottom Haze / Fog */}
-        <div className="absolute inset-x-0 bottom-0 h-[30%] bg-gradient-to-t from-[#020202] via-[#020202]/50 to-transparent pointer-events-none"></div>
-
-        {/* Cinematic Particles */}
+        {/* 4. Partículas / Luciérnagas */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden hero-particles opacity-0">
-          {[...Array(20)].map((_, i) => (
+          {[...Array(25)].map((_, i) => (
             <div 
               key={i}
-              className={`absolute w-1 h-1 bg-white/40 rounded-full particle-${i}`}
+              className={`absolute w-1 h-1 bg-[#d4a5ff] rounded-full particle-${i}`}
               style={{
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
-                filter: 'blur(1.5px)',
-                boxShadow: '0 0 10px 2px rgba(255,255,255,0.2)'
+                filter: 'blur(1px)',
+                boxShadow: '0 0 8px 2px rgba(100,24,157,0.6)'
               }}
             ></div>
           ))}
         </div>
       </div>
 
-      {/* Content */}
+      {/* 5. Contenido del Hero (texto, tarjetas y botones) */}
       <div className="relative z-10 max-w-[87.5rem] mx-auto px-6 w-full py-16 md:py-0">
         <div className="max-w-[43.75rem]">
           <div className="space-y-10">
