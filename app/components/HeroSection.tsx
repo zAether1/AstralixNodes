@@ -48,27 +48,14 @@ export default function HeroSection() {
     <section ref={container} className="relative bg-black overflow-hidden min-h-[31.25rem] md:min-h-[37.5rem] lg:min-h-[43.75rem]">
       {/* Background */}
       <div className="absolute inset-0 hero-bg opacity-0">
-        <div className="absolute inset-0 lg:hidden">
-          <Image 
-            alt="Minecraft characters - AstralixNodes servers" 
-            fill 
-            className="object-cover object-center" 
-            src="/assets/images/hero-minecraft.avif" 
-            priority
-          />
-        </div>
-        <video 
-          className="hidden lg:block absolute inset-0 w-full h-full object-cover object-[70%_center]" 
-          muted 
-          loop 
-          playsInline 
-          autoPlay 
-          poster="/assets/images/hero-minecraft-poster.avif"
-        >
-          <source src="/assets/videos/hero-minecraft.webm" type="video/webm"/>
-          <source src="/assets/videos/hero-minecraft.mp4" type="video/mp4"/>
-        </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black lg:bg-none"></div>
+        <Image 
+          alt="Minecraft servers - AstralixNodes" 
+          fill 
+          className="object-cover object-[70%_center]" 
+          src="/assets/images/Minecraft-Principio-pagina.jpg" 
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black"></div>
       </div>
 
       {/* Content */}
@@ -112,21 +99,7 @@ export default function HeroSection() {
                 <span className="text-white/90 text-sm whitespace-nowrap">Todas las versiones y modpacks.</span>
               </div>
 
-              <Link href="/nosotros" className="hero-feature opacity-0 group flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-[#64189D] flex items-center justify-center flex-shrink-0">
-                  <svg className="w-4 h-4" viewBox="0 0 640 512" fill="black"><path d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304l67.4 0C344.2 304 424 383.8 424 482.3c0 16.4-13.3 29.7-29.7 29.7L29.7 512C13.3 512 0 498.7 0 482.3zM609.3 512l-137.8 0c5.4-9.4 8.6-20.3 8.6-32l0-8c0-60.7-27.1-115.2-69.8-151.8c2.4-.1 4.7-.2 7.1-.2l36.7 0C543.3 320 640 416.7 640 506c0 3.3-2.7 6-6 6l-24.7 0zM432 256c-31 0-59-12.6-79.3-32.9C372.4 196.5 384 163.6 384 128c0-26.8-6.6-52.1-18.3-74.3C384.3 40.1 407.2 32 432 32c61.9 0 112 50.1 112 112s-50.1 112-112 112z" opacity=".4"></path><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z"></path></svg>
-                </div>
-                <span className="text-white/90 text-sm whitespace-nowrap">Confiado por <strong className="font-bold text-white">+150</strong> creadores.</span>
-                <svg className="w-3 h-3 text-[#64189D] flex-shrink-0 opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"></path></svg>
-              </Link>
 
-              <Link href="/faq" className="hero-feature opacity-0 group flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-[#64189D] flex items-center justify-center flex-shrink-0">
-                  <svg className="w-4 h-4" viewBox="0 0 448 512" fill="black"><path d="M0 96C0 43 43 0 96 0l96 0 32 0 0 64-32 0L96 64C69.5 64 48 85.5 48 112l0 48 96 0 32 0 0 64-32 0-96 0 0 176c0 26.5 21.5 48 48 48l256 0c26.5 0 48-21.5 48-48l0-48 0-64 0-80 0-64-80 0-32 0 0-64 32 0 80 0c35.3 0 64 28.7 64 64l0 64 0 80 0 64 0 48c0 53-43 96-96 96L96 512c-53 0-96-43-96-96L0 96z" opacity=".4"></path><path d="M176 64L96 64C69.5 64 48 85.5 48 112l0 48 128 0 0-96zm0 160L48 224l0 176c0 26.5 21.5 48 48 48l80 0 0-224z"></path></svg>
-                </div>
-                <span className="text-white/90 text-sm whitespace-nowrap"><strong className="font-bold text-white">+500</strong> guías y tutoriales.</span>
-                <svg className="w-3 h-3 text-[#64189D] flex-shrink-0 opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"></path></svg>
-              </Link>
             </div>
 
             <div className="flex flex-col sm:flex-row items-center gap-6 pt-2">
