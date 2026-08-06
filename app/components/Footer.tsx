@@ -57,7 +57,7 @@ export default function Footer() {
               <h3 className="text-white font-black uppercase text-sm tracking-wider mb-5">POPULAR</h3>
               <ul className="space-y-2.5">
                 <li><Link className="text-[#888] hover:text-white text-sm transition-colors" href="/minecraft">Minecraft</Link></li>
-                <li><Link className="text-[#888] hover:text-white text-sm transition-colors" href="/dedicados">Minecraft Dedicado Hosting</Link></li>
+                <li><Link className="text-[#888] hover:text-white text-sm transition-colors" href="/minecraft-dedicado">Minecraft Dedicado Hosting</Link></li>
                 <li><Link className="text-[#888] hover:text-white text-sm transition-colors" href="/discord-bot">Discord Bot Hosting</Link></li>
                 <li><Link className="text-[#888] hover:text-white text-sm transition-colors" href="/juegos">Otros Juegos Hosting</Link></li>
                 <li><Link className="text-[#888] hover:text-white text-sm transition-colors" href="/ts3">Servidor de Voz Hosting</Link></li>

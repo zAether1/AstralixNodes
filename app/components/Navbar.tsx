@@ -153,7 +153,7 @@ export default function Navbar() {
 
             {/* Cloud Hosting Dropdown */}
             <div className="relative group">
-              <Link href="/dedicados" className="flex items-center gap-1 py-6 text-white font-bold text-sm hover:text-[#64189D] transition-colors whitespace-nowrap">
+              <Link href="/vps" className="flex items-center gap-1 py-6 text-white font-bold text-sm hover:text-[#64189D] transition-colors whitespace-nowrap">
                 Cloud Hosting
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
               </Link>
@@ -328,7 +328,7 @@ export default function Navbar() {
         <div className="lg:hidden bg-[#020202] border-t border-white/5 absolute w-full left-0 top-full p-4 flex flex-col gap-4 shadow-xl">
           <Link href="/minecraft" className="text-white font-bold p-2 hover:bg-[#141414] rounded-lg">Minecraft Hosting</Link>
           <Link href="/juegos" className="text-white font-bold p-2 hover:bg-[#141414] rounded-lg">Game Hosting</Link>
-          <Link href="/dedicados" className="text-white font-bold p-2 hover:bg-[#141414] rounded-lg">Cloud Hosting</Link>
+          <Link href="/vps" className="text-white font-bold p-2 hover:bg-[#141414] rounded-lg">Cloud Hosting</Link>
           <Link href="/nosotros" className="text-white font-bold p-2 hover:bg-[#141414] rounded-lg">Nosotros</Link>
           <hr className="border-white/5" />
           <div className="flex flex-col gap-2">
