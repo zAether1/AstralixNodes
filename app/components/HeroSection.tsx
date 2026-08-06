@@ -47,15 +47,17 @@ export default function HeroSection() {
   return (
     <section ref={container} className="relative bg-black overflow-hidden min-h-[31.25rem] md:min-h-[37.5rem] lg:min-h-[43.75rem]">
       {/* Background */}
-      <div className="absolute inset-0 hero-bg opacity-0">
+      <div className="absolute inset-0 hero-bg opacity-0 z-0">
         <Image 
           alt="Minecraft servers - AstralixNodes" 
           fill 
-          className="object-cover object-[70%_center]" 
+          className="object-cover object-[65%_center] md:object-[60%_center] w-full h-full" 
           src="/assets/images/Minecraft-Principio-pagina.jpg" 
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black"></div>
+        {/* Overlays para legibilidad y mezcla */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#020202] via-[#020202]/80 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#020202] via-transparent to-[#020202]/40"></div>
       </div>
 
       {/* Content */}
