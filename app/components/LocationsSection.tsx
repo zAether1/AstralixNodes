@@ -2,73 +2,63 @@
 import React, { useEffect, useState, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Image from 'next/image';
 
 gsap.registerPlugin(ScrollTrigger);
+
+// Proyección matemática perfecta para este SVG
+const calcUserCoords = (lat: number, lon: number) => {
+  const x = 475.35 + (lon * 2.562);
+  const latRad = lat * Math.PI / 180;
+  const mercN = Math.log(Math.tan((Math.PI / 4) + (latRad / 2)));
+  const y = 223.2 - (mercN * 68.43); 
+  return { cx: x, cy: y };
+};
 
 const locations = [
   {
     region: 'Norteamérica',
     places: [
-      { id: 'us-va', name: 'Virginia', flag: 'us', cx: 274, cy: 175, endpoint: 'https://dynamodb.us-east-1.amazonaws.com' },
-      { id: 'ca-qc', name: 'Quebec', flag: 'ca', cx: 269, cy: 140, endpoint: 'https://dynamodb.ca-central-1.amazonaws.com' },
-      { id: 'us-or', name: 'Oregon', flag: 'us', cx: 175, cy: 160, endpoint: 'https://dynamodb.us-west-2.amazonaws.com' },
-      { id: 'us-ny', name: 'New York', flag: 'us', cx: 269, cy: 165, endpoint: 'https://dynamodb.us-east-2.amazonaws.com' },
-      { id: 'us-ut', name: 'Utah', flag: 'us', cx: 197, cy: 172, endpoint: 'https://dynamodb.us-west-1.amazonaws.com' },
-      { id: 'us-tx', name: 'Texas', flag: 'us', cx: 230, cy: 192, endpoint: 'https://dynamodb.us-east-2.amazonaws.com' },
-      { id: 'us-ca', name: 'California', flag: 'us', cx: 168, cy: 185, endpoint: 'https://dynamodb.us-west-1.amazonaws.com' }
+      { id: 'us-mia', name: 'Miami', flag: 'us', lat: 25.7, lon: -80.1, endpoint: 'https://dynamodb.us-east-1.amazonaws.com' },
+      { id: 'us-nyc', name: 'Nueva York', flag: 'us', lat: 40.7, lon: -74.0, endpoint: 'https://dynamodb.us-east-2.amazonaws.com' },
+      { id: 'mx-mex', name: 'Ciudad de México', flag: 'mx', lat: 19.4, lon: -99.1, endpoint: 'https://dynamodb.us-west-1.amazonaws.com' },
     ]
   },
   {
     region: 'Europa',
     places: [
-      { id: 'de-de', name: 'Alemania', flag: 'de', cx: 502, cy: 152, endpoint: 'https://dynamodb.eu-central-1.amazonaws.com' },
-      { id: 'fi-fi', name: 'Finlandia', flag: 'fi', cx: 540, cy: 132, endpoint: 'https://dynamodb.eu-north-1.amazonaws.com' },
-      { id: 'fr-fr', name: 'Francia', flag: 'fr', cx: 477, cy: 155, endpoint: 'https://dynamodb.eu-west-3.amazonaws.com' }
+      { id: 'eu-mad', name: 'Madrid', flag: 'es', lat: 40.4, lon: -3.7, endpoint: 'https://dynamodb.eu-south-2.amazonaws.com' },
+      { id: 'eu-fra', name: 'Frankfurt', flag: 'de', lat: 50.1, lon: 8.6, endpoint: 'https://dynamodb.eu-central-1.amazonaws.com' },
+      { id: 'eu-lhr', name: 'Londres', flag: 'gb', lat: 51.5, lon: -0.1, endpoint: 'https://dynamodb.eu-west-2.amazonaws.com' },
+      { id: 'eu-par', name: 'París', flag: 'fr', lat: 48.8, lon: 2.3, endpoint: 'https://dynamodb.eu-west-3.amazonaws.com' },
+      { id: 'eu-ams', name: 'Ámsterdam', flag: 'nl', lat: 52.3, lon: 4.9, endpoint: 'https://dynamodb.eu-central-1.amazonaws.com' },
     ]
   },
   {
     region: 'Sudamérica',
     places: [
-      { id: 'ar-ar', name: 'Argentina', flag: 'ar', cx: 346, cy: 391, endpoint: 'https://dynamodb.sa-east-1.amazonaws.com' },
-      { id: 'cl-cl', name: 'Chile', flag: 'cl', cx: 293, cy: 387, endpoint: 'https://dynamodb.sa-east-1.amazonaws.com' }
+      { id: 'br-sao', name: 'São Paulo', flag: 'br', lat: -23.5, lon: -46.6, endpoint: 'https://dynamodb.sa-east-1.amazonaws.com' },
     ]
   },
   {
-    region: 'Oceanía',
+    region: 'Asia / Pacífico',
     places: [
-      { id: 'au-au', name: 'Australia', flag: 'au', cx: 865, cy: 368, endpoint: 'https://dynamodb.ap-southeast-2.amazonaws.com' }
+      { id: 'jp-tyo', name: 'Tokio', flag: 'jp', lat: 35.6, lon: 139.6, endpoint: 'https://dynamodb.ap-northeast-1.amazonaws.com' },
+      { id: 'sg-sin', name: 'Singapur', flag: 'sg', lat: 1.3, lon: 103.8, endpoint: 'https://dynamodb.ap-southeast-1.amazonaws.com' },
+      { id: 'au-syd', name: 'Sídney', flag: 'au', lat: -33.8, lon: 151.2, endpoint: 'https://dynamodb.ap-southeast-2.amazonaws.com' },
     ]
   }
 ];
 
-// Flat array to make rendering map points easier
-const allPlaces = locations.flatMap(loc => loc.places.map(p => ({ ...p, regionName: loc.region })));
+// Pre-calculate exact coordinates for the map points
+const allPlaces = locations.flatMap(loc => loc.places.map(p => {
+  const coords = calcUserCoords(p.lat, p.lon);
+  return { ...p, regionName: loc.region, cx: coords.cx, cy: coords.cy };
+}));
 
 const getPingColor = (ping: number) => {
   if (ping < 80) return '#4ade80'; 
   if (ping < 150) return '#facc15'; 
   return '#ef4444'; 
-};
-
-const getPingStatus = (ping: number) => {
-  if (ping < 80) return 'Excelente';
-  if (ping < 150) return 'Medio';
-  return 'Alto';
-};
-
-const calcUserCoords = (lat: number, lon: number) => {
-  const mapWidth = 827.61;
-  const mapHeight = 423.74;
-  const xOffset = 95.85;
-  const yOffset = 62.19;
-
-  const x = (lon + 180) * (mapWidth / 360) + xOffset;
-  const latRad = lat * Math.PI / 180;
-  const mercN = Math.log(Math.tan((Math.PI / 4) + (latRad / 2)));
-  const y = (mapHeight / 2) - (mapWidth * mercN / (2 * Math.PI)) + yOffset - 40; 
-
-  return { cx: x, cy: y };
 };
 
 export default function LocationsSection() {
@@ -148,7 +138,6 @@ export default function LocationsSection() {
       name: place.name, 
       ping, 
       color, 
-      status: getPingStatus(ping),
       region: place.regionName,
       x: e.clientX, 
       y: e.clientY
@@ -173,7 +162,7 @@ export default function LocationsSection() {
             <span className="text-[#64189D]">EN TODO EL MUNDO.</span>
           </h2>
           <p className="text-[#888] mt-4 max-w-2xl mx-auto">
-            Hoy más de 13 ubicaciones globales disponibles para hostear tu servidor al instante.
+            12 ubicaciones globales estratégicas disponibles para hostear tu servidor al instante.
           </p>
         </div>
         
@@ -197,14 +186,15 @@ export default function LocationsSection() {
                         key={place.id} 
                         className="group flex items-center rounded-lg transition-colors cursor-pointer hover:bg-white/5" 
                         style={{ padding: '6px 10px', gap: '10px' }}
-                        onMouseMove={(e) => handleMouseMove(e, place, ping, color)}
+                        onMouseMove={(e) => handleMouseMove(e, allPlaces.find(p => p.id === place.id), ping, color)}
                         onMouseLeave={handleMouseLeave}
                       >
-                        <Image 
+                        {/* Se usa img en lugar de Image para evitar errores de dominios no permitidos en next.config.js y asegurar que cargue la bandera correcta */}
+                        <img 
                           alt={place.flag.toUpperCase()} 
                           width={24} 
                           height={17} 
-                          className="rounded-sm flex-shrink-0" 
+                          className="rounded-sm flex-shrink-0 object-cover" 
                           src={`https://flagcdn.com/w40/${place.flag}.png`} 
                         />
                         <span className="text-[#E8E6E6] flex-1 truncate text-[13px] group-hover:text-white transition-colors">{place.name}</span>
