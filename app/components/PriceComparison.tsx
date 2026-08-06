@@ -9,12 +9,12 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const competitors = [
   { name: 'AstralixNodes', price: '$0,94/gb', image: '/icons/AstralixNodes.png', fill: 20, color: '#64189D', isMain: true },
-  { name: 'Theminecrafthost', price: '$2,50/gb', image: '/holy_assets/assets/images/theminecrafthost.png', fill: 50, color: '#2d2e2e' },
-  { name: 'Sparkedhost', price: '$2,59/gb', image: '/holy_assets/assets/images/sparkedhost.png', fill: 52, color: '#2d2e2e' },
-  { name: 'Bisecthosting', price: '$3,00/gb', image: '/holy_assets/assets/images/bisecthosting.png', fill: 60, color: '#2d2e2e' },
-  { name: 'ApexHosting', price: '$3,75/gb', image: '/holy_assets/assets/images/apexhosting.png', fill: 75, color: '#2d2e2e' },
-  { name: 'Shockbyte', price: '$3,99/gb', image: '/holy_assets/assets/images/shockbyte.png', fill: 80, color: '#2d2e2e' },
-  { name: 'Scalacube', price: '$4,99/gb', image: '/holy_assets/assets/images/scalacube.png', fill: 100, color: '#2d2e2e' }
+  { name: 'Theminecrafthost', price: '$2,50/gb', image: '/assets/images/theminecrafthost.png', fill: 50, color: '#2d2e2e' },
+  { name: 'Sparkedhost', price: '$2,59/gb', image: '/assets/images/sparkedhost.png', fill: 52, color: '#2d2e2e' },
+  { name: 'Bisecthosting', price: '$3,00/gb', image: '/assets/images/bisecthosting.png', fill: 60, color: '#2d2e2e' },
+  { name: 'ApexHosting', price: '$3,75/gb', image: '/assets/images/apexhosting.png', fill: 75, color: '#2d2e2e' },
+  { name: 'Shockbyte', price: '$3,99/gb', image: '/assets/images/shockbyte.png', fill: 80, color: '#2d2e2e' },
+  { name: 'Scalacube', price: '$4,99/gb', image: '/assets/images/scalacube.png', fill: 100, color: '#2d2e2e' }
 ];
 
 export default function PriceComparison() {

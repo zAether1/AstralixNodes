@@ -7,19 +7,20 @@ gsap.registerPlugin(ScrollTrigger);
 
 // Coordinates from the original SVG and locations, adding real ping endpoints
 const locations = [
-  { id: 'us-va', name: 'Virginia', countryCode: 'us', continent: 'NA', cx: 274, cy: 175, endpoint: 'https://dynamodb.us-east-1.amazonaws.com' },
-  { id: 'ca-qc', name: 'Quebec', countryCode: 'ca', continent: 'NA', cx: 269, cy: 140, endpoint: 'https://dynamodb.ca-central-1.amazonaws.com' },
+  { id: 'us-va', name: 'Miami (Virginia)', countryCode: 'us', continent: 'NA', cx: 274, cy: 175, endpoint: 'https://dynamodb.us-east-1.amazonaws.com' },
+  { id: 'ca-qc', name: 'Montreal', countryCode: 'ca', continent: 'NA', cx: 269, cy: 140, endpoint: 'https://dynamodb.ca-central-1.amazonaws.com' },
   { id: 'us-or', name: 'Oregon', countryCode: 'us', continent: 'NA', cx: 175, cy: 160, endpoint: 'https://dynamodb.us-west-2.amazonaws.com' },
   { id: 'us-ny', name: 'New York', countryCode: 'us', continent: 'NA', cx: 269, cy: 165, endpoint: 'https://dynamodb.us-east-1.amazonaws.com' }, 
-  { id: 'us-ut', name: 'Utah', countryCode: 'us', continent: 'NA', cx: 197, cy: 172, endpoint: 'https://dynamodb.us-west-2.amazonaws.com' },
   { id: 'us-tx', name: 'Texas', countryCode: 'us', continent: 'NA', cx: 230, cy: 192, endpoint: 'https://dynamodb.us-east-2.amazonaws.com' },
-  { id: 'us-ca', name: 'California', countryCode: 'us', continent: 'NA', cx: 168, cy: 185, endpoint: 'https://dynamodb.us-west-1.amazonaws.com' },
-  { id: 'de', name: 'Alemania', countryCode: 'de', continent: 'EU', cx: 502, cy: 152, endpoint: 'https://dynamodb.eu-central-1.amazonaws.com' },
-  { id: 'fi', name: 'Finlandia', countryCode: 'fi', continent: 'EU', cx: 540, cy: 132, endpoint: 'https://dynamodb.eu-north-1.amazonaws.com' },
-  { id: 'fr', name: 'Francia', countryCode: 'fr', continent: 'EU', cx: 477, cy: 155, endpoint: 'https://dynamodb.eu-west-3.amazonaws.com' },
-  { id: 'ar', name: 'Argentina', countryCode: 'ar', continent: 'SA', cx: 346, cy: 391, endpoint: 'https://dynamodb.sa-east-1.amazonaws.com' },
-  { id: 'cl', name: 'Chile', countryCode: 'cl', continent: 'SA', cx: 293, cy: 387, endpoint: 'https://dynamodb.sa-east-1.amazonaws.com' },
-  { id: 'au', name: 'Australia', countryCode: 'au', continent: 'OC', cx: 865, cy: 368, endpoint: 'https://dynamodb.ap-southeast-2.amazonaws.com' }
+  { id: 'us-ca', name: 'Los Angeles', countryCode: 'us', continent: 'NA', cx: 168, cy: 185, endpoint: 'https://dynamodb.us-west-1.amazonaws.com' },
+  { id: 'eu-de', name: 'Frankfurt', countryCode: 'de', continent: 'EU', cx: 502, cy: 152, endpoint: 'https://dynamodb.eu-central-1.amazonaws.com' },
+  { id: 'eu-gb', name: 'Londres', countryCode: 'gb', continent: 'EU', cx: 465, cy: 145, endpoint: 'https://dynamodb.eu-west-2.amazonaws.com' },
+  { id: 'eu-es', name: 'Madrid', countryCode: 'es', continent: 'EU', cx: 458, cy: 165, endpoint: 'https://dynamodb.eu-south-2.amazonaws.com' },
+  { id: 'eu-fr', name: 'París', countryCode: 'fr', continent: 'EU', cx: 477, cy: 155, endpoint: 'https://dynamodb.eu-west-3.amazonaws.com' },
+  { id: 'sa-br', name: 'São Paulo', countryCode: 'br', continent: 'SA', cx: 370, cy: 360, endpoint: 'https://dynamodb.sa-east-1.amazonaws.com' },
+  { id: 'sa-ar', name: 'Buenos Aires', countryCode: 'ar', continent: 'SA', cx: 346, cy: 391, endpoint: 'https://dynamodb.sa-east-1.amazonaws.com' },
+  { id: 'oc-au', name: 'Sídney', countryCode: 'au', continent: 'OC', cx: 865, cy: 368, endpoint: 'https://dynamodb.ap-southeast-2.amazonaws.com' },
+  { id: 'as-sg', name: 'Singapur', countryCode: 'sg', continent: 'AS', cx: 770, cy: 280, endpoint: 'https://dynamodb.ap-southeast-1.amazonaws.com' }
 ];
 
 const getPingColor = (ping: number) => {

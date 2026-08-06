@@ -19,12 +19,11 @@ export default function Footer() {
               />
               <div>
                 <span className="text-[25px] font-black text-white leading-tight block">AstralixNodes</span>
-                <span className="text-sm font-light text-[#888] leading-tight block">Servidores potentes a precios económicos.</span>
+                <span className="text-sm font-light text-[#888] leading-tight block">Hosting premium de alto rendimiento.</span>
               </div>
             </div>
             
-            <p className="text-[#666] text-xs mt-6 leading-relaxed">Copyright © 2025 AstralixNodes. Todos los derechos reservados.</p>
-            <p className="text-[#666] text-xs mt-2 leading-relaxed">REG. NO.: 001599788. Esta entidad comercial está registrada oficialmente en 30 N Gould St, Suite N, Sheridan, WY 82801, Wyoming, US.</p>
+            <p className="text-[#666] text-xs mt-6 leading-relaxed">Copyright © 2026 AstralixNodes. Todos los derechos reservados.</p>
             
             <div className="flex items-center gap-4 mt-6">
               <a target="_blank" rel="noopener noreferrer" className="text-[#888] hover:text-white transition-colors" aria-label="X (Twitter)" href="https://twitter.com/astralixnodes">
@@ -48,10 +47,6 @@ export default function Footer() {
             </div>
 
             <button type="button" className="hidden lg:flex items-center gap-2 mt-6 text-white hover:text-[#64189D] transition-colors" aria-label="Preferences">
-              <span className="relative block h-[22px] w-[22px] overflow-hidden rounded-sm flex-shrink-0">
-                <Image alt="" fill className="object-cover" src="/holy_assets/assets/images/flag-es.png" />
-              </span>
-              <span className="text-[#555] text-sm">|</span>
               <span className="text-sm font-bold">USD</span>
               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
@@ -114,8 +109,7 @@ export default function Footer() {
 
         <div className="border-t border-[#2d2e2e] pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="text-center md:text-left">
-            <p className="text-[#666] text-[12px] leading-relaxed">Copyright © 2025 HOLY SERVERS LLC, operando bajo el nombre registrado de AstralixNodes. Todos los derechos reservados.</p>
-            <p className="text-[#555] text-[11px] leading-relaxed mt-1">El proceso de pago puede estar gestionado por Tebex Limited, actuando como comerciante registrado y siendo responsable del cumplimiento del producto y la atención de consultas de facturación.</p>
+            <p className="text-[#666] text-[12px] leading-relaxed">Copyright © 2026 AstralixNodes. Todos los derechos reservados.</p>
           </div>
           <div className="flex-shrink-0">
             <a href="https://www.dmca.com/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 border border-[#444] rounded px-3 py-1.5 hover:border-[#64189D] transition-colors">

@@ -53,7 +53,7 @@ export default function HeroSection() {
             alt="Minecraft characters - AstralixNodes servers" 
             fill 
             className="object-cover object-center" 
-            src="/holy_assets/assets/images/hero-minecraft.avif" 
+            src="/assets/images/hero-minecraft.avif" 
             priority
           />
         </div>
@@ -63,10 +63,10 @@ export default function HeroSection() {
           loop 
           playsInline 
           autoPlay 
-          poster="/holy_assets/assets/images/hero-minecraft-poster.avif"
+          poster="/assets/images/hero-minecraft-poster.avif"
         >
-          <source src="/holy_assets/assets/videos/hero-minecraft.webm" type="video/webm"/>
-          <source src="/holy_assets/assets/videos/hero-minecraft.mp4" type="video/mp4"/>
+          <source src="/assets/videos/hero-minecraft.webm" type="video/webm"/>
+          <source src="/assets/videos/hero-minecraft.mp4" type="video/mp4"/>
         </video>
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black lg:bg-none"></div>
       </div>

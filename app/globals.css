@@ -331,7 +331,7 @@
 }
 
 /* === AstralixNodes Brand Color Overrides for astralixnodes.com Components === */
-:root { --holy-primary: #64189D; --holy-secondary: #180228; }
+:root { --astralix-primary: #64189D; --astralix-secondary: #180228; }
 
 /* Override astralixnodes.com yellow accent (#f0df1e) with brand purple */
 .text-\[\#f0df1e\], [class*='text-[#f0df1e]'] { color: #64189D !important; }

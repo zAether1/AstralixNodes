@@ -109,7 +109,7 @@ export default function ReviewsSection() {
     <section ref={container} className="relative w-full overflow-hidden reviews-banner-h min-h-[400px]">
       <div 
         className="absolute inset-0 bg-cover bg-right md:bg-center" 
-        style={{ backgroundImage: 'url(/holy_assets/assets/images/astralixnodes-banner-largo.png)' }}
+        style={{ backgroundImage: 'url(/assets/images/astralixnodes-banner-largo.png)' }}
       ></div>
       <div className="absolute inset-0 bg-black/85 md:bg-black/70"></div>
       
