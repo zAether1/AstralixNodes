@@ -39,19 +39,27 @@ const stats = [
   }
 ];
 
-const terminalLines = [
-  "> Initializing AstralixNodes Infrastructure...",
-  "> Checking network nodes... [OK]",
-  "> Loading security modules... [OK]",
-  "> Verifying DDoS protection... [ACTIVE]",
-  "> Connecting monitoring services... [OK]",
-  "> System status: ONLINE"
+const terminalSequence = [
+  { type: 'command', text: 'iniciar astralix --status' },
+  { type: 'response', text: '[OK] Iniciando núcleo de AstralixNodes...' },
+  { type: 'response', text: '[OK] Verificando conexiones de red...' },
+  { type: 'response', text: '[OK] Revisando protección DDoS...' },
+  { type: 'response', text: '[OK] Comprobando nodos activos...' },
+  { type: 'response', text: '[EXITO] Infraestructura lista.' },
+  { type: 'empty', text: '' },
+  { type: 'command', text: 'comprobar latencia global' },
+  { type: 'response', text: '[INFO] Analizando conexiones...' },
+  { type: 'response', text: '[OK] Nodo Miami disponible.' },
+  { type: 'response', text: '[OK] Nodo Madrid disponible.' },
+  { type: 'response', text: '[OK] Nodo Frankfurt disponible.' },
+  { type: 'response', text: '[EXITO] Red funcionando correctamente.' }
 ];
 
 export default function StatsSection() {
   const container = useRef<HTMLDivElement>(null);
+  const terminalScrollRef = useRef<HTMLDivElement>(null);
   
-  const [displayedLines, setDisplayedLines] = useState<string[]>([]);
+  const [displayedLines, setDisplayedLines] = useState<{text: string, isCommand: boolean}[]>([]);
   const [currentLineIndex, setCurrentLineIndex] = useState(0);
   const [currentLineText, setCurrentLineText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -60,29 +68,61 @@ export default function StatsSection() {
   useEffect(() => {
     if (!hasStarted) return;
     
-    if (currentLineIndex < terminalLines.length) {
-      setIsTyping(true);
-      const fullText = terminalLines[currentLineIndex];
-      let charIndex = 0;
-      
-      const typeInterval = setInterval(() => {
-        if (charIndex <= fullText.length) {
-          setCurrentLineText(fullText.substring(0, charIndex));
-          charIndex++;
-        } else {
-          clearInterval(typeInterval);
-          setIsTyping(false);
-          setDisplayedLines(prev => [...prev, fullText]);
-          setCurrentLineText('');
-          setTimeout(() => {
-            setCurrentLineIndex(prev => prev + 1);
-          }, 400); // pause between lines
-        }
-      }, 30); // typing speed
-      
-      return () => clearInterval(typeInterval);
+    if (currentLineIndex < terminalSequence.length) {
+      const currentItem = terminalSequence[currentLineIndex];
+
+      if (currentItem.type === 'command') {
+        setIsTyping(true);
+        const fullText = currentItem.text;
+        let charIndex = 0;
+        
+        const typeInterval = setInterval(() => {
+          if (charIndex <= fullText.length) {
+            setCurrentLineText(fullText.substring(0, charIndex));
+            charIndex++;
+          } else {
+            clearInterval(typeInterval);
+            setIsTyping(false);
+            setDisplayedLines(prev => [...prev, { text: fullText, isCommand: true }]);
+            setCurrentLineText('');
+            setTimeout(() => {
+              setCurrentLineIndex(prev => prev + 1);
+            }, 300); // Wait before system response
+          }
+        }, 50); // Typing speed
+        
+        return () => clearInterval(typeInterval);
+
+      } else if (currentItem.type === 'response') {
+        const timeout = setTimeout(() => {
+          setDisplayedLines(prev => [...prev, { text: currentItem.text, isCommand: false }]);
+          setCurrentLineIndex(prev => prev + 1);
+        }, 600); // System processing time
+        return () => clearTimeout(timeout);
+
+      } else if (currentItem.type === 'empty') {
+        const timeout = setTimeout(() => {
+          setDisplayedLines(prev => [...prev, { text: '', isCommand: false }]);
+          setCurrentLineIndex(prev => prev + 1);
+        }, 400);
+        return () => clearTimeout(timeout);
+      }
+    } else {
+      // Loop sequence
+      const timeout = setTimeout(() => {
+        setDisplayedLines([]);
+        setCurrentLineIndex(0);
+      }, 5000);
+      return () => clearTimeout(timeout);
     }
   }, [currentLineIndex, hasStarted]);
+
+  // Autoscroll terminal
+  useEffect(() => {
+    if (terminalScrollRef.current) {
+      terminalScrollRef.current.scrollTop = terminalScrollRef.current.scrollHeight;
+    }
+  }, [displayedLines, currentLineText]);
 
   useGSAP(() => {
     ScrollTrigger.create({
@@ -107,6 +147,34 @@ export default function StatsSection() {
     );
   }, { scope: container });
 
+  const renderResponseText = (line: string) => {
+    if (line.includes('[OK]')) {
+      return (
+        <>
+          <span className="text-[#28ca42] font-bold drop-shadow-[0_0_5px_rgba(40,202,66,0.6)]">[OK]</span>
+          {line.replace('[OK]', '')}
+        </>
+      );
+    }
+    if (line.includes('[EXITO]')) {
+      return (
+        <>
+          <span className="text-[#28ca42] font-bold drop-shadow-[0_0_5px_rgba(40,202,66,0.8)] animate-pulse">[EXITO]</span>
+          {line.replace('[EXITO]', '')}
+        </>
+      );
+    }
+    if (line.includes('[INFO]')) {
+      return (
+        <>
+          <span className="text-[#3b82f6] font-bold drop-shadow-[0_0_5px_rgba(59,130,246,0.6)]">[INFO]</span>
+          {line.replace('[INFO]', '')}
+        </>
+      );
+    }
+    return line;
+  };
+
   return (
     <section ref={container} className="relative bg-[#020202] py-24 px-6 border-t border-white/5 overflow-hidden">
       {/* Background glow for the section */}
@@ -116,10 +184,10 @@ export default function StatsSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
           
           {/* NOC Terminal */}
-          <div className="rounded-xl overflow-hidden border border-white/10 stat-reveal bg-[#10011c]/80 backdrop-blur-md shadow-[0_0_30px_rgba(100,24,157,0.15)] relative">
+          <div className="rounded-xl overflow-hidden border border-white/10 stat-reveal bg-[#10011c]/80 backdrop-blur-md shadow-[0_0_30px_rgba(100,24,157,0.15)] relative flex flex-col h-[25rem]">
             <div className="absolute inset-0 bg-gradient-to-br from-[#64189D]/10 to-transparent pointer-events-none"></div>
             
-            <div className="bg-[#1a0a2e] border-b border-[#64189D]/20 px-5 py-3.5 flex items-center justify-between">
+            <div className="bg-[#1a0a2e] border-b border-[#64189D]/20 px-5 py-3.5 flex items-center justify-between flex-shrink-0">
               <div className="flex gap-2">
                 <div className="w-3 h-3 rounded-full bg-[#ff5f57]"></div>
                 <div className="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
@@ -128,40 +196,47 @@ export default function StatsSection() {
               <span className="text-[#64189D] text-xs font-mono opacity-80">root@astralix-noc:~</span>
             </div>
             
-            <div className="p-6 min-h-[20rem] font-mono text-[13px] md:text-sm leading-relaxed text-[#c084fc] whitespace-pre-wrap break-words relative z-10">
-              {displayedLines.map((line, index) => (
-                 <div key={index} className="mb-2 text-white/90">
-                   {line.includes('[OK]') ? (
-                      <>
-                        {line.replace('[OK]', '')}
-                        <span className="text-[#28ca42] font-bold">[OK]</span>
-                      </>
-                   ) : line.includes('[ACTIVE]') ? (
-                      <>
-                        {line.replace('[ACTIVE]', '')}
-                        <span className="text-[#a855f7] font-bold drop-shadow-[0_0_5px_rgba(168,85,247,0.8)]">[ACTIVE]</span>
-                      </>
-                   ) : line.includes('ONLINE') ? (
-                      <>
-                        {line.replace('ONLINE', '')}
-                        <span className="text-[#28ca42] font-bold animate-pulse drop-shadow-[0_0_5px_rgba(40,202,66,0.8)]">ONLINE</span>
-                      </>
-                   ) : (
-                     line
-                   )}
-                 </div>
-              ))}
-              
-              {isTyping && (
-                <div className="inline-block text-white/90">
-                  {currentLineText}
-                  <span className="inline-block w-2 h-4 ml-1 align-middle bg-[#a855f7] animate-pulse"></span>
-                </div>
-              )}
-              
-              {!isTyping && currentLineIndex >= terminalLines.length && (
-                <div className="mt-2 text-[#a855f7] animate-pulse font-bold">_</div>
-              )}
+            <div ref={terminalScrollRef} className="p-6 font-mono text-[13px] md:text-sm leading-relaxed text-[#c084fc] whitespace-pre-wrap break-words relative z-10 flex-1 overflow-y-auto scrollbar-hide">
+              <div className="flex flex-col justify-end min-h-full">
+                {displayedLines.map((line, index) => (
+                   <div key={index} className="mb-2 text-white/90">
+                     {line.isCommand ? (
+                        <>
+                          <span className="text-[#a855f7] font-bold mr-2">{'>'}</span>
+                          <span>{line.text}</span>
+                        </>
+                     ) : line.text === '' ? (
+                        <div className="h-4"></div>
+                     ) : (
+                        renderResponseText(line.text)
+                     )}
+                   </div>
+                ))}
+                
+                {isTyping && (
+                  <div className="inline-block text-white/90">
+                    <span className="text-[#a855f7] font-bold mr-2">{'>'}</span>
+                    <span>{currentLineText}</span>
+                    <span className="inline-block w-2 h-4 ml-1 align-middle bg-[#a855f7] animate-pulse"></span>
+                  </div>
+                )}
+                
+                {/* Blinking cursor waiting for new command */}
+                {!isTyping && currentLineIndex < terminalSequence.length && terminalSequence[currentLineIndex].type === 'command' && displayedLines.length === 0 && (
+                  <div className="inline-block text-white/90">
+                    <span className="text-[#a855f7] font-bold mr-2">{'>'}</span>
+                    <span className="inline-block w-2 h-4 ml-1 align-middle bg-[#a855f7] animate-pulse"></span>
+                  </div>
+                )}
+
+                {/* Final blinking cursor when done */}
+                {!isTyping && currentLineIndex >= terminalSequence.length && (
+                  <div className="inline-block text-white/90 mt-2">
+                    <span className="text-[#a855f7] font-bold mr-2">{'>'}</span>
+                    <span className="inline-block w-2 h-4 ml-1 align-middle bg-[#a855f7] animate-pulse"></span>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
