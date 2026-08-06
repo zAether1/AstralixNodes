@@ -5,12 +5,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Proyección matemática perfecta para este SVG
+// Proyección Equirectangular exacta del SVG "world-map.svg" original
 const calcUserCoords = (lat: number, lon: number) => {
-  const x = 475.35 + (lon * 2.562);
-  const latRad = lat * Math.PI / 180;
-  const mercN = Math.log(Math.tan((Math.PI / 4) + (latRad / 2)));
-  const y = 223.2 - (mercN * 68.43); 
+  const x = 473.98 + (lon * 2.683);
+  const y = 309.31 - (lat * 3.115);
   return { cx: x, cy: y };
 };
 
@@ -18,33 +16,33 @@ const locations = [
   {
     region: 'Norteamérica',
     places: [
-      { id: 'us-mia', name: 'Miami', flag: 'us', lat: 25.7, lon: -80.1, endpoint: 'https://dynamodb.us-east-1.amazonaws.com' },
-      { id: 'us-nyc', name: 'Nueva York', flag: 'us', lat: 40.7, lon: -74.0, endpoint: 'https://dynamodb.us-east-2.amazonaws.com' },
-      { id: 'mx-mex', name: 'Ciudad de México', flag: 'mx', lat: 19.4, lon: -99.1, endpoint: 'https://dynamodb.us-west-1.amazonaws.com' },
+      { id: 'us-mia', name: 'Miami', flag: 'us', lat: 25.76, lon: -80.19, endpoint: 'https://dynamodb.us-east-1.amazonaws.com' },
+      { id: 'us-nyc', name: 'Nueva York', flag: 'us', lat: 40.71, lon: -74.00, endpoint: 'https://dynamodb.us-east-2.amazonaws.com' },
+      { id: 'mx-mex', name: 'Ciudad de México', flag: 'mx', lat: 19.43, lon: -99.13, endpoint: 'https://dynamodb.us-west-1.amazonaws.com' },
     ]
   },
   {
     region: 'Europa',
     places: [
-      { id: 'eu-mad', name: 'Madrid', flag: 'es', lat: 40.4, lon: -3.7, endpoint: 'https://dynamodb.eu-south-2.amazonaws.com' },
-      { id: 'eu-fra', name: 'Frankfurt', flag: 'de', lat: 50.1, lon: 8.6, endpoint: 'https://dynamodb.eu-central-1.amazonaws.com' },
-      { id: 'eu-lhr', name: 'Londres', flag: 'gb', lat: 51.5, lon: -0.1, endpoint: 'https://dynamodb.eu-west-2.amazonaws.com' },
-      { id: 'eu-par', name: 'París', flag: 'fr', lat: 48.8, lon: 2.3, endpoint: 'https://dynamodb.eu-west-3.amazonaws.com' },
-      { id: 'eu-ams', name: 'Ámsterdam', flag: 'nl', lat: 52.3, lon: 4.9, endpoint: 'https://dynamodb.eu-central-1.amazonaws.com' },
+      { id: 'eu-mad', name: 'Madrid', flag: 'es', lat: 40.41, lon: -3.70, endpoint: 'https://dynamodb.eu-south-2.amazonaws.com' },
+      { id: 'eu-fra', name: 'Frankfurt', flag: 'de', lat: 50.11, lon: 8.68, endpoint: 'https://dynamodb.eu-central-1.amazonaws.com' },
+      { id: 'eu-lhr', name: 'Londres', flag: 'gb', lat: 51.50, lon: -0.12, endpoint: 'https://dynamodb.eu-west-2.amazonaws.com' },
+      { id: 'eu-par', name: 'París', flag: 'fr', lat: 48.85, lon: 2.35, endpoint: 'https://dynamodb.eu-west-3.amazonaws.com' },
+      { id: 'eu-ams', name: 'Ámsterdam', flag: 'nl', lat: 52.36, lon: 4.90, endpoint: 'https://dynamodb.eu-central-1.amazonaws.com' },
     ]
   },
   {
     region: 'Sudamérica',
     places: [
-      { id: 'br-sao', name: 'São Paulo', flag: 'br', lat: -23.5, lon: -46.6, endpoint: 'https://dynamodb.sa-east-1.amazonaws.com' },
+      { id: 'br-sao', name: 'São Paulo', flag: 'br', lat: -23.55, lon: -46.63, endpoint: 'https://dynamodb.sa-east-1.amazonaws.com' },
     ]
   },
   {
     region: 'Asia / Pacífico',
     places: [
-      { id: 'jp-tyo', name: 'Tokio', flag: 'jp', lat: 35.6, lon: 139.6, endpoint: 'https://dynamodb.ap-northeast-1.amazonaws.com' },
-      { id: 'sg-sin', name: 'Singapur', flag: 'sg', lat: 1.3, lon: 103.8, endpoint: 'https://dynamodb.ap-southeast-1.amazonaws.com' },
-      { id: 'au-syd', name: 'Sídney', flag: 'au', lat: -33.8, lon: 151.2, endpoint: 'https://dynamodb.ap-southeast-2.amazonaws.com' },
+      { id: 'jp-tyo', name: 'Tokio', flag: 'jp', lat: 35.67, lon: 139.65, endpoint: 'https://dynamodb.ap-northeast-1.amazonaws.com' },
+      { id: 'sg-sin', name: 'Singapur', flag: 'sg', lat: 1.35, lon: 103.81, endpoint: 'https://dynamodb.ap-southeast-1.amazonaws.com' },
+      { id: 'au-syd', name: 'Sídney', flag: 'au', lat: -33.86, lon: 151.20, endpoint: 'https://dynamodb.ap-southeast-2.amazonaws.com' },
     ]
   }
 ];
@@ -189,7 +187,6 @@ export default function LocationsSection() {
                         onMouseMove={(e) => handleMouseMove(e, allPlaces.find(p => p.id === place.id), ping, color)}
                         onMouseLeave={handleMouseLeave}
                       >
-                        {/* Se usa img en lugar de Image para evitar errores de dominios no permitidos en next.config.js y asegurar que cargue la bandera correcta */}
                         <img 
                           alt={place.flag.toUpperCase()} 
                           width={24} 
