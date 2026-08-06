@@ -5,53 +5,50 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Proyección Equirectangular exacta del SVG "world-map.svg" original
+// Proyección Equirectangular para el usuario
 const calcUserCoords = (lat: number, lon: number) => {
   const x = 473.98 + (lon * 2.683);
   const y = 309.31 - (lat * 3.115);
   return { cx: x, cy: y };
 };
 
+// Coordenadas extraídas directamente de los píxeles reales del SVG vectorial original para garantizar 100% de precisión visual.
 const locations = [
   {
     region: 'Norteamérica',
     places: [
-      { id: 'us-mia', name: 'Miami', flag: 'us', lat: 25.76, lon: -80.19, endpoint: 'https://dynamodb.us-east-1.amazonaws.com' },
-      { id: 'us-nyc', name: 'Nueva York', flag: 'us', lat: 40.71, lon: -74.00, endpoint: 'https://dynamodb.us-east-2.amazonaws.com' },
-      { id: 'mx-mex', name: 'Ciudad de México', flag: 'mx', lat: 19.43, lon: -99.13, endpoint: 'https://dynamodb.us-west-1.amazonaws.com' },
+      { id: 'us-mia', name: 'Miami', flag: 'us', cx: 269.25, cy: 206.74, endpoint: 'https://dynamodb.us-east-1.amazonaws.com' },
+      { id: 'us-nyc', name: 'Nueva York', flag: 'us', cx: 274.06, cy: 168.28, endpoint: 'https://dynamodb.us-east-2.amazonaws.com' },
+      { id: 'mx-mex', name: 'Ciudad de México', flag: 'mx', cx: 211.55, cy: 235.59, endpoint: 'https://dynamodb.us-west-1.amazonaws.com' },
     ]
   },
   {
     region: 'Europa',
     places: [
-      { id: 'eu-mad', name: 'Madrid', flag: 'es', lat: 40.41, lon: -3.70, endpoint: 'https://dynamodb.eu-south-2.amazonaws.com' },
-      { id: 'eu-fra', name: 'Frankfurt', flag: 'de', lat: 50.11, lon: 8.68, endpoint: 'https://dynamodb.eu-central-1.amazonaws.com' },
-      { id: 'eu-lhr', name: 'Londres', flag: 'gb', lat: 51.50, lon: -0.12, endpoint: 'https://dynamodb.eu-west-2.amazonaws.com' },
-      { id: 'eu-par', name: 'París', flag: 'fr', lat: 48.85, lon: 2.35, endpoint: 'https://dynamodb.eu-west-3.amazonaws.com' },
-      { id: 'eu-ams', name: 'Ámsterdam', flag: 'nl', lat: 52.36, lon: 4.90, endpoint: 'https://dynamodb.eu-central-1.amazonaws.com' },
+      { id: 'eu-mad', name: 'Madrid', flag: 'es', cx: 468.78, cy: 185.11, endpoint: 'https://dynamodb.eu-south-2.amazonaws.com' },
+      { id: 'eu-fra', name: 'Frankfurt', flag: 'de', cx: 502.44, cy: 151.45, endpoint: 'https://dynamodb.eu-central-1.amazonaws.com' },
+      { id: 'eu-lhr', name: 'Londres', flag: 'gb', cx: 471.19, cy: 144.24, endpoint: 'https://dynamodb.eu-west-2.amazonaws.com' },
+      { id: 'eu-par', name: 'París', flag: 'fr', cx: 480.80, cy: 158.66, endpoint: 'https://dynamodb.eu-west-3.amazonaws.com' },
+      { id: 'eu-ams', name: 'Ámsterdam', flag: 'nl', cx: 490.42, cy: 149.05, endpoint: 'https://dynamodb.eu-central-1.amazonaws.com' },
     ]
   },
   {
     region: 'Sudamérica',
     places: [
-      { id: 'br-sao', name: 'São Paulo', flag: 'br', lat: -23.55, lon: -46.63, endpoint: 'https://dynamodb.sa-east-1.amazonaws.com' },
+      { id: 'br-sao', name: 'São Paulo', flag: 'br', cx: 339.00, cy: 360.00, endpoint: 'https://dynamodb.sa-east-1.amazonaws.com' },
     ]
   },
   {
     region: 'Asia / Pacífico',
     places: [
-      { id: 'jp-tyo', name: 'Tokio', flag: 'jp', lat: 35.67, lon: 139.65, endpoint: 'https://dynamodb.ap-northeast-1.amazonaws.com' },
-      { id: 'sg-sin', name: 'Singapur', flag: 'sg', lat: 1.35, lon: 103.81, endpoint: 'https://dynamodb.ap-southeast-1.amazonaws.com' },
-      { id: 'au-syd', name: 'Sídney', flag: 'au', lat: -33.86, lon: 151.20, endpoint: 'https://dynamodb.ap-southeast-2.amazonaws.com' },
+      { id: 'jp-tyo', name: 'Tokio', flag: 'jp', cx: 822.17, cy: 192.32, endpoint: 'https://dynamodb.ap-northeast-1.amazonaws.com' },
+      { id: 'sg-sin', name: 'Singapur', flag: 'sg', cx: 754.86, cy: 302.90, endpoint: 'https://dynamodb.ap-southeast-1.amazonaws.com' },
+      { id: 'au-syd', name: 'Sídney', flag: 'au', cx: 855.83, cy: 423.11, endpoint: 'https://dynamodb.ap-southeast-2.amazonaws.com' },
     ]
   }
 ];
 
-// Pre-calculate exact coordinates for the map points
-const allPlaces = locations.flatMap(loc => loc.places.map(p => {
-  const coords = calcUserCoords(p.lat, p.lon);
-  return { ...p, regionName: loc.region, cx: coords.cx, cy: coords.cy };
-}));
+const allPlaces = locations.flatMap(loc => loc.places.map(p => ({ ...p, regionName: loc.region })));
 
 const getPingColor = (ping: number) => {
   if (ping < 80) return '#4ade80'; 
@@ -98,16 +95,21 @@ export default function LocationsSection() {
     return () => clearInterval(pingInterval);
   }, []);
 
+  // Animación continua de flujo en líneas (Fibra óptica)
   useEffect(() => {
     if (userLoc && containerRef.current) {
-      gsap.to('.fiber-line', {
-        strokeDashoffset: -100,
-        ease: 'none',
-        duration: 1.5,
-        repeat: -1
-      });
+      const lines = containerRef.current.querySelectorAll('.fiber-line');
+      if (lines.length > 0) {
+        // strokeDasharray="5 15" -> total = 20. Moviendo por -20 genera un loop sin fin perfecto
+        gsap.to(lines, {
+          strokeDashoffset: -20,
+          ease: 'none',
+          duration: 0.8,
+          repeat: -1
+        });
+      }
     }
-  }, [userLoc, pings]);
+  }, [userLoc, pings]); // Se re-aplica si cambia userLoc o se re-renderizan los pings
 
   useEffect(() => {
     if (containerRef.current) {
