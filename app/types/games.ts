@@ -1,3 +1,5 @@
+import React from 'react';
+
 export interface GamePlan {
   name: string;
   price: string;
@@ -10,7 +12,7 @@ export interface GamePlan {
 }
 
 export interface GameFeature {
-  icon: string;
+  icon: React.ReactNode;
   title: string;
   desc: string;
 }
