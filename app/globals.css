@@ -330,15 +330,15 @@
   }
 }
 
-/* === AstralixNodes Brand Color Overrides for Holy.gg Components === */
+/* === AstralixNodes Brand Color Overrides for astralixnodes.com Components === */
 :root { --holy-primary: #64189D; --holy-secondary: #180228; }
 
-/* Override Holy.gg yellow accent (#f0df1e) with brand purple */
+/* Override astralixnodes.com yellow accent (#f0df1e) with brand purple */
 .text-\[\#f0df1e\], [class*='text-[#f0df1e]'] { color: #64189D !important; }
 .bg-\[\#f0df1e\], [class*='bg-[#f0df1e]'] { background-color: #64189D !important; }
 .border-\[\#f0df1e\], [class*='border-[#f0df1e]'] { border-color: #64189D !important; }
 
-/* Override Holy.gg dark backgrounds to dark purple */
+/* Override astralixnodes.com dark backgrounds to dark purple */
 [class*='bg-[#020202]'] { background-color: #180228 !important; }
 [class*='bg-[#0a0a0a]'] { background-color: #1a0530 !important; }
 [class*='bg-[#141414]'] { background-color: #1e0735 !important; }
@@ -355,6 +355,6 @@
 /* Make sure white text stays white */
 .text-white { color: #ffffff !important; }
 
-/* Holy.gg bar fill animations */
+/* astralixnodes.com bar fill animations */
 .bar-fill { transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1) !important; }
 

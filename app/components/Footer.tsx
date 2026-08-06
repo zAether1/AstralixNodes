@@ -23,7 +23,7 @@ export default function Footer() {
               </div>
             </div>
             
-            <p className="text-[#666] text-xs mt-6 leading-relaxed">Copyright © 2025 HOLY SERVERS LLC, operando bajo el nombre de AstralixNodes.</p>
+            <p className="text-[#666] text-xs mt-6 leading-relaxed">Copyright © 2025 AstralixNodes. Todos los derechos reservados.</p>
             <p className="text-[#666] text-xs mt-2 leading-relaxed">REG. NO.: 001599788. Esta entidad comercial está registrada oficialmente en 30 N Gould St, Suite N, Sheridan, WY 82801, Wyoming, US.</p>
             
             <div className="flex items-center gap-4 mt-6">

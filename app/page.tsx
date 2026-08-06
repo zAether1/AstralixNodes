@@ -5,12 +5,13 @@ import Footer from './components/Footer';
 import HeroSection from './components/HeroSection';
 import FeaturesHighlights from './components/FeaturesHighlights';
 import PriceComparison from './components/PriceComparison';
-import HolyPanelShowcase from './components/HolyPanelShowcase';
+import AstralixPanelShowcase from './components/AstralixPanelShowcase';
 import ReviewsSection from './components/ReviewsSection';
 import LocationsSection from './components/LocationsSection';
 import StatsSection from './components/StatsSection';
 import FaqSection from './components/FAQSection';
 import CtaSection from './components/CtaSection';
+import CEOSection from './components/CEOSection';
 
 export default function Home() {
   return (
@@ -19,9 +20,10 @@ export default function Home() {
       <HeroSection />
       <FeaturesHighlights />
       <PriceComparison />
-      <HolyPanelShowcase />
+      <AstralixPanelShowcase />
       <ReviewsSection />
       <LocationsSection />
+      <CEOSection />
       <StatsSection />
       <FaqSection />
       <CtaSection />
