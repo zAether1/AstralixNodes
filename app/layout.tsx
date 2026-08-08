@@ -4,6 +4,7 @@ import "./globals.css";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { CurrencyProvider } from "./contexts/CurrencyContext";
 import { Analytics } from "@vercel/analytics/next"
+import Script from "next/script";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -123,6 +124,9 @@ export default function RootLayout({
           </LanguageProvider>
         </CurrencyProvider>
         <Analytics />
+        <Script id="crisp-chat" strategy="afterInteractive">
+          {`window.$crisp=[];window.CRISP_WEBSITE_ID="5c60d237-f2e7-43c7-9917-14d601af7570";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();`}
+        </Script>
       </body>
     </html>
   );
