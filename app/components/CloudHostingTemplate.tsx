@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import Image from 'next/image';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import Price from './Price';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -117,7 +118,7 @@ export default function CloudHostingTemplate({ title, subtitle, bgImage, descrip
                 <div className="mb-6 mt-4">
                   <h3 className="text-2xl font-black text-white mb-2">{plan.name}</h3>
                   <div className="flex items-baseline gap-1">
-                    <span className="text-4xl font-black text-white">${plan.price}</span>
+                    <span className="text-4xl font-black text-white"><Price eur={parseFloat(String(plan.price).replace(',','.'))} /></span>
                     <span className="text-[#666] text-sm">/mes</span>
                   </div>
                 </div>

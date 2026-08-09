@@ -23,10 +23,10 @@ export default function Home() {
       <AstralixPanelShowcase />
       <ReviewsSection />
       <LocationsSection />
-      <CEOSection />
+      {/* <CEOSection /> */}
       <StatsSection />
       <FaqSection />
-      <CtaSection />
+      {/* <CtaSection /> */}
       <Footer />
     </main>
   )

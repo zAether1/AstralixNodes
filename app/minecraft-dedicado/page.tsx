@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Image from "next/image";
+import Price from '../components/Price';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -31,17 +32,14 @@ export default function DedicadosPage() {
       <Navbar />
       <main>
         {/* HERO */}
-        <section className="relative bg-[#180228] min-h-[70vh] flex items-center justify-center overflow-hidden pt-20">
+      <section className="relative bg-[#180228] min-h-[65vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 z-0">
              <div className="absolute inset-0 bg-gradient-to-b from-[#180228]/60 via-[#020202]/80 to-[#020202] z-10 mix-blend-multiply"></div>
              <div className="absolute inset-0 bg-[url('/assets/images/minecraft-hero-bg.webp')] bg-cover bg-center opacity-30"></div>
           </div>
           
           <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
-             <div className="hero-text inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/80 text-xs font-bold uppercase tracking-widest mb-6">
-                <span className="w-2 h-2 rounded-full bg-[#4ade80] animate-pulse"></span>
-                Disponibilidad Inmediata
-             </div>
+             
              
              <h1 className="hero-text text-5xl md:text-7xl lg:text-8xl font-black text-white leading-none tracking-tight">
                 SERVIDOR <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-[#64189D]">DEDICADO</span>
@@ -51,10 +49,12 @@ export default function DedicadosPage() {
                 Recursos 100% exclusivos, rendimiento hasta un <strong className="text-white">85% superior</strong> al alojamiento compartido. Hardware premium Ryzen con refrigeración líquida extrema.
              </p>
              
-             <div className="hero-text mt-10">
-                <a href="#planes" className="inline-flex items-center gap-3 bg-[#64189D] hover:bg-[#7b1dc2] text-white font-bold text-lg px-8 py-4 rounded-lg transition-all shadow-[0_0_30px_rgba(100,24,157,0.3)]">
-                   Ver Hardware y Planes
-                   <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+             <div className="hero-text mt-6 flex flex-col sm:flex-row items-center gap-4 justify-center">
+                <a href="#planes" className="inline-flex items-center gap-3 bg-[#64189D] hover:bg-[#7b1dc2] text-white font-bold text-lg px-6 py-3 rounded-lg transition-all shadow-[0_8px_30px_rgba(100,24,157,0.25)] cursor-pointer">
+                   Ver Planes
+                </a>
+                <a href="#caracteristicas" className="inline-flex items-center gap-3 bg-transparent hover:bg-[#3b0f4f] border border-[#64189D]/30 text-white font-semibold text-lg px-6 py-3 rounded-lg transition-all cursor-pointer">
+                   Ver Características
                 </a>
              </div>
           </div>
@@ -133,7 +133,7 @@ export default function DedicadosPage() {
                       {plan.pop && <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#64189D] text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">Más Popular</div>}
                       <h3 className="text-xl font-bold text-white mb-1">{plan.name}</h3>
                       <div className="flex items-baseline gap-1 mb-6 border-b border-white/10 pb-6">
-                         <span className="text-4xl font-black text-[#64189D]">€{plan.price}</span>
+                         <span className="text-4xl font-black text-[#64189D]"><Price eur={parseFloat(String(plan.price).replace(',','.'))} /></span>
                          <span className="text-[#666] text-sm">/mes</span>
                       </div>
                       
@@ -164,6 +164,80 @@ export default function DedicadosPage() {
              </div>
           </div>
         </section>
+
+            {/* CARACTERÍSTICAS VPS / DEDICADOS */}
+            <section id="caracteristicas" className="py-24 px-6 bg-gradient-to-b from-[#2b0d46] to-[#180226]">
+               <div className="max-w-7xl mx-auto">
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                     <div className="lg:col-span-1 reveal-up text-center flex flex-col items-center h-full justify-center py-8 lg:py-0">
+                        <h2 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tight">Características VPS & Dedicados</h2>
+                        <p className="text-[#d6c9f8] mt-4 max-w-md mx-auto">Recursos pensados para proyectos exigentes: conectividad 10Gbps, IPs dedicadas, snapshots y soporte premium con SLA.</p>
+                     </div>
+
+                     <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6 pl-8 lg:pl-16">
+                        <div className="reveal-up flex gap-4 p-6 rounded-2xl border border-white/6 bg-[#2a0e46]">
+                           <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-gradient-to-br from-[#7c3aed] to-[#9d4edd] flex items-center justify-center shadow-md">
+                              <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                           </div>
+                           <div>
+                              <h4 className="text-white font-bold">Conectividad 10Gbps</h4>
+                              <p className="text-[#d6c9f8] mt-1 text-sm">Red de baja latencia y enlaces redundantes para máxima disponibilidad y experiencia de juego.</p>
+                           </div>
+                        </div>
+
+                        <div className="reveal-up flex gap-4 p-6 rounded-2xl border border-white/6 bg-[#2a0e46]">
+                           <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-gradient-to-br from-[#6b21a8] to-[#9d4edd] flex items-center justify-center shadow-md">
+                              <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" d="M12 2a2 2 0 012 2v4a2 2 0 01-2 2 2 2 0 01-2-2V4a2 2 0 012-2zM4 12h16v8a2 2 0 01-2 2H6a2 2 0 01-2-2v-8z"/></svg>
+                           </div>
+                           <div>
+                              <h4 className="text-white font-bold">IPs Dedicadas</h4>
+                              <p className="text-[#d6c9f8] mt-1 text-sm">Asignamos IPs públicas dedicadas para tus servidores y servicios sin NAT compartido.</p>
+                           </div>
+                        </div>
+
+                        <div className="reveal-up flex gap-4 p-6 rounded-2xl border border-white/6 bg-[#2a0e46]">
+                           <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-gradient-to-br from-[#7c3aed] to-[#8b5cf6] flex items-center justify-center shadow-md">
+                              <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" d="M3 7h18M3 12h18M3 17h18"/></svg>
+                           </div>
+                           <div>
+                              <h4 className="text-white font-bold">Snapshots & Backups</h4>
+                              <p className="text-[#d6c9f8] mt-1 text-sm">Programación de snapshots y backups incrementales para restauración rápida.</p>
+                           </div>
+                        </div>
+
+                        <div className="reveal-up flex gap-4 p-6 rounded-2xl border border-white/6 bg-[#2a0e46]">
+                           <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-gradient-to-br from-[#8b5cf6] to-[#9d4edd] flex items-center justify-center shadow-md">
+                              <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" d="M12 11c0-3.866 3.582-7 8-7v11M4 6v11a1 1 0 001 1h9M8 3v4"/></svg>
+                           </div>
+                           <div>
+                              <h4 className="text-white font-bold">Soporte Premium 24/7</h4>
+                              <p className="text-[#d6c9f8] mt-1 text-sm">Equipo técnico especializado para asistencia, migraciones y optimizaciones.</p>
+                           </div>
+                        </div>
+
+                        <div className="reveal-up flex gap-4 p-6 rounded-2xl border border-white/6 bg-[#2a0e46]">
+                           <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-gradient-to-br from-[#7c3aed] to-[#9d4edd] flex items-center justify-center shadow-md">
+                              <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" d="M12 2l2 5h5l-4 3 2 5-5-3-5 3 2-5-4-3h5z"/></svg>
+                           </div>
+                           <div>
+                              <h4 className="text-white font-bold">Redundancia & SLA</h4>
+                              <p className="text-[#d6c9f8] mt-1 text-sm">Arquitectura redundante con opciones de SLA empresarial y alta tolerancia a fallos.</p>
+                           </div>
+                        </div>
+
+                        <div className="reveal-up flex gap-4 p-6 rounded-2xl border border-white/6 bg-[#2a0e46]">
+                           <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-gradient-to-br from-[#8b5cf6] to-[#9d4edd] flex items-center justify-center shadow-md">
+                              <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" d="M3 12h18M12 3v18"/></svg>
+                           </div>
+                           <div>
+                              <h4 className="text-white font-bold">IPs Geolocalizadas</h4>
+                              <p className="text-[#d6c9f8] mt-1 text-sm">Elige ubicaciones con IPs locales para reducir latencia hacia tus jugadores o clientes.</p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </section>
       </main>
       <Footer />
     </div>
