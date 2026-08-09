@@ -40,18 +40,54 @@ const faqs = {
     {
       q: '¿Tienen soporte para Bedrock o Geyser?',
       a: 'Sí, soportamos servidores Bedrock nativos y también puedes usar GeyserMC en servidores Java para permitir la conexión de jugadores de Bedrock (Crossplay).'
+    },
+    {
+      q: '¿Puedo instalar modpacks y plugins personalizados?',
+      a: 'Claro: ofrecemos instalación de modpacks populares y soporte para plugins. Si necesitas ayuda con configuraciones (Forge, Fabric, Sponge), nuestro equipo puede asistirte.'
+    },
+    {
+      q: '¿Cómo funcionan los backups y restauraciones?',
+      a: 'Realizamos snapshots diarios automáticos y puedes solicitar restauraciones desde el panel. También puedes descargar backups manuales cuando lo necesites.'
+    },
+    {
+      q: '¿Qué latencia puedo esperar?',
+      a: 'Depende de la ubicación del nodo y de tus jugadores. Disponemos de múltiples ubicaciones y ofrecemos recomendaciones para reducir ping según la audiencia.'
     }
   ],
   juegos: [
     {
       q: '¿Ofrecen servidores para otros juegos?',
       a: 'Sí, ofrecemos servidores para Rust, ARK, Terraria, Palworld, CS:GO, GMod, y muchos otros. Puedes ver la lista completa en la sección de juegos.'
+    },
+    {
+      q: '¿Puedo pedir configuración de mapas o mods personalizados?',
+      a: 'Sí: instalamos mapas y mods bajo pedido. Para cambios complejos o integraciones, abre un ticket y evaluamos tiempos y compatibilidades.'
+    },
+    {
+      q: '¿Qué ubicaciones de servidores están disponibles?',
+      a: 'Contamos con múltiples datacenters en Europa y América; para algunos juegos también ofrecemos regiones adicionales para optimizar la experiencia.'
+    },
+    {
+      q: '¿Ofrecen soporte para voice chat o integración con Discord?',
+      a: 'Podemos ayudar con integraciones básicas y recomendaciones; la configuración de bots/servicios externos suele gestionarse vía documentación y soporte técnico.'
     }
   ],
   dedicado: [
     {
       q: '¿Cuál es la diferencia de los planes dedicados?',
       a: 'Los planes dedicados ofrecen recursos garantizados (CPU y RAM) que no se comparten con otros usuarios, ideal para servidores grandes con cientos de jugadores.'
+    },
+    {
+      q: '¿Puedo solicitar IPs adicionales o bloque de IPs?',
+      a: 'Sí, gestionamos asignaciones de IPs públicas dedicadas y bloques según disponibilidad y justificación técnica.'
+    },
+    {
+      q: '¿Qué opciones de gestión ofrecen para servidores dedicados?',
+      a: 'Ofrecemos paneles de administración, acceso root/SSH y servicios gestionados bajo contrato (migraciones, optimizaciones y back-ups personalizados).'
+    },
+    {
+      q: '¿Tienen SLA y opciones de soporte prioritario?',
+      a: 'Sí, podemos ofrecer acuerdos de nivel de servicio y soporte prioritario para clientes empresariales con requerimientos específicos.'
     }
   ]
 };
@@ -115,7 +151,7 @@ export default function FaqSection() {
                 activeCategory === cat.id 
                   ? 'bg-[#64189D] text-white font-semibold' 
                   : 'bg-[#2a2a2a] text-[#999] hover:bg-[#333] hover:text-white'
-              }`}
+              } cursor-pointer`}
             >
               {cat.icon}
               {cat.label}

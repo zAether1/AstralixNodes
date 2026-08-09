@@ -6,6 +6,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { GamePlan, GameFeature } from '../types/games';
 import Footer from './Footer';
+import Price from './Price';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -121,7 +122,7 @@ export default function GameHostingTemplate({ gameName, gameId, bgImage, descrip
                 <div className="mb-6">
                   <h3 className="text-2xl font-black text-white mb-2">{plan.name}</h3>
                   <div className="flex items-baseline gap-1">
-                    <span className="text-3xl font-black text-white">${plan.price}</span>
+                    <span className="text-3xl font-black text-white"><Price eur={parseFloat(String(plan.price).replace(',','.'))} /></span>
                     <span className="text-[#666] text-sm">/mes</span>
                   </div>
                 </div>

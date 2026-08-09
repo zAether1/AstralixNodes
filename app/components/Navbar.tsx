@@ -270,19 +270,26 @@ export default function Navbar() {
           <div className="flex items-center gap-4">
             
             {/* Currency Selector */}
-            <div className="flex bg-[#141414] rounded-lg p-1 border border-white/5">
-              <button 
-                onClick={() => setCurrency('EUR')}
-                className={`px-3 py-1 text-xs font-bold rounded-md transition-colors ${currency === 'EUR' ? 'bg-[#64189D] text-white' : 'text-[#888] hover:text-white'}`}
-              >
-                EUR
-              </button>
-              <button 
-                onClick={() => setCurrency('USD')}
-                className={`px-3 py-1 text-xs font-bold rounded-md transition-colors ${currency === 'USD' ? 'bg-[#64189D] text-white' : 'text-[#888] hover:text-white'}`}
-              >
-                USD
-              </button>
+            <div className="relative">
+              <div className="inline-flex items-center bg-[#141414] rounded-full border border-white/6 p-1">
+                <button
+                  onClick={() => setCurrency('EUR')}
+                  aria-pressed={currency === 'EUR'}
+                  className={`flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold transition-all ${currency === 'EUR' ? 'bg-[#64189D] text-white shadow-[0_6px_20px_rgba(100,24,157,0.18)]' : 'text-[#aaa] hover:text-white'} cursor-pointer`}
+                >
+                  <span className="w-5 h-5 flex items-center justify-center rounded-full bg-white/5 text-sm">€</span>
+                  <span className="hidden sm:inline">EUR</span>
+                </button>
+
+                <button
+                  onClick={() => setCurrency('USD')}
+                  aria-pressed={currency === 'USD'}
+                  className={`flex items-center gap-2 px-3 py-1 ml-1 rounded-full text-xs font-bold transition-all ${currency === 'USD' ? 'bg-[#64189D] text-white shadow-[0_6px_20px_rgba(100,24,157,0.18)]' : 'text-[#aaa] hover:text-white'} cursor-pointer`}
+                >
+                  <span className="w-5 h-5 flex items-center justify-center rounded-full bg-white/5 text-sm">$</span>
+                  <span className="hidden sm:inline">USD</span>
+                </button>
+              </div>
             </div>
 
             {/* Login & Panel */}
