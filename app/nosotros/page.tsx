@@ -2,8 +2,6 @@
 import React, { useEffect, useRef } from 'react';
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import CEOSection from "../components/CEOSection";
-import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -35,93 +33,147 @@ export default function NosotrosPage() {
     <div className="min-h-screen bg-[#020202]" ref={containerRef}>
       <Navbar />
       <main>
-        {/* Hero Section */}
-        <section className="relative bg-[#180228] min-h-[60vh] flex items-center justify-center overflow-hidden pt-20">
-          <div className="absolute inset-0 z-0">
-             <div className="absolute inset-0 bg-gradient-to-b from-[#180228]/80 via-[#020202]/90 to-[#020202] z-10 mix-blend-multiply"></div>
-             <Image 
-                src="/assets/images/nosotros-hero-bg.avif" 
-                alt="Nosotros Fondo" 
-                fill 
-                className="object-cover object-center opacity-30"
-             />
-             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#64189D]/20 rounded-full blur-[120px] pointer-events-none"></div>
-          </div>
-          
-          <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
-            <span className="hero-anim inline-block py-1.5 px-4 rounded-full bg-[#64189D]/20 text-[#64189D] border border-[#64189D]/30 font-bold text-xs tracking-widest uppercase mb-6 shadow-[0_0_15px_rgba(100,24,157,0.3)]">¿Quiénes Somos?</span>
-            <h1 className="hero-anim text-4xl sm:text-5xl md:text-7xl font-black text-white mb-8 leading-none tracking-tight">
-              ASTRALIX<span className="text-[#64189D]">NODES</span>
-            </h1>
-            <p className="hero-anim text-[#999] text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
-              Nuestra misión es ofrecer la infraestructura más avanzada y estable para tus proyectos digitales. Más que un hosting, somos el motor de tu comunidad.
-            </p>
-          </div>
-        </section>
-
-        {/* Historia Section */}
-        <section className="bg-[#020202] py-24 px-6 relative border-t border-white/5">
-          <div className="max-w-4xl mx-auto relative z-10">
-            <div className="reveal-up text-center mb-20">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white uppercase tracking-tight mb-4">Nuestra Historia</h2>
-              <div className="w-24 h-1.5 bg-[#64189D] mx-auto rounded-full shadow-[0_0_10px_rgba(100,24,157,0.5)]"></div>
-            </div>
-            
-            <div className="space-y-12 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-[#64189D]/30 before:to-transparent">
-              
-              {/* Timeline Item 1 */}
-              <div className="reveal-up relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-[#020202] bg-[#64189D] shadow-[0_0_15px_rgba(100,24,157,0.8)] text-white font-bold shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
-                </div>
-                
-                <div className="w-[calc(100%-4rem)] md:w-[calc(50%-3rem)] bg-[#10011c] border border-white/5 rounded-2xl p-8 hover:border-[#64189D]/50 transition-colors shadow-lg">
-                  <div className="flex items-center gap-4 mb-4">
-                     <span className="text-4xl font-black text-[#64189D] leading-none">2023</span>
-                     <h3 className="text-lg font-bold text-white uppercase tracking-wide">El Comienzo</h3>
-                  </div>
-                  <p className="text-[#888] leading-relaxed text-sm md:text-base">
-                    Todo comenzó bajo el nombre de <strong>ZerithNodes</strong>. Nuestra visión inicial era proporcionar servidores de calidad para comunidades pequeñas. Sin embargo, debido a desafíos logísticos y estructurales, tomamos la difícil decisión de pausar para replantear objetivos.
-                  </p>
-                </div>
+        {/* Hero Section  */}
+        <section className="relative min-h-[70vh] flex items-center" style={{ backgroundImage: "url('https://i.imgur.com/nJwXQ8C.png')", backgroundSize: 'cover', backgroundPosition: 'center' }}>
+          <div className="absolute inset-0 bg-black/65 backdrop-blur-sm"></div>
+          <div className="relative z-10 w-full px-6 py-20">
+            <div className="max-w-4xl mx-auto text-center text-white">
+              <span className="inline-block py-1 px-4 rounded-full bg-white/5 text-[#cdbcff] border border-white/6 font-bold text-xs tracking-widest uppercase mb-4">Quiénes Somos</span>
+              <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-white leading-tight mb-6">Equipo Astralix</h1>
+              <p className="text-lg md:text-xl lg:text-2xl text-white/90 max-w-3xl mx-auto font-medium mb-8">Infraestructura premium diseñada para comunidades de juego y proyectos digitales. Rendimiento, soporte humano y herramientas que facilitan escalar.</p>
+              <div className="flex justify-center gap-4">
+                <a href="/vps" className="inline-block bg-gradient-to-r from-[#7b1dc2] to-[#64189D] px-6 py-3 rounded-full text-white font-bold shadow-md hover:opacity-95 transition">Conoce nuestros servicios</a>
+                <a href="https://discord.gg/6UMfyMM5pu" target="_blank" rel="noopener noreferrer" className="inline-block bg-white/6 px-6 py-3 rounded-full text-white font-bold border border-white/10 hover:bg-white/10 transition">Unirme al Discord</a>
               </div>
-
-              {/* Timeline Item 2 */}
-              <div className="reveal-up relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-[#020202] bg-[#64189D] shadow-[0_0_15px_rgba(100,24,157,0.8)] text-white font-bold shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"/></svg>
-                </div>
-                
-                <div className="w-[calc(100%-4rem)] md:w-[calc(50%-3rem)] bg-[#10011c] border border-white/5 rounded-2xl p-8 hover:border-[#64189D]/50 transition-colors shadow-lg">
-                  <div className="flex items-center gap-4 mb-4">
-                     <span className="text-4xl font-black text-[#64189D] leading-none">2026</span>
-                     <h3 className="text-lg font-bold text-white uppercase tracking-wide">El Renacer</h3>
-                  </div>
-                  <p className="text-[#888] leading-relaxed text-sm md:text-base">
-                    Regresamos con una visión renovada y una infraestructura de clase mundial. Cambiamos nuestra identidad, mejoramos la tecnología y renacimos como <strong>AstralixNodes</strong>. Hoy ofrecemos hosting premium con el máximo rendimiento garantizado.
-                  </p>
-                </div>
-              </div>
-
             </div>
           </div>
         </section>
 
-        {/* CEO Section */}
-        <div className="border-t border-white/5 bg-[#020202]">
-           <CEOSection />
-        </div>
+        <section className="py-20 px-6 bg-gradient-to-r from-[#020202] to-[#0b0412] text-white border-t border-white/5">
+          <div className="max-w-5xl mx-auto text-center">
+            <blockquote className="text-2xl md:text-3xl lg:text-4xl font-medium leading-relaxed mx-auto max-w-4xl mb-8 text-white/95">
+              "Construimos AstralixNodes con un solo objetivo en mente: brindarte el rendimiento puro y la estabilidad que todo creador merece. Sin compromisos, sin ataduras, solo potencia y un soporte que sí entiende tus problemas."
+            </blockquote>
+            <div className="mt-4">
+              <div className="text-2xl font-bold">Carlos Jahir</div>
+              <div className="text-sm uppercase tracking-widest text-white/80">Founder & CEO — @_zAether</div>
+            </div>
+          </div>
+        </section>
+
+        <section className="py-20 px-6 bg-[#0b0b0b] border-t border-white/5">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-4xl font-black text-[#64189D] text-center mb-4">Personal</h2>
+            <p className="text-[#9b9b9b] text-center max-w-3xl mx-auto mb-10">Nuestro equipo está organizado en CEO, Developer y Support para cubrir visión, producto y atención.</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-[#111] border border-[#4a1b7b]/40 rounded-3xl p-8 shadow-[0_20px_60px_rgba(100,24,157,0.12)]">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-16 h-16 rounded-3xl bg-[#64189D] flex items-center justify-center text-2xl font-black text-white">CJ</div>
+                  <div>
+                    <p className="text-sm uppercase tracking-[0.3em] text-[#cdbcff]/80 mb-1">CEO</p>
+                    <h3 className="text-2xl font-bold text-white">Carlos Jahir</h3>
+                  </div>
+                </div>
+                <div className="flex flex-wrap gap-2 mb-6">
+                  <span className="px-3 py-1 rounded-full bg-[#64189D]/15 text-[#cdbcff] text-xs font-semibold">Founder</span>
+                  <span className="px-3 py-1 rounded-full bg-[#ffffff]/10 text-white text-xs font-semibold">Visión</span>
+                </div>
+                <p className="text-[#bbb] leading-relaxed">Impulsa la visión general del servicio y toma decisiones clave para que AstralixNodes crezca con el estándar de calidad que piden las comunidades.</p>
+                <div className="mt-8 flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-sm font-black text-white">CJ</div>
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.2em] text-[#888]">Discord</p>
+                    <p className="font-bold text-white">CJ#0001</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-[#111] border border-white/10 rounded-3xl p-8">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-16 h-16 rounded-3xl bg-[#2d0f45] flex items-center justify-center text-2xl font-black text-white">DV</div>
+                  <div>
+                    <p className="text-sm uppercase tracking-[0.3em] text-[#cdbcff]/80 mb-1">Developer</p>
+                    <h3 className="text-2xl font-bold text-white">Desarrollo</h3>
+                  </div>
+                </div>
+                <div className="flex flex-wrap gap-2 mb-6">
+                  <span className="px-3 py-1 rounded-full bg-[#ffffff]/10 text-white text-xs font-semibold">Backend</span>
+                  <span className="px-3 py-1 rounded-full bg-[#ffffff]/10 text-white text-xs font-semibold">Frontend</span>
+                </div>
+                <p className="text-[#bbb] leading-relaxed">Diseña y mantiene los servicios y las integraciones que hacen posible que tus proyectos funcionen sin caídas ni complicaciones.</p>
+                <div className="mt-8 flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-sm font-black text-white">DV</div>
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.2em] text-[#888]">Discord</p>
+                    <p className="font-bold text-white">Dev#2202</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-[#111] border border-white/10 rounded-3xl p-8">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-16 h-16 rounded-3xl bg-[#241436] flex items-center justify-center text-2xl font-black text-white">SP</div>
+                  <div>
+                    <p className="text-sm uppercase tracking-[0.3em] text-[#cdbcff]/80 mb-1">Support</p>
+                    <h3 className="text-2xl font-bold text-white">Atención</h3>
+                  </div>
+                </div>
+                <div className="flex flex-wrap gap-2 mb-6">
+                  <span className="px-3 py-1 rounded-full bg-[#ffffff]/10 text-white text-xs font-semibold">24/7</span>
+                  <span className="px-3 py-1 rounded-full bg-[#64189D]/15 text-[#cdbcff] text-xs font-semibold">Comunidad</span>
+                </div>
+                <p className="text-[#bbb] leading-relaxed">Atiende dudas, resuelve incidencias y mantiene comunicación directa con clientes y creadores para que todo funcione sin ruido.</p>
+                <div className="mt-8 flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-sm font-black text-white">SP</div>
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.2em] text-[#888]">Discord</p>
+                    <p className="font-bold text-white">Support#7788</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ¿Por qué HolyHosting? / Stats */}
+        <section className="py-20 px-6 bg-[#0b0b0b] border-t border-white/5">
+          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div className="p-6 bg-[#0f0f0f] rounded-2xl border border-white/6">
+              <h3 className="text-3xl font-extrabold text-[#64189D] mb-4">¿Por qué AstralixNodes?</h3>
+              <p className="text-[#bfbfbf] mb-6">Con más de una década alojando servidores, sabemos exactamente lo que necesitas.</p>
+              <a href="/vps" className="inline-block bg-[#64189D] text-white font-bold px-6 py-3 rounded-full">Comprar un servidor</a>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="p-6 rounded-2xl bg-[#111] border border-white/6">
+                <div className="text-2xl font-bold text-white">+50.000</div>
+                <div className="text-sm text-[#bfbfbf]">Clientes satisfechos</div>
+              </div>
+              <div className="p-6 rounded-2xl bg-[#111] border border-white/6">
+                <div className="text-2xl font-bold text-white">80</div>
+                <div className="text-sm text-[#bfbfbf]">Nodos operando</div>
+              </div>
+              <div className="p-6 rounded-2xl bg-[#111] border border-white/6">
+                <div className="text-2xl font-bold text-white">2017</div>
+                <div className="text-sm text-[#bfbfbf]">Superiores desde 2017</div>
+              </div>
+              <div className="p-6 rounded-2xl bg-[#111] border border-white/6">
+                <div className="text-2xl font-bold text-white">99.997%</div>
+                <div className="text-sm text-[#bfbfbf]">Uptime histórico</div>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* Call to Action */}
-        <section className="bg-gradient-to-b from-[#020202] to-[#180228] py-24 text-center border-t border-white/5 relative overflow-hidden">
+        <section className="bg-gradient-to-b from-[#0b0412] to-[#150127] py-24 text-center border-t border-white/5 relative overflow-hidden">
           <div className="absolute inset-0">
-             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-[#64189D]/10 blur-[100px] rounded-t-[100%] pointer-events-none"></div>
+             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-gradient-to-r from-[#64189D]/8 to-[#3a0b4f]/8 blur-[100px] rounded-t-[100%] pointer-events-none"></div>
           </div>
           <div className="reveal-up relative z-10 max-w-3xl mx-auto px-6">
-            <h2 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tight mb-6">¿Listo para evolucionar?</h2>
+            <h2 className="text-3xl md:text-5xl font-black text-[#cdbcff] uppercase tracking-tight mb-6">¿Listo para evolucionar?</h2>
             <p className="text-[#999] text-lg mb-10">Experimenta la verdadera potencia de una red diseñada para ganar.</p>
-            <a href="/minecraft" className="inline-block bg-[#64189D] text-white font-bold px-10 py-4 rounded-xl hover:bg-[#7b1dc2] transition-colors shadow-[0_0_30px_rgba(100,24,157,0.3)]">
-              Explorar Servicios Premium
+            <a href="/contacto" className="inline-block bg-gradient-to-r from-[#7b1dc2] to-[#64189D] text-white font-bold px-10 py-4 rounded-xl hover:opacity-95 transition-colors shadow-[0_0_30px_rgba(100,24,157,0.28)]">
+              Habla con Ventas
             </a>
           </div>
         </section>

@@ -66,8 +66,7 @@ export default function FeaturesHighlights() {
           <div className="w-full lg:w-[23.75rem] lg:min-h-[30.625rem] flex-shrink-0 order-2 lg:order-1 flex flex-col gap-2.5 lg:max-h-[37.5rem] lg:overflow-y-auto lg:pr-2">
             
             <div className="bg-[#282828]/60 border-2 border-[#282828] rounded-xl px-5 py-4 flex items-center justify-center gap-2.5 mb-1">
-              <span className="text-white text-lg font-extrabold">Usa el cupón</span>
-              <span className="text-[#64189D] text-2xl font-black uppercase tracking-wider">PRIMERMES</span>
+              <span className="text-[#64189D] text-2xl font-black uppercase tracking-wider">AstralixNodes2026</span>
             </div>
 
             <div className="flex flex-col gap-2.5">
@@ -81,7 +80,7 @@ export default function FeaturesHighlights() {
                   <div className="text-[#888] text-xs">Ideal para comenzar</div>
                 </div>
                 <div className="text-right">
-                  <div className="text-white font-bold text-sm">{formatPrice(4.24)}</div>
+                  <div className="text-white font-bold text-sm">$52.92</div>
                 </div>
               </div>
 
@@ -94,7 +93,7 @@ export default function FeaturesHighlights() {
                   <div className="text-[#888] text-xs">Para servidores medianos</div>
                 </div>
                 <div className="text-right">
-                  <div className="text-white font-bold text-sm">{formatPrice(8.48)}</div>
+                  <div className="text-white font-bold text-sm">$117.72</div>
                 </div>
               </div>
 
@@ -107,7 +106,7 @@ export default function FeaturesHighlights() {
                   <div className="text-[#888] text-xs">Máximo rendimiento</div>
                 </div>
                 <div className="text-right">
-                  <div className="text-white font-bold text-sm">{formatPrice(16.96)}</div>
+                  <div className="text-white font-bold text-sm">$322.92</div> 
                 </div>
               </div>
 

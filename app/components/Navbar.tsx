@@ -55,9 +55,8 @@ export default function Navbar() {
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2">
                         <div className="text-white font-bold text-sm leading-tight">Minecraft Hosting</div>
-                        <span className="bg-[#64189D] text-white text-[10px] font-bold px-1.5 py-0.5 rounded">POPULAR</span>
                       </div>
-                      <div className="text-[#999] text-xs mt-1">Comenzando en <span className="text-white font-bold">{formatPrice(4.24)}</span></div>
+                      <div className="text-[#999] text-xs mt-1">Proximamente</div>
                     </div>
                   </Link>
 
@@ -67,9 +66,9 @@ export default function Navbar() {
                     </div>
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2">
-                        <div className="text-white font-bold text-sm leading-tight">Servidor Dedicado</div>
+                        <div className="text-white font-bold text-sm leading-tight">Servidor Dedicado</div> <span className="bg-[#64189D] text-white text-[10px] font-bold px-1.5 py-0.5 rounded">POPULAR</span>
                       </div>
-                      <div className="text-[#999] text-xs mt-1">Comenzando en <span className="text-white font-bold">{formatPrice(21.08)}</span></div>
+                      <div className="text-[#999] text-xs mt-1">Comenzando en <span className="text-white font-bold">{formatPrice(49)}</span></div>
                     </div>
                   </Link>
 
@@ -90,27 +89,27 @@ export default function Navbar() {
                     
                     <Link href="/project-zomboid" className="flex items-center gap-3 p-3 rounded-lg bg-[#141414] hover:bg-[#1e1e1e] transition-colors">
                       <div className="w-[60px] h-[70px] relative flex-shrink-0 rounded-md overflow-hidden">
-                        <Image alt="Project Zomboid" fill className="object-cover" src="/assets/games/project-zomboid.jpeg" />
+                        <Image alt="Project Zomboid" fill sizes="60px" className="object-cover" src="/assets/games/project-zomboid.jpeg" />
                       </div>
                       <div className="min-w-0">
                         <div className="text-white font-bold text-sm leading-tight">Project Zomboid</div>
-                        <div className="text-[#999] text-xs mt-1">Comenzando en <span className="text-white font-bold">{formatPrice(4.25)}</span></div>
+                        <div className="text-[#999] text-xs mt-1">Próximamente</div>
                       </div>
                     </Link>
 
                     <Link href="/palworld" className="flex items-center gap-3 p-3 rounded-lg bg-[#141414] hover:bg-[#1e1e1e] transition-colors">
                       <div className="w-[60px] h-[70px] relative flex-shrink-0 rounded-md overflow-hidden">
-                        <Image alt="Palworld" fill className="object-cover" src="/assets/games/palworld.jpeg" />
+                        <Image alt="Palworld" fill sizes="60px" className="object-cover" src="/assets/games/palworld.jpeg" />
                       </div>
                       <div className="min-w-0">
                         <div className="text-white font-bold text-sm leading-tight">Palworld</div>
-                        <div className="text-[#999] text-xs mt-1">Comenzando en <span className="text-white font-bold">{formatPrice(8.50)}</span></div>
+                        <div className="text-[#999] text-xs mt-1">Próximamente</div>
                       </div>
                     </Link>
 
                     <Link href="/hytale" className="flex items-center gap-3 p-3 rounded-lg bg-[#141414] hover:bg-[#1e1e1e] transition-colors">
                       <div className="w-[60px] h-[70px] relative flex-shrink-0 rounded-md overflow-hidden">
-                        <Image alt="Hytale" fill className="object-cover" src="/assets/games/hytale-cover.png" />
+                        <Image alt="Hytale" fill sizes="60px" className="object-cover" src="/assets/games/hytale-cover.png" />
                       </div>
                       <div className="min-w-0">
                         <div className="text-white font-bold text-sm leading-tight">Hytale</div>
@@ -120,21 +119,21 @@ export default function Navbar() {
 
                     <Link href="/valheim" className="flex items-center gap-3 p-3 rounded-lg bg-[#141414] hover:bg-[#1e1e1e] transition-colors">
                       <div className="w-[60px] h-[70px] relative flex-shrink-0 rounded-md overflow-hidden">
-                        <Image alt="Valheim" fill className="object-cover" src="/assets/games/valheim.png" />
+                        <Image alt="Valheim" fill sizes="60px" className="object-cover" src="/assets/games/valheim.png" />
                       </div>
                       <div className="min-w-0">
                         <div className="text-white font-bold text-sm leading-tight">Valheim</div>
-                        <div className="text-[#999] text-xs mt-1">Comenzando en <span className="text-white font-bold">{formatPrice(5.50)}</span></div>
+                        <div className="text-[#999] text-xs mt-1">Próximamente</div>
                       </div>
                     </Link>
 
                     <Link href="/terraria" className="flex items-center gap-3 p-3 rounded-lg bg-[#141414] hover:bg-[#1e1e1e] transition-colors">
                       <div className="w-[60px] h-[70px] relative flex-shrink-0 rounded-md overflow-hidden">
-                        <Image alt="Terraria" fill className="object-cover" src="/assets/games/terraria.jpeg" />
+                        <Image alt="Terraria" fill sizes="60px" className="object-cover" src="/assets/games/terraria.jpeg" />
                       </div>
                       <div className="min-w-0">
                         <div className="text-white font-bold text-sm leading-tight">Terraria</div>
-                        <div className="text-[#999] text-xs mt-1">Comenzando en <span className="text-white font-bold">{formatPrice(3.50)}</span></div>
+                        <div className="text-[#999] text-xs mt-1">Próximamente</div>
                       </div>
                     </Link>
 
@@ -206,14 +205,14 @@ export default function Navbar() {
                       </div>
                     </Link>
 
-                    <Link href="/branding" className="flex items-center gap-3 p-3 rounded-lg bg-[#141414] hover:bg-[#1e1e1e] transition-colors">
+                    {/* <Link href="/branding" className="flex items-center gap-3 p-3 rounded-lg bg-[#141414] hover:bg-[#1e1e1e] transition-colors">
                       <div className="w-10 h-10 flex-shrink-0 bg-[#64189D] rounded-full flex items-center justify-center">
                         <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                       </div>
                       <div className="min-w-0">
                         <div className="text-white font-bold text-sm leading-tight">Nuestro Branding</div>
                       </div>
-                    </Link>
+                    </Link> */}
 
                     <Link href="/afiliados" className="flex items-center gap-3 p-3 rounded-lg bg-[#141414] hover:bg-[#1e1e1e] transition-colors">
                       <div className="w-10 h-10 flex-shrink-0 bg-[#64189D] rounded-full flex items-center justify-center">
