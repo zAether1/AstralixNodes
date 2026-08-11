@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function PrivacidadPage() {
   return (
-    <LegalTemplate title="Políticas de Privacidad" lastUpdated="10 de Mayo, 2026">
+    <LegalTemplate title="Políticas de Privacidad" lastUpdated="10 de Mayo, 2026" twoColumn>
       <div dangerouslySetInnerHTML={{ __html: `<h2>1. Recopilación de Información</h2>
 <p>Recopilamos información que usted nos proporciona directamente, como cuando crea una cuenta, se suscribe a nuestro boletín, solicita soporte al cliente o interactúa con nosotros.</p>
 

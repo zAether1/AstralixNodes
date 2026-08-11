@@ -97,7 +97,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark" data-scroll-behavior="smooth">
       <body className={`${poppins.variable} antialiased bg-[#020202] text-white`}>
         <script
           type="application/ld+json"
@@ -130,4 +130,4 @@ export default function RootLayout({
       </body>
     </html>
   );
-}
+}
