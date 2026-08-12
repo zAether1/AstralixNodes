@@ -110,7 +110,7 @@ export default function FeaturesHighlights() {
                 </div>
               </div>
 
-              <Link href="/minecraft" className="mt-2 block w-full text-center bg-[#282828]/60 hover:bg-[#64189D] text-white border-2 border-[#282828] hover:border-[#64189D] rounded-xl py-3.5 font-bold transition-all duration-300">
+              <Link href="/dedicado" className="mt-2 block w-full text-center bg-[#282828]/60 hover:bg-[#64189D] text-white border-2 border-[#282828] hover:border-[#64189D] rounded-xl py-3.5 font-bold transition-all duration-300">
                 Ver todos los planes
               </Link>
             </div>

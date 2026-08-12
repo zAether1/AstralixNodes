@@ -10,7 +10,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const games = [
-  { id: 'minecraft', name: 'Minecraft', price: '4,24', originalPrice: '4,99', image: '/assets/games/minecraft.jpeg', tag: 'Más popular' },
+  { id: 'minecraft', name: 'Minecraft', price: '4,24', originalPrice: '4,99', image: '/assets/games/minecraft.jpeg', tag: 'Próximamente', comingSoon: true },
   { id: 'project-zomboid', name: 'Project Zomboid', price: '4,25', originalPrice: '5,00', image: '/assets/games/project-zomboid.jpeg', tag: 'Próximamente', comingSoon: true},
   { id: 'palworld', name: 'Palworld', price: '8,50', originalPrice: '10,00', image: '/assets/games/palworld.jpeg', tag: 'Próximamente', comingSoon: true },
   { id: 'hytale', name: 'Hytale', price: '9,69', originalPrice: '11,40', image: '/assets/games/hytale-cover.png', tag: 'Próximamente', comingSoon: true },
