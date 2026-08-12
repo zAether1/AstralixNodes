@@ -1,41 +1,21 @@
-export interface DedicatedPlan {
+export interface DedicatedServer {
   id: string
-  name: string
-  badge: string
-  cpu: string
-  cpuDetail: string
-  ram: string
-  ramDetail: string
+  cpuName: string
+  cpuCores: string
+  cpuBrand: "AMD" | "Intel"
+  ram: number
+  ramUnit: string
   storage: string
-  storageDetail: string
-  bandwidth: string
-  bandwidthDetail: string
-  price: string
-  period: string
-  features: string[]
+  storageGB: number
+  storageType: "SSD" | "NVME" | "HDD"
+  dc: string
+  dcFull: string
+  stock: number | "inStock"
+  stockLabel: string
+  price: number
   orderLink: string
 }
 
-export interface PlanType {
-  id: string
-  name: string
-  displayName: string
-  image: string
-}
-
-export interface Location {
-  id: string
-  name: string
-  flag: string
-  displayName: string
-  cpu: string
-  availableCpus: string[]
-}
-
 export interface DediConfig {
-  planTypes: PlanType[]
-  locations: Location[]
-  plans: {
-    [key: string]: DedicatedPlan[]
-  }
+  servers: DedicatedServer[]
 }

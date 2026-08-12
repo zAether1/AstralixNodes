@@ -13,7 +13,6 @@ import {
 } from "lucide-react"
 import showcaseConfig from "@/app/config/sections/showcase.json"
 import { useLanguage } from '../contexts/LanguageContext';
-import uiConfig from "@/app/config/sections/ui.json"
 
 interface ShowcaseCard {
   id: number;
@@ -137,34 +136,6 @@ export default function PanelShowcase() {
                       </div>
                     </div>
 
-                    {isActive && (
-                      <div className="absolute bottom-0 left-0 right-0 h-1 ">
-                        <motion.div
-                          className="h-full rounded-full button-primary"
-                          initial={{ width: "0%" }}
-                          animate={{ width: `${progress}%` }}
-                          transition={{ duration: 0.1, ease: "linear" }}
-                        />
-                      </div>
-                    )}
-                    {uiConfig.christmasTheme.enabled && (
-                      <>
-                        <Image
-                          src="/christmas/button-deco-up.png"
-                          alt="Christmas decoration"
-                          width={28}
-                          height={28}
-                          className="absolute -top-2 -right-2 pointer-events-none"
-                        />
-                        <Image
-                          src="/christmas/button-deco-down.png"
-                          alt="Christmas decoration"
-                          width={28}
-                          height={28}
-                          className="absolute -bottom-2 -left-2 pointer-events-none"
-                        />
-                      </>
-                    )}
                   </motion.div>
                 )
               })}
