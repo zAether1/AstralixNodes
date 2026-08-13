@@ -1,9 +1,7 @@
 'use client';
 import React, { useEffect, useState, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import { gsap, useGSAP, ScrollTrigger, MOTION, prefersReducedMotion } from '@/lib/gsap';
+import ScrollReveal from './animations/ScrollReveal';
 
 // Proyección Equirectangular para el usuario
 const calcUserCoords = (lat: number, lon: number) => {
@@ -12,7 +10,6 @@ const calcUserCoords = (lat: number, lon: number) => {
   return { cx: x, cy: y };
 };
 
-// Coordenadas extraídas directamente de los píxeles reales del SVG vectorial original para garantizar 100% de precisión visual.
 const locations = [
   {
     region: 'Norteamérica',
@@ -95,42 +92,62 @@ export default function LocationsSection() {
     return () => clearInterval(pingInterval);
   }, []);
 
-  // Animación continua de flujo en líneas (Fibra óptica)
-  useEffect(() => {
-    if (userLoc && containerRef.current) {
-      const lines = containerRef.current.querySelectorAll('.fiber-line');
-      if (lines.length > 0) {
-        // strokeDasharray="5 15" -> total = 20. Moviendo por -20 genera un loop sin fin perfecto
-        gsap.to(lines, {
-          strokeDashoffset: -20,
-          ease: 'none',
-          duration: 0.8,
-          repeat: -1
-        });
-      }
-    }
-  }, [userLoc, pings]); // Se re-aplica si cambia userLoc o se re-renderizan los pings
+  useGSAP(() => {
+    if (prefersReducedMotion()) return;
 
-  useEffect(() => {
-    if (containerRef.current) {
-      const els = gsap.utils.toArray('.loc-reveal');
-      els.forEach((el: any) => {
-        gsap.fromTo(el, 
-          { opacity: 0, y: 30 },
-          { 
-            opacity: 1, 
-            y: 0, 
-            duration: 0.8, 
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: el,
-              start: 'top 85%',
-            }
-          }
-        );
+    // Continuous flow animation on fiber optic lines
+    const lines = containerRef.current?.querySelectorAll('.fiber-line');
+    if (lines && lines.length > 0) {
+      gsap.to(lines, {
+        strokeDashoffset: -20,
+        ease: 'none',
+        duration: 0.8,
+        repeat: -1
       });
     }
-  }, []);
+
+    // GSAP scale/pulse animation for the map nodes
+    gsap.to('.pulse-circle', {
+      r: 16,
+      opacity: 0,
+      duration: 1.8,
+      repeat: -1,
+      ease: 'power1.out',
+      stagger: {
+        each: 0.4,
+        from: 'random'
+      }
+    });
+
+    // GSAP scale/pulse for user location node
+    gsap.to('.user-pulse-circle', {
+      r: 28,
+      opacity: 0,
+      duration: 2.2,
+      repeat: -1,
+      ease: 'power2.out'
+    });
+
+  }, { scope: containerRef, dependencies: [userLoc, pings] });
+
+  useGSAP(() => {
+    // Reveal titles and boxes
+    gsap.fromTo('.loc-reveal', 
+      { opacity: 0, y: 30, filter: 'blur(4px)' },
+      { 
+        opacity: 1, 
+        y: 0, 
+        filter: 'blur(0px)',
+        duration: 0.8, 
+        stagger: 0.12,
+        ease: MOTION.ease.out,
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: 'top 80%',
+        }
+      }
+    );
+  }, { scope: containerRef });
 
   const handleMouseMove = (e: React.MouseEvent, place: any, ping: number, color: string) => {
     setActiveTooltip({
@@ -154,38 +171,42 @@ export default function LocationsSection() {
   const closestPlaceId = getLowestPingPlaceId();
 
   return (
-    <section id="cobertura" className="bg-[#191919] py-24 px-6 relative" ref={containerRef}>
+    <section id="cobertura" className="bg-[#0a0118] py-24 px-6 relative overflow-hidden section-glow-top" ref={containerRef}>
+      {/* Background ambient lighting */}
+      <div className="absolute top-1/4 left-1/3 w-[500px] h-[500px] bg-[#9000FA]/5 blur-[120px] rounded-full pointer-events-none"></div>
+
       <div className="max-w-[87.5rem] mx-auto">
         <div className="loc-reveal text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-black uppercase tracking-wide">
             <span className="text-white">TE TENEMOS CUBIERTO, </span>
-            <span className="text-[#64189D]">EN TODO EL MUNDO.</span>
+            <span className="text-[#9000FA] glow-text">EN TODO EL MUNDO.</span>
           </h2>
-          <p className="text-[#888] mt-4 max-w-2xl mx-auto">
+          <p className="text-white/50 mt-4 max-w-2xl mx-auto">
             12 ubicaciones globales estratégicas disponibles para hostear tu servidor al instante.
           </p>
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-[18.5rem_1fr] gap-8 items-start relative">
           
-          <div className="loc-reveal w-full overflow-hidden">
+          {/* Places List (Left) */}
+          <div className="loc-reveal w-full overflow-hidden glass p-5 rounded-2xl border border-white/5">
             {locations.map((loc, idx) => (
               <div key={loc.region}>
-                {idx > 0 && <hr className="border-[#333] my-3" />}
-                <div className="flex items-center justify-between mb-1.5">
-                  <h3 className="text-white/50 uppercase font-bold tracking-wider text-[12px]">{loc.region}</h3>
-                  <span className="text-white/30 uppercase tracking-wider text-[11px]">Latencia</span>
+                {idx > 0 && <hr className="border-white/5 my-4" />}
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="text-white/50 uppercase font-black tracking-wider text-[11px]">{loc.region}</h3>
+                  <span className="text-white/30 uppercase tracking-wider text-[10px]">Latencia</span>
                 </div>
-                <div>
+                <div className="space-y-1">
                   {loc.places.map((place) => {
                     const ping = pings[place.id] || 0;
                     const color = ping ? getPingColor(ping) : '#888';
+                    const isClosest = place.id === closestPlaceId;
 
                     return (
                       <div 
                         key={place.id} 
-                        className="group flex items-center rounded-lg transition-colors cursor-pointer hover:bg-white/5" 
-                        style={{ padding: '6px 10px', gap: '10px' }}
+                        className={`group flex items-center rounded-lg transition-colors cursor-pointer p-2 gap-3 hover:bg-white/[0.04] border ${isClosest ? 'border-[#4ade80]/20 bg-[#4ade80]/5' : 'border-transparent'}`} 
                         onMouseMove={(e) => handleMouseMove(e, allPlaces.find(p => p.id === place.id), ping, color)}
                         onMouseLeave={handleMouseLeave}
                       >
@@ -193,20 +214,20 @@ export default function LocationsSection() {
                           alt={place.flag.toUpperCase()} 
                           width={24} 
                           height={17} 
-                          className="rounded-sm flex-shrink-0 object-cover" 
+                          className="rounded-sm flex-shrink-0 object-cover border border-white/10" 
                           src={`https://flagcdn.com/w40/${place.flag}.png`} 
                         />
-                        <span className="text-[#E8E6E6] flex-1 truncate text-[13px] group-hover:text-white transition-colors">{place.name}</span>
+                        <span className="text-white/80 flex-1 truncate text-[13px] group-hover:text-white transition-colors">{place.name}</span>
                         <div className="flex items-center gap-[6px] flex-shrink-0">
                           {ping > 0 && ping < 999 ? (
-                            <span className="font-mono font-bold text-xs" style={{ color }}>{ping} ms</span>
+                            <span className="font-mono font-bold text-xs" style={{ color, textShadow: `0 0 8px ${color}50` }}>{ping} ms</span>
                           ) : ping === 999 ? (
-                            <span className="text-red-500 font-mono text-xs">ERR</span>
+                            <span className="text-red-500 font-mono text-xs font-bold">ERR</span>
                           ) : (
-                            <span className="text-[#666] font-mono text-xs flex items-center gap-1">
-                               <div className="w-1 h-1 rounded-full bg-[#666] animate-bounce"></div>
-                               <div className="w-1 h-1 rounded-full bg-[#666] animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                               <div className="w-1 h-1 rounded-full bg-[#666] animate-bounce" style={{ animationDelay: '0.4s' }}></div>
+                            <span className="text-white/20 font-mono text-xs flex items-center gap-1">
+                               <div className="w-1 h-1 rounded-full bg-white/40 animate-bounce"></div>
+                               <div className="w-1 h-1 rounded-full bg-white/40 animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                               <div className="w-1 h-1 rounded-full bg-white/40 animate-bounce" style={{ animationDelay: '0.4s' }}></div>
                             </span>
                           )}
                         </div>
@@ -218,7 +239,8 @@ export default function LocationsSection() {
             ))}
           </div>
           
-          <div className="loc-reveal flex-1 w-full bg-[#180228] border border-white/5 rounded-3xl overflow-hidden relative shadow-[inset_0_0_50px_rgba(100,24,157,0.1)]">
+          {/* Map Vector (Right) */}
+          <div className="loc-reveal flex-1 w-full bg-[#140528]/40 border border-white/5 rounded-3xl overflow-hidden relative shadow-[inset_0_0_50px_rgba(100,24,157,0.2)] backdrop-blur-sm">
             <svg viewBox="95.85 62.19 827.61 423.74" className="w-full h-auto aspect-[2/1]" preserveAspectRatio="xMidYMid meet">
               <image x="95.85" y="62.19" width="827.61" height="423.74" href="/assets/images/world-map.svg"></image>
               
@@ -231,8 +253,8 @@ export default function LocationsSection() {
                 const pathData = `M ${userLoc.cx} ${userLoc.cy} Q ${midX} ${midY} ${place.cx} ${place.cy}`;
                 
                 const isClosest = place.id === closestPlaceId;
-                const strokeColor = isClosest ? '#4ade80' : '#64189D';
-                const opacityLine = isClosest ? '0.6' : '0.2';
+                const strokeColor = isClosest ? '#4ade80' : '#9000FA';
+                const opacityLine = isClosest ? '0.7' : '0.25';
                 
                 return (
                   <g key={`line-${place.id}`}>
@@ -254,7 +276,7 @@ export default function LocationsSection() {
 
               {allPlaces.map(place => {
                 const ping = pings[place.id] || 0;
-                const color = ping ? getPingColor(ping) : '#64189D';
+                const color = ping ? getPingColor(ping) : '#9000FA';
                 const isClosest = place.id === closestPlaceId;
                 
                 return (
@@ -266,12 +288,17 @@ export default function LocationsSection() {
                   >
                     <circle cx={place.cx} cy={place.cy} r="20" fill="transparent" />
                     
-                    {isClosest && (
-                       <circle cx={place.cx} cy={place.cy} r="12" fill={color} opacity="0.3">
-                          <animate attributeName="r" values="12;20;12" dur="2s" repeatCount="indefinite" />
-                          <animate attributeName="opacity" values="0.3;0;0.3" dur="2s" repeatCount="indefinite" />
-                       </circle>
-                    )}
+                    {/* Pulsing ring around nodes */}
+                    <circle 
+                      cx={place.cx} 
+                      cy={place.cy} 
+                      r={isClosest ? "8" : "6"} 
+                      fill="none" 
+                      stroke={color} 
+                      strokeWidth="1.5"
+                      className="pulse-circle" 
+                      opacity="0.6"
+                    />
 
                     <circle 
                       cx={place.cx} 
@@ -287,18 +314,18 @@ export default function LocationsSection() {
 
               {userLoc && (
                 <g className="user-node">
-                  <circle cx={userLoc.cx} cy={userLoc.cy} r="35" fill="url(#userGlow)" opacity="0.8">
-                     <animate attributeName="opacity" values="0.8;0.3;0.8" dur="2.5s" repeatCount="indefinite" />
-                  </circle>
+                  <circle cx={userLoc.cx} cy={userLoc.cy} r="35" fill="url(#userGlow)" opacity="0.8"></circle>
                   
-                  <circle cx={userLoc.cx} cy={userLoc.cy} r="8" fill="none" stroke="#ffffff" strokeWidth="1.5">
-                    <animate attributeName="r" values="8;30" dur="2s" repeatCount="indefinite"/>
-                    <animate attributeName="opacity" values="1;0" dur="2s" repeatCount="indefinite"/>
-                  </circle>
-                  <circle cx={userLoc.cx} cy={userLoc.cy} r="8" fill="none" stroke="#ffffff" strokeWidth="1.5">
-                    <animate attributeName="r" values="8;30" dur="2s" repeatCount="indefinite" begin="1s"/>
-                    <animate attributeName="opacity" values="1;0" dur="2s" repeatCount="indefinite" begin="1s"/>
-                  </circle>
+                  {/* Dynamic pulse rings with GSAP-like fallback animation */}
+                  <circle 
+                    cx={userLoc.cx} 
+                    cy={userLoc.cy} 
+                    r="8" 
+                    fill="none" 
+                    stroke="#ffffff" 
+                    strokeWidth="1.5"
+                    className="user-pulse-circle"
+                  />
 
                   <circle cx={userLoc.cx} cy={userLoc.cy} r="6" fill="#ffffff" style={{ filter: 'drop-shadow(0 0 10px #ffffff)' }} />
                   
@@ -315,14 +342,15 @@ export default function LocationsSection() {
         </div>
       </div>
 
+      {/* Tooltip with Glassmorphism */}
       {activeTooltip && (
         <div 
           className="fixed z-[9999] pointer-events-none transform -translate-x-1/2 -translate-y-[120%] pb-3 transition-opacity duration-150"
           style={{ left: activeTooltip.x, top: activeTooltip.y }}
         >
-          <div className="bg-[#180228] border border-[#64189D]/50 shadow-[0_10px_30px_rgba(100,24,157,0.5)] rounded-xl p-4 w-[14rem] relative overflow-hidden backdrop-blur-md">
-            <div className="absolute top-0 right-0 w-16 h-16 bg-[#64189D] opacity-30 blur-[20px] rounded-full"></div>
-            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-[#180228] border-b border-r border-[#64189D]/50 transform rotate-45"></div>
+          <div className="bg-[#140528]/95 border border-[#9000FA]/30 shadow-[0_10px_35px_rgba(144,0,250,0.4)] rounded-xl p-4 w-[14rem] relative overflow-hidden backdrop-blur-md">
+            <div className="absolute top-0 right-0 w-16 h-16 bg-[#9000FA] opacity-20 blur-[20px] rounded-full"></div>
+            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-[#140528] border-b border-r border-[#9000FA]/30 transform rotate-45"></div>
             
             <div className="flex items-center gap-2 mb-3 border-b border-white/10 pb-2">
               <h4 className="text-white font-black text-[13px] uppercase tracking-wider">{activeTooltip.name}</h4>
@@ -330,11 +358,11 @@ export default function LocationsSection() {
             
             <div className="space-y-2">
               <div className="flex justify-between items-center text-xs">
-                <span className="text-[#888] uppercase tracking-wider">Región:</span>
-                <span className="text-white font-medium">{activeTooltip.region}</span>
+                <span className="text-white/40 uppercase tracking-wider">Región:</span>
+                <span className="text-white font-bold">{activeTooltip.region}</span>
               </div>
               <div className="flex justify-between items-center text-xs">
-                <span className="text-[#888] uppercase tracking-wider">Ping:</span>
+                <span className="text-white/40 uppercase tracking-wider">Ping:</span>
                 <span className="font-mono font-bold" style={{ color: activeTooltip.color, textShadow: `0 0 10px ${activeTooltip.color}80` }}>
                   {activeTooltip.ping > 0 && activeTooltip.ping < 999 ? `${activeTooltip.ping} ms` : 'Midiendo'}
                 </span>

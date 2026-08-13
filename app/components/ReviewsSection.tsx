@@ -1,10 +1,8 @@
 'use client';
 import React, { useRef, useState, useEffect } from 'react';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+import { gsap, useGSAP, ScrollTrigger, MOTION, prefersReducedMotion } from '@/lib/gsap';
+import GlowCard from './animations/GlowCard';
+import ScrollReveal from './animations/ScrollReveal';
 
 const reviews = [
   {
@@ -58,12 +56,11 @@ const reviews = [
   }
 ];
 
-const StarRating = ({ rating = 5 }) => (
+const StarRating = () => (
   <div className="flex items-center gap-0.5">
     {[...Array(5)].map((_, i) => (
-      <svg key={i} width="18" height="18" viewBox="0 0 24 24" className="flex-shrink-0">
-        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#333"></path>
-        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#64189D"></path>
+      <svg key={i} width="16" height="16" viewBox="0 0 24 24" className="flex-shrink-0 text-[#9000FA]">
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="currentColor"></path>
       </svg>
     ))}
   </div>
@@ -76,19 +73,37 @@ export default function ReviewsSection() {
 
   useGSAP(() => {
     gsap.fromTo('.review-reveal',
-      { opacity: 0, x: -30 },
+      { opacity: 0, x: -30, filter: 'blur(4px)' },
       { 
         opacity: 1, 
         x: 0, 
+        filter: 'blur(0px)',
         duration: 0.8, 
-        stagger: 0.1,
-        ease: 'power3.out',
+        stagger: 0.12,
+        ease: MOTION.ease.out,
         scrollTrigger: {
           trigger: container.current,
           start: 'top 80%'
         }
       }
     );
+
+    // Parallax background scroll effect
+    if (!prefersReducedMotion()) {
+      gsap.fromTo('.reviews-parallax-bg',
+        { yPercent: -10 },
+        {
+          yPercent: 10,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: container.current,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true,
+          }
+        }
+      );
+    }
   }, { scope: container });
 
   const nextSlide = () => {
@@ -101,83 +116,100 @@ export default function ReviewsSection() {
 
   useEffect(() => {
     if (sliderRef.current) {
-      sliderRef.current.style.transform = `translate3d(-${currentIndex * 100}%, 0, 0)`;
+      if (prefersReducedMotion()) {
+        sliderRef.current.style.transform = `translate3d(-${currentIndex * 100}%, 0, 0)`;
+      } else {
+        gsap.to(sliderRef.current, {
+          xPercent: -currentIndex * 100,
+          duration: 0.5,
+          ease: 'power3.out',
+        });
+      }
     }
   }, [currentIndex]);
 
   return (
-    <section ref={container} className="relative w-full overflow-hidden reviews-banner-h min-h-[400px]">
+    <section ref={container} className="relative w-full overflow-hidden min-h-[420px] bg-black">
+      {/* Parallax Background */}
       <div 
-        className="absolute inset-0 bg-cover bg-right md:bg-center" 
+        className="reviews-parallax-bg absolute inset-0 bg-cover bg-right md:bg-center scale-110" 
         style={{ backgroundImage: 'url(/assets/images/astralixnodes-banner-largo.png)' }}
       ></div>
-      <div className="absolute inset-0 bg-black/85 md:bg-black/70"></div>
+      <div className="absolute inset-0 bg-black/90 md:bg-black/75"></div>
       
-      <div className="relative min-h-[inherit] flex items-center py-12 xl:py-20 px-4 sm:px-6">
+      <div className="relative min-h-[inherit] flex items-center py-16 xl:py-24 px-6 z-10">
         <div className="review-reveal max-w-[87.5rem] mx-auto w-full">
-          <div className="flex flex-col xl:flex-row xl:items-center gap-8 xl:gap-14">
+          <div className="flex flex-col xl:flex-row xl:items-center gap-10 xl:gap-16">
             
-            <div className="xl:w-[20rem] flex-shrink-0 flex flex-col items-center xl:items-start text-center xl:text-left">
-              <p className="text-white/60 text-[0.95rem] font-semibold uppercase tracking-wider mb-2">
+            {/* Trustpilot Brand Left Column */}
+            <div className="xl:w-[22rem] flex-shrink-0 flex flex-col items-center xl:items-start text-center xl:text-left">
+              <p className="text-white/60 text-xs font-bold uppercase tracking-widest mb-3">
                 ESTAMOS CALIFICADOS
               </p>
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-4">
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight uppercase">
                 EXCELENTE
               </h2>
               <div className="flex items-center gap-0.5">
                 {[...Array(4)].map((_, i) => (
-                  <svg key={i} width="34" height="34" viewBox="0 0 24 24" className="flex-shrink-0">
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#333"></path>
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#64189D"></path>
+                  <svg key={i} width="34" height="34" viewBox="0 0 24 24" className="flex-shrink-0 text-[#9000FA]">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="currentColor"></path>
                   </svg>
                 ))}
-                <svg width="34" height="34" viewBox="0 0 24 24" className="flex-shrink-0">
+                <svg width="34" height="34" viewBox="0 0 24 24" className="flex-shrink-0 text-[#9000FA]">
                   <defs><clipPath id="star-clip-lg"><rect x="0" y="0" width="70%" height="100%"></rect></clipPath></defs>
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#333"></path>
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#64189D" clipPath="url(#star-clip-lg)"></path>
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="currentColor" clipPath="url(#star-clip-lg)"></path>
                 </svg>
               </div>
-              <p className="text-white/50 text-[0.95rem] mt-3">Calificado 4.7 de 5 estrellas</p>
-              <a href="https://www.trustpilot.com/review/astralixnodes.com" target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex items-center gap-2 text-[#64189D] text-[0.9rem] font-semibold hover:text-[#7f22c4] transition-colors">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+              <p className="text-white/50 text-sm mt-3">Calificado 4.7 de 5 estrellas</p>
+              <a href="https://www.trustpilot.com/review/astralixnodes.com" target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center gap-2 text-[#9000FA] text-sm font-bold hover:text-[#b870ff] transition-colors group">
+                <svg className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
                 Ver en Trustpilot
               </a>
             </div>
 
+            {/* Testimonials Slider Right Column */}
             <div className="flex-1 min-w-0">
               <div className="overflow-hidden">
-                <div ref={sliderRef} className="flex" style={{ transition: 'transform 300ms ease-out' }}>
+                <div ref={sliderRef} className="flex" style={{ willChange: 'transform' }}>
                   {reviews.map((rev, idx) => (
                     <div key={idx} className="flex-shrink-0 px-2" style={{ width: '100%' }}>
-                      <a href={rev.url} target="_blank" rel="noopener noreferrer" className="bg-white/[0.08] rounded-xl border-t-2 border-[#64189D]/30 p-6 flex flex-col gap-3 h-full no-underline hover:bg-white/[0.12] transition-colors min-h-[220px]">
-                        <h3 className="font-bold text-lg text-white truncate">{rev.title}</h3>
-                        <p className="text-white/70 text-base leading-relaxed line-clamp-4 flex-1 whitespace-pre-wrap">{rev.content}</p>
-                        <div className="flex items-center justify-between mt-auto pt-2">
-                          <div className="flex items-center gap-2">
-                            <StarRating />
-                            <span className="text-white/50 text-[0.85rem]">{rev.author}</span>
+                      <a href={rev.url} target="_blank" rel="noopener noreferrer" className="no-underline block h-full">
+                        <GlowCard glowColor="rgba(144,0,250,0.3)" glowIntensity="normal" className="p-6 md:p-8 flex flex-col gap-4 min-h-[220px] bg-white/[0.04] border border-white/5 hover:border-[#9000FA]/30 hover:bg-white/[0.06] transition-all">
+                          <h3 className="font-bold text-lg text-white truncate">{rev.title}</h3>
+                          <p className="text-white/70 text-sm md:text-base leading-relaxed line-clamp-4 flex-1 whitespace-pre-wrap">{rev.content}</p>
+                          
+                          <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/5">
+                            <div className="flex items-center gap-3">
+                              <StarRating />
+                              <span className="text-white/50 text-xs font-bold">{rev.author}</span>
+                            </div>
+                            <span className="text-white/30 text-xs">{rev.date}</span>
                           </div>
-                          <span className="text-white/30 text-[0.8rem]">{rev.date}</span>
-                        </div>
+                        </GlowCard>
                       </a>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="flex items-center justify-center gap-2 sm:gap-3 mt-6">
-                <button onClick={prevSlide} className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center text-white bg-white/10 rounded-full hover:bg-white/20 transition-colors flex-shrink-0" aria-label="Previous">
-                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
+              {/* Slider Controls */}
+              <div className="flex items-center justify-center gap-3 mt-8">
+                <button onClick={prevSlide} className="w-10 h-10 flex items-center justify-center text-white bg-white/5 rounded-full border border-white/5 hover:bg-[#9000FA]/20 hover:border-[#9000FA]/35 transition-all duration-300 cursor-pointer" aria-label="Previous">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 19l-7-7 7-7"></path></svg>
                 </button>
-                <div className="flex items-center gap-1 sm:gap-1.5 overflow-hidden max-w-[150px]">
+                
+                {/* Dots indicator */}
+                <div className="flex items-center gap-1.5 overflow-hidden max-w-[150px]">
                   {reviews.map((_, i) => (
-                    <button key={i} onClick={() => setCurrentIndex(i)} className="p-0.5 sm:p-1 cursor-pointer" aria-label={`Page ${i + 1}`}>
-                      <span className={`block w-2 h-2 rounded-full ${i === currentIndex ? 'bg-[#64189D]' : 'bg-white/20 hover:bg-white/40'} transition-colors`}></span>
+                    <button key={i} onClick={() => setCurrentIndex(i)} className="p-1 cursor-pointer" aria-label={`Page ${i + 1}`}>
+                      <span className={`block h-2 rounded-full transition-all duration-300 ${i === currentIndex ? 'bg-[#9000FA] w-5' : 'bg-white/20 hover:bg-white/40 w-2'}`}></span>
                     </button>
                   ))}
                 </div>
-                <button onClick={nextSlide} className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center text-white bg-white/10 rounded-full hover:bg-white/20 transition-colors flex-shrink-0" aria-label="Next">
-                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
+
+                <button onClick={nextSlide} className="w-10 h-10 flex items-center justify-center text-white bg-white/5 rounded-full border border-white/5 hover:bg-[#9000FA]/20 hover:border-[#9000FA]/35 transition-all duration-300 cursor-pointer" aria-label="Next">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7"></path></svg>
                 </button>
               </div>
             </div>

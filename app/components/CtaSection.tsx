@@ -1,23 +1,23 @@
 'use client';
 import React, { useRef } from 'react';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+import { gsap, useGSAP, ScrollTrigger, MOTION, prefersReducedMotion } from '@/lib/gsap';
+import GlowCard from './animations/GlowCard';
+import MagneticButton from './animations/MagneticButton';
+import ScrollReveal from './animations/ScrollReveal';
 
 export default function CtaSection() {
   const container = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
+    // Scroll reveal for CTA block
     gsap.fromTo('.cta-reveal',
-      { opacity: 0, y: 30, scale: 0.98 },
-      {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        duration: 1,
-        ease: 'power3.out',
+      { opacity: 0, scale: 0.96, filter: 'blur(6px)' },
+      { 
+        opacity: 1, 
+        scale: 1, 
+        filter: 'blur(0px)',
+        duration: 0.9, 
+        ease: MOTION.ease.out,
         scrollTrigger: {
           trigger: container.current,
           start: 'top 85%'
@@ -25,113 +25,70 @@ export default function CtaSection() {
       }
     );
 
-    gsap.fromTo('.cta-feature',
-      { opacity: 0, y: 20 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        stagger: 0.12,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: container.current,
-          start: 'top 90%'
+    // Subtle drift animation on ambient bg light
+    if (!prefersReducedMotion()) {
+      gsap.fromTo('.cta-bg-orb',
+        { x: -20, y: -20, scale: 0.95 },
+        {
+          x: 20,
+          y: 20,
+          scale: 1.05,
+          duration: 10,
+          yoyo: true,
+          repeat: -1,
+          ease: 'sine.inOut'
         }
-      }
-    );
+      );
+    }
   }, { scope: container });
 
   return (
-    <section
+    <section 
       ref={container}
-      className="w-full py-16 px-6 relative overflow-hidden"
+      className="w-full py-16 px-6 relative overflow-hidden bg-[#0a0118] section-glow-top"
     >
-      <div className="absolute inset-0 opacity-90" style={{
-        background: `radial-gradient(circle at 88% 78%, rgba(100,24,157,0.35) 0%, rgba(100,24,157,0) 35%),
-                     radial-gradient(circle at 14% 18%, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0) 30%),
-                     linear-gradient(180deg, rgba(10,6,24,0.95) 0%, rgba(5,1,10,0.98) 100%)`
-      }} />
+      {/* Background orbs */}
+      <div className="cta-bg-orb absolute top-0 left-0 w-[500px] h-[500px] bg-[#9000FA]/5 blur-[120px] rounded-full pointer-events-none"></div>
+      <div className="cta-bg-orb absolute bottom-0 right-0 w-[400px] h-[400px] bg-[#9000FA]/5 blur-[100px] rounded-full pointer-events-none"></div>
 
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-10 left-10 w-24 h-24 rounded-full bg-[#8b5cf6]/20 blur-2xl" />
-        <div className="absolute bottom-16 right-10 w-32 h-32 rounded-full bg-[#a855f7]/15 blur-3xl" />
-      </div>
-
-      <div className="relative z-10 max-w-7xl mx-auto">
-        <div className="cta-reveal relative overflow-hidden rounded-[2.25rem] border border-white/10 bg-white/[0.04] p-8 md:p-12 shadow-[0_0_70px_rgba(100,24,157,0.18)] backdrop-blur-xl">
-          <div className="absolute inset-x-0 top-0 h-2 bg-gradient-to-r from-[#8b5cf6] via-[#a855f7] to-[#ec4899] opacity-90" />
-          <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_0.9fr] gap-10 items-center">
-            <div className="space-y-6">
-              <div className="inline-flex items-center gap-2 rounded-full bg-[#9d4edd]/10 px-4 py-2 text-sm font-semibold uppercase tracking-[0.3em] text-[#e9d5ff] cta-feature">
-                <span className="w-2 h-2 rounded-full bg-[#d8b4fe] animate-pulse" />
-                Minecraft listo en minutos
-              </div>
-              <div className="space-y-4">
-                <p className="text-sm uppercase tracking-[0.35em] text-[#c4b5fd] font-bold">Servidor + Panel + Soporte</p>
-                <h2 className="text-4xl md:text-5xl font-black uppercase text-white leading-tight tracking-[-0.03em]">
-                  ¡Quiero crear mi <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#c084fc] via-[#a855f7] to-[#f472b6]">servidor de Minecraft!</span>
-                </h2>
-                <p className="max-w-2xl text-white/70 text-base leading-relaxed md:text-lg">
-                  Empieza hoy con recursos dedicados, panel instantáneo y soporte 24/7. Tu mundo, tus reglas, sin esperas y sin complicaciones.
-                </p>
-              </div>
-
-              <div className="grid gap-3 sm:grid-cols-3">
-                <div className="cta-feature rounded-2xl border border-white/10 bg-black/20 p-4">
-                  <p className="text-xs uppercase tracking-[0.25em] text-[#c4b5fd] font-semibold">Panel Fácil</p>
-                  <p className="mt-2 text-sm text-white/80">Gestiona tu servidor con un clic.</p>
-                </div>
-                <div className="cta-feature rounded-2xl border border-white/10 bg-black/20 p-4">
-                  <p className="text-xs uppercase tracking-[0.25em] text-[#c4b5fd] font-semibold">Anticheat + DDoS</p>
-                  <p className="mt-2 text-sm text-white/80">Seguridad que protege tu mundo.</p>
-                </div>
-                <div className="cta-feature rounded-2xl border border-white/10 bg-black/20 p-4">
-                  <p className="text-xs uppercase tracking-[0.25em] text-[#c4b5fd] font-semibold">Mods & Versión</p>
-                  <p className="mt-2 text-sm text-white/80">Java, Bedrock y cualquier modpack.</p>
-                </div>
-              </div>
+      <div className="cta-reveal max-w-7xl mx-auto relative z-10 opacity-0">
+        <GlowCard glowColor="rgba(144, 0, 250, 0.4)" glowIntensity="strong" className="p-8 md:p-14">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-10 items-center">
+            
+            <div className="space-y-4">
+              <p className="text-xs uppercase tracking-widest text-[#c084fc] font-bold flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#9000FA] shadow-[0_0_10px_#9000FA] animate-pulse"></span>
+                CREA TU SERVIDOR
+              </p>
+              <h2 className="text-3xl md:text-[42px] font-black uppercase text-white leading-none tracking-tight">
+                ¿LISTO PARA <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-[#c084fc] glow-text">COMENZAR</span>?
+              </h2>
+              <p className="text-sm md:text-base text-white/65 leading-relaxed max-w-2xl">
+                ¡Comienza hoy y te ofreceremos un <span className="text-white font-bold">descuento</span> en tu primera factura con nuestra promoción de nuevos clientes! Disponible por tiempo limitado.
+              </p>
             </div>
 
-            <div className="space-y-6 rounded-[2rem] border border-white/10 bg-black/30 p-8 shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur-xl">
-              <div className="space-y-2">
-                <p className="text-sm uppercase tracking-[0.3em] text-[#c4b5fd] font-bold">Oferta exclusiva</p>
-                <h3 className="text-3xl font-black text-white">Servidor Minecraft desde <span className="text-[#c084fc]">$19.99</span></h3>
-              </div>
-
-              <div className="space-y-4">
-                <div className="rounded-3xl bg-[#7c3aed]/10 p-4 text-white/80">
-                  <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#d8b4fe]">Extra</p>
-                  <p className="mt-2 text-sm">Cupón de bienvenida y setup instantáneo al contratar.</p>
+            <div className="flex-shrink-0 w-full lg:w-auto">
+              <MagneticButton as="a" href="/discounts" className="w-full">
+                <div className="group flex items-center bg-gradient-to-r from-[#9000FA] to-[#7000C8] border border-white/10 rounded-2xl overflow-hidden hover:shadow-[0_0_30px_rgba(144,0,250,0.4)] transition-all duration-300 btn-shine w-full justify-center">
+                  <div className="flex items-center gap-4 px-6 py-5">
+                    <div className="w-12 h-12 bg-white/10 rounded-xl backdrop-blur-md flex items-center justify-center border border-white/10 group-hover:bg-white/20 transition-colors">
+                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"></path>
+                      </svg>
+                    </div>
+                    <div className="text-left">
+                      <p className="text-[9px] uppercase tracking-widest text-white/60 font-bold leading-tight mb-1">PROMOCIONES</p>
+                      <p className="text-base font-black text-white uppercase leading-tight tracking-wider">CUPONES ACTIVOS</p>
+                    </div>
+                  </div>
+                  <div className="px-5 py-5 text-2xl font-mono text-white/50 group-hover:text-white group-hover:translate-x-2 transition-all bg-white/5 border-l border-white/5 h-full flex items-center">»</div>
                 </div>
-
-                <a
-                  href="/minecraft"
-                  className="group inline-flex w-full items-center justify-center rounded-3xl bg-gradient-to-r from-[#9d4edd] via-[#8b5cf6] to-[#ec4899] px-6 py-4 text-center text-base font-black uppercase text-white shadow-[0_14px_40px_rgba(156,39,176,0.35)] transition-transform duration-300 hover:-translate-y-1"
-                >
-                  QUIERO CREAR MI SERVIDOR
-                </a>
-
-                <a
-                  href="/discounts"
-                  className="block text-center text-sm font-semibold uppercase tracking-[0.2em] text-[#c4b5fd] transition-colors hover:text-[#ffffff]"
-                >
-                  Ver promociones y cupones
-                </a>
-              </div>
-
-              <div className="grid gap-3 rounded-3xl bg-white/5 p-4 text-white/75">
-                <div className="flex items-center justify-between text-sm">
-                  <span>Inicio en minutos</span>
-                  <span className="text-[#c4b5fd] font-semibold">Instantáneo</span>
-                </div>
-                <div className="flex items-center justify-between text-sm">
-                  <span>Soporte 24/7</span>
-                  <span className="text-[#c4b5fd] font-semibold">Siempre activo</span>
-                </div>
-              </div>
+              </MagneticButton>
             </div>
+
           </div>
-        </div>
+        </GlowCard>
       </div>
     </section>
   );

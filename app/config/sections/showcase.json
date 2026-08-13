@@ -2,45 +2,45 @@
   "showcase": {
     "header": {
       "badge": {
-        "text": "Nuestro Panel",
+        "text": "Our Panel",
         "icon": "Zap"
       },
       "title": {
-        "text": "Experimenta Nuestra Plataforma",
-        "accent": "Plataforma"
+        "text": "Experience Our Platform",
+        "accent": "Platform"
       },
-      "description": "Descubre las potentes funciones que hacen de nuestra plataforma la opción perfecta para tus necesidades"
+      "description": "Discover the powerful features that make our platform the perfect choice for your needs"
     },
     "cards": [
       {
         "id": 1,
         "icon": "Zap",
-        "title": "Acceso Shell",
-        "description": "Gestiona tu servidor directamente a través de nuestro propio sistema Shell personalizado. ¡No necesitas herramientas de terceros!",
+        "title": "Shell Access",
+        "description": "Manage your server directly via our own custom made Shell system. no need for any third party tools!",
         "imageDark": "/showcase/dark/shell.png",
         "imageLight": "/showcase/light/shell.png"
       },
       {
         "id": 2,
         "icon": "Plug",
-        "title": "Gestor de Plugins",
-        "description": "Nuestros desarrolladores trabajaron duro para brindarte la mejor experiencia al alojar tu servidor de Minecraft. Instala plugins con un solo clic.",
+        "title": "Plugin Manager",
+        "description": "Our developers worked hard to bring you the best experience when hosting ur minecraft server. install plugins in a single click.",
         "imageDark": "/showcase/dark/plugin.png",
         "imageLight": "/showcase/light/plugin.png"
       },
       {
         "id": 3,
         "icon": "Archive",
-        "title": "Gestor de Mods",
-        "description": "Nuestros desarrolladores trabajaron duro para brindarte la mejor experiencia al alojar tu servidor de Minecraft. Instala mods con un solo clic.",
+        "title": "Mod Manager",
+        "description": "Our developers worked hard to bring you the best experience when hosting ur minecraft server. install mods in a single click.",
         "imageDark": "/showcase/dark/mod.png",
         "imageLight": "/showcase/light/mod.png"
       },
       {
         "id": 4,
         "icon": "HeartPulse",
-        "title": "Analíticas",
-        "description": "Consulta las analíticas de tu servidor en 1 minuto, con registros y gráficos detallados.",
+        "title": "Analytics",
+        "description": "View ur server analytic in 1 minute, giving you detailed logs and charts.",
         "imageDark": "/showcase/dark/analytics.png",
         "imageLight": "/showcase/light/analytics.png"
       }

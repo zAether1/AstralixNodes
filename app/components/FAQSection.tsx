@@ -1,10 +1,8 @@
 'use client';
 import React, { useRef, useState } from 'react';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+import { gsap, useGSAP, ScrollTrigger, MOTION, prefersReducedMotion } from '@/lib/gsap';
+import GlowCard from './animations/GlowCard';
+import ScrollReveal from './animations/ScrollReveal';
 
 const faqCategories = [
   { id: 'general', label: 'General', icon: <svg className="w-4 h-4" viewBox="0 0 512 512" fill="currentColor"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336l24 0 0-64-24 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l48 0c13.3 0 24 10.7 24 24l0 88 8 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-80 0c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"></path></svg> },
@@ -40,56 +38,74 @@ const faqs = {
     {
       q: '¿Tienen soporte para Bedrock o Geyser?',
       a: 'Sí, soportamos servidores Bedrock nativos y también puedes usar GeyserMC en servidores Java para permitir la conexión de jugadores de Bedrock (Crossplay).'
-    },
-    {
-      q: '¿Puedo instalar modpacks y plugins personalizados?',
-      a: 'Claro: ofrecemos instalación de modpacks populares y soporte para plugins. Si necesitas ayuda con configuraciones (Forge, Fabric, Sponge), nuestro equipo puede asistirte.'
-    },
-    {
-      q: '¿Cómo funcionan los backups y restauraciones?',
-      a: 'Realizamos snapshots diarios automáticos y puedes solicitar restauraciones desde el panel. También puedes descargar backups manuales cuando lo necesites.'
-    },
-    {
-      q: '¿Qué latencia puedo esperar?',
-      a: 'Depende de la ubicación del nodo y de tus jugadores. Disponemos de múltiples ubicaciones y ofrecemos recomendaciones para reducir ping según la audiencia.'
     }
   ],
   juegos: [
     {
       q: '¿Ofrecen servidores para otros juegos?',
       a: 'Sí, ofrecemos servidores para Rust, ARK, Terraria, Palworld, CS:GO, GMod, y muchos otros. Puedes ver la lista completa en la sección de juegos.'
-    },
-    {
-      q: '¿Puedo pedir configuración de mapas o mods personalizados?',
-      a: 'Sí: instalamos mapas y mods bajo pedido. Para cambios complejos o integraciones, abre un ticket y evaluamos tiempos y compatibilidades.'
-    },
-    {
-      q: '¿Qué ubicaciones de servidores están disponibles?',
-      a: 'Contamos con múltiples datacenters en Europa y América; para algunos juegos también ofrecemos regiones adicionales para optimizar la experiencia.'
-    },
-    {
-      q: '¿Ofrecen soporte para voice chat o integración con Discord?',
-      a: 'Podemos ayudar con integraciones básicas y recomendaciones; la configuración de bots/servicios externos suele gestionarse vía documentación y soporte técnico.'
     }
   ],
   dedicado: [
     {
       q: '¿Cuál es la diferencia de los planes dedicados?',
       a: 'Los planes dedicados ofrecen recursos garantizados (CPU y RAM) que no se comparten con otros usuarios, ideal para servidores grandes con cientos de jugadores.'
-    },
-    {
-      q: '¿Puedo solicitar IPs adicionales o bloque de IPs?',
-      a: 'Sí, gestionamos asignaciones de IPs públicas dedicadas y bloques según disponibilidad y justificación técnica.'
-    },
-    {
-      q: '¿Qué opciones de gestión ofrecen para servidores dedicados?',
-      a: 'Ofrecemos paneles de administración, acceso root/SSH y servicios gestionados bajo contrato (migraciones, optimizaciones y back-ups personalizados).'
-    },
-    {
-      q: '¿Tienen SLA y opciones de soporte prioritario?',
-      a: 'Sí, podemos ofrecer acuerdos de nivel de servicio y soporte prioritario para clientes empresariales con requerimientos específicos.'
     }
   ]
+};
+
+interface AccordionItemProps {
+  question: string;
+  answer: string;
+  isOpen: boolean;
+  onToggle: () => void;
+}
+
+const AccordionItem = ({ question, answer, isOpen, onToggle }: AccordionItemProps) => {
+  const contentRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    if (prefersReducedMotion()) {
+      gsap.set(contentRef.current, { height: isOpen ? 'auto' : 0, opacity: isOpen ? 1 : 0 });
+      return;
+    }
+
+    gsap.to(contentRef.current, {
+      height: isOpen ? 'auto' : 0,
+      opacity: isOpen ? 1 : 0,
+      duration: 0.35,
+      ease: MOTION.ease.smooth,
+    });
+  }, { dependencies: [isOpen] });
+
+  return (
+    <div 
+      ref={containerRef}
+      className={`rounded-xl transition-all duration-300 border ${isOpen ? 'bg-[#140528]/80 border-[#9000FA]/30 shadow-[0_0_20px_rgba(144,0,250,0.1)]' : 'bg-[#0a0118]/60 border-white/5 hover:border-[#9000FA]/20 hover:bg-[#140528]/40'}`}
+    >
+      <button 
+        onClick={onToggle}
+        className="w-full px-6 py-5 flex justify-between items-center text-left gap-4 cursor-pointer"
+      >
+        <h3 className={`font-bold text-sm md:text-base transition-colors duration-300 ${isOpen ? 'text-[#c084fc]' : 'text-white/80'}`}>{question}</h3>
+        <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${isOpen ? 'bg-[#9000FA] text-white shadow-[0_0_12px_rgba(144,0,250,0.4)] rotate-45' : 'bg-white/5 text-white/40'}`}>
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4"></path>
+          </svg>
+        </div>
+      </button>
+      <div 
+        ref={contentRef}
+        className="overflow-hidden"
+        style={{ height: 0, opacity: 0 }}
+      >
+        <p className="text-white/60 text-sm md:text-base pb-6 px-6 pl-6 md:pl-8 leading-relaxed border-t border-white/5 pt-4">
+          {answer}
+        </p>
+      </div>
+    </div>
+  );
 };
 
 export default function FaqSection() {
@@ -99,13 +115,14 @@ export default function FaqSection() {
 
   useGSAP(() => {
     gsap.fromTo('.faq-reveal',
-      { opacity: 0, y: 20 },
+      { opacity: 0, y: 25, filter: 'blur(4px)' },
       { 
         opacity: 1, 
         y: 0, 
+        filter: 'blur(0px)',
         duration: 0.8, 
-        stagger: 0.1,
-        ease: 'power3.out',
+        stagger: 0.12,
+        ease: MOTION.ease.out,
         scrollTrigger: {
           trigger: container.current,
           start: 'top 80%'
@@ -115,83 +132,70 @@ export default function FaqSection() {
   }, { scope: container });
 
   const toggleFaq = (idx: number) => {
-    if (openFaqIndex === idx) {
-      setOpenFaqIndex(null);
-    } else {
-      setOpenFaqIndex(idx);
-    }
+    setOpenFaqIndex(openFaqIndex === idx ? null : idx);
   };
 
   const handleCategoryChange = (id: string) => {
     setActiveCategory(id);
-    setOpenFaqIndex(null);
+    setOpenFaqIndex(0); // auto-open first item on category change
   };
 
   const currentFaqs = faqs[activeCategory as keyof typeof faqs] || [];
 
   return (
-    <section ref={container} className="bg-[#191919] py-24 px-6">
-      <div className="max-w-4xl mx-auto">
+    <section ref={container} className="bg-[#0e0320] py-24 px-6 relative overflow-hidden section-glow-top">
+      {/* Background decoration */}
+      <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-[#9000FA]/5 blur-[120px] rounded-full pointer-events-none"></div>
+
+      <div className="max-w-4xl mx-auto relative z-10">
         
-        <div className="faq-reveal text-center mb-10">
-          <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-[0.03em] mb-3">
-            Preguntas <span className="text-[#64189D]">Frecuentes</span>
+        {/* Header */}
+        <div className="faq-reveal text-center mb-12">
+          <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-[0.03em] mb-4">
+            Preguntas <span className="text-[#9000FA] glow-text">Frecuentes</span>
           </h2>
-          <p className="text-[#888] text-sm">
+          <p className="text-white/50 text-sm md:text-base">
             Encuentra respuestas rápidas a las dudas más comunes
           </p>
         </div>
 
-        <div className="faq-reveal flex justify-center gap-2 mb-10 flex-wrap">
-          {faqCategories.map(cat => (
-            <button 
-              key={cat.id}
-              onClick={() => handleCategoryChange(cat.id)}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm transition-all ${
-                activeCategory === cat.id 
-                  ? 'bg-[#64189D] text-white font-semibold' 
-                  : 'bg-[#2a2a2a] text-[#999] hover:bg-[#333] hover:text-white'
-              } cursor-pointer`}
-            >
-              {cat.icon}
-              {cat.label}
-            </button>
-          ))}
-        </div>
-
-        <div className="space-y-2 faq-reveal">
-          {currentFaqs.map((faq, idx) => {
-            const isOpen = openFaqIndex === idx;
+        {/* Category Pills Selector */}
+        <div className="faq-reveal flex justify-center gap-2 mb-12 flex-wrap">
+          {faqCategories.map(cat => {
+            const isSelected = activeCategory === cat.id;
             return (
-              <div key={idx} className={`rounded-xl transition-colors ${isOpen ? 'bg-[#242424]' : 'bg-[#1e1e1e] hover:bg-[#242424]'}`}>
-                <button 
-                  onClick={() => toggleFaq(idx)}
-                  className="w-full px-6 py-5 flex justify-between items-center text-left gap-4"
-                >
-                  <div className="flex items-center gap-3">
-                    <h3 className={`font-semibold ${isOpen ? 'text-white' : 'text-[#ccc]'}`}>{faq.q}</h3>
-                  </div>
-                  <div className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center transition-all ${isOpen ? 'bg-[#64189D]' : 'bg-[#2d2e2e]'}`}>
-                    <svg className={`w-3.5 h-3.5 transition-colors ${isOpen ? 'text-white' : 'text-[#888]'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-                      <path strokeLinecap="round" strokeLinejoin="round" d={isOpen ? "M20 12H4" : "M12 4v16m8-8H4"}></path>
-                    </svg>
-                  </div>
-                </button>
-                <div 
-                  className={`overflow-hidden transition-all duration-300 ease-in-out`}
-                  style={{ maxHeight: isOpen ? '500px' : '0', opacity: isOpen ? 1 : 0 }}
-                >
-                  <p className="text-[#999] text-sm pb-5 px-6 pl-10 leading-relaxed">
-                    {faq.a}
-                  </p>
-                </div>
-              </div>
+              <button 
+                key={cat.id}
+                onClick={() => handleCategoryChange(cat.id)}
+                className={`flex items-center gap-2 px-5 py-3 rounded-full text-xs md:text-sm font-bold uppercase tracking-wider transition-all cursor-pointer border ${
+                  isSelected 
+                    ? 'bg-[#9000FA] border-[#9000FA] text-white shadow-[0_0_15px_rgba(144,0,250,0.35)]' 
+                    : 'bg-[#0a0118]/60 border-white/5 text-white/50 hover:bg-[#140528]/40 hover:text-white'
+                }`}
+              >
+                <span className={isSelected ? 'text-white' : 'text-[#9000FA]'}>{cat.icon}</span>
+                {cat.label}
+              </button>
             );
           })}
         </div>
 
-        <div className="faq-reveal flex flex-col sm:flex-row items-center justify-center gap-4 mt-12 pt-8 border-t border-white/[0.06]">
-          <a className="inline-flex items-center gap-2.5 bg-[#64189D] hover:bg-[#3A0E5C] text-white font-bold px-6 py-3 rounded-lg transition-colors text-sm" href="/contacto#opciones">
+        {/* Accordions */}
+        <div className="space-y-3 faq-reveal">
+          {currentFaqs.map((faq, idx) => (
+            <AccordionItem 
+              key={idx}
+              question={faq.q}
+              answer={faq.a}
+              isOpen={openFaqIndex === idx}
+              onToggle={() => toggleFaq(idx)}
+            />
+          ))}
+        </div>
+
+        {/* Support Section Footer */}
+        <div className="faq-reveal flex flex-col sm:flex-row items-center justify-center gap-6 mt-16 pt-8 border-t border-white/5">
+          <a className="inline-flex items-center gap-2.5 bg-[#9000FA] hover:bg-[#7000C8] text-white font-bold px-6 py-3.5 rounded-xl transition-all duration-300 text-sm shadow-[0_0_20px_rgba(144,0,250,0.2)] hover:shadow-[0_0_35px_rgba(144,0,250,0.4)] btn-shine" href="/contacto#opciones">
             <svg viewBox="0 0 512 512" fill="currentColor" className="w-4 h-4">
               <path d="M214.7 169.5c12.5-6 26.5-9.5 41.3-9.5s28.8 3.5 41.3 9.5L412.8 53.9C369.5 20.3 315.2 0 256 0S142.5 20.3 99.2 53.9l115.5 115.6zm-45.2 127.8c-6-12.5-9.5-26.5-9.5-41.3s3.5-28.8 9.5-41.3L53.9 99.2C20.3 142.5 0 196.8 0 256s20.3 113.5 53.9 156.8l115.6-115.5zM458.1 99.2 342.5 214.7c6 12.5 9.5 26.5 9.5 41.3s-3.5 28.8-9.5 41.3l115.6 115.5C491.7 369.5 512 315.2 512 256s-20.3-113.5-53.9-156.8zM297.3 342.5c-12.5 6-26.5 9.5-41.3 9.5s-28.8-3.5-41.3-9.5L99.2 458.1C142.5 491.7 196.8 512 256 512s113.5-20.3 156.8-53.9L297.3 342.5z" opacity=".4"></path>
               <path d="M57.4 57.4c-12.5 12.5-12.5 32.8 0 45.3l112 112a96.65 96.65 0 0 1 45.3-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm112 240-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112a96.65 96.65 0 0 1-45.3-45.3zm128 45.3 112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-112-112a96.65 96.65 0 0 1-45.3 45.3zm45.3-128 112-112c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-112 112a96.65 96.65 0 0 1 45.3 45.3z"></path>
@@ -199,10 +203,10 @@ export default function FaqSection() {
             Entra en contacto
           </a>
           <div className="flex items-center gap-2">
-            <span className="text-white font-bold text-sm">Soporte <span className="text-[#64189D]">24/7/365</span></span>
+            <span className="text-white font-bold text-sm">Soporte <span className="text-[#9000FA] glow-text">24/7/365</span></span>
             <span className="relative flex h-2.5 w-2.5">
-              <span className="absolute inline-flex h-full w-full rounded-full bg-[#28ca42] opacity-75 animate-ping"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#28ca42]"></span>
+              <span className="absolute inline-flex h-full w-full rounded-full bg-[#4ade80] opacity-75 animate-ping"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#4ade80]"></span>
             </span>
           </div>
         </div>
