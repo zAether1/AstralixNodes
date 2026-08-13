@@ -46,10 +46,10 @@ export default function Footer() {
               </a>
             </div>
 
-            <button type="button" className="hidden lg:flex items-center gap-2 mt-6 text-white hover:text-[#64189D] transition-colors" aria-label="Preferences">
+            {/* <button type="button" className="hidden lg:flex items-center gap-2 mt-6 text-white hover:text-[#64189D] transition-colors" aria-label="Preferences">
               <span className="text-sm font-bold">USD</span>
               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-            </button>
+            </button> */}
           </div>
 
           <div className="flex-1 grid grid-cols-2 md:grid-cols-3 gap-8 lg:gap-12 relative">
@@ -100,9 +100,9 @@ export default function Footer() {
               </ul>
             </div>
 
-            <button className="hidden md:flex absolute -right-2 bottom-0 w-10 h-10 rounded-full border-2 border-[#64189D] items-center justify-center text-[#64189D] hover:bg-[#64189D] hover:text-white transition-colors" aria-label="Volver arriba">
+            {/* <button className="hidden md:flex absolute -right-2 bottom-0 w-10 h-10 rounded-full border-2 border-[#64189D] items-center justify-center text-[#64189D] hover:bg-[#64189D] hover:text-white transition-colors" aria-label="Volver arriba">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7"></path></svg>
-            </button>
+            </button> */}
           </div>
         </div>
 
