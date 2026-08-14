@@ -30,8 +30,8 @@ type SortDir = "asc" | "desc"
 function StockBadge({ server }: { server: DedicatedServer }) {
   if (server.stock === "inStock") {
     return (
-      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+      <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
         In Stock
       </span>
     )
@@ -44,8 +44,8 @@ function StockBadge({ server }: { server: DedicatedServer }) {
     yellow: "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
   }
   return (
-    <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold border ${colorMap[color]}`}>
-      <span className={`w-1.5 h-1.5 rounded-full bg-current`} />
+    <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-semibold border ${colorMap[color]}`}>
+      <span className={`w-2 h-2 rounded-full bg-current`} />
       {server.stockLabel}
     </span>
   )
@@ -73,7 +73,7 @@ const DC_FLAG_IMG: Record<string, string> = {
   PNJ: "/flags/usa.png",
 }
 
-function OrderDropdown({ server }: { server: DedicatedServer }) {
+function OrderDropdown({ server, isLast = false }: { server: DedicatedServer; isLast?: boolean }) {
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 
@@ -91,7 +91,7 @@ function OrderDropdown({ server }: { server: DedicatedServer }) {
     <div ref={ref} className="relative w-full">
       <button
         onClick={() => setOpen((v) => !v)}
-        className="cursor-pointer orbitron-font inline-flex items-center justify-between w-full gap-2 px-3 py-2 rounded-lg text-xs font-bold button-primary text-button-primary border border-transparent hover:opacity-90 transition-all duration-200 whitespace-nowrap"
+        className="cursor-pointer orbitron-font inline-flex items-center justify-between w-full gap-2 px-3 py-2.5 rounded-lg text-sm font-bold button-primary text-button-primary border border-transparent hover:opacity-90 transition-all duration-200 whitespace-nowrap"
       >
         <span className="flex items-center gap-1.5">
           <ShoppingCart className="w-3.5 h-3.5 shrink-0" />
@@ -104,44 +104,44 @@ function OrderDropdown({ server }: { server: DedicatedServer }) {
         {open && (
           <motion.div
             key="orderDrop"
-            initial={{ opacity: 0, y: -6, scale: 0.97 }}
+            initial={{ opacity: 0, y: isLast ? 6 : -6, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -6, scale: 0.97 }}
+            exit={{ opacity: 0, y: isLast ? 6 : -6, scale: 0.97 }}
             transition={{ duration: 0.15 }}
-            className="absolute z-50 right-0 mt-1.5 w-56 rounded-xl bg-[#13141f] border border-gray-700/60 shadow-2xl overflow-hidden"
+            className={`absolute z-50 right-0 ${isLast ? "bottom-full mb-1.5" : "mt-1.5"} w-64 rounded-xl bg-[#13141f] border border-gray-700/60 shadow-2xl overflow-hidden`}
           >
             {/* Header */}
-            <div className="px-3 py-2 border-b border-gray-700/60">
-              <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Ubicación disponible</p>
+            <div className="px-4 py-2.5 border-b border-gray-700/60">
+              <p className="text-sm font-semibold text-gray-400 uppercase tracking-widest">Ubicación disponible</p>
             </div>
             {/* Location row */}
             <a
               href={server.orderLink}
               onClick={() => setOpen(false)}
-              className="flex items-center justify-between gap-3 px-3 py-3 hover:bg-gray-800/60 transition-colors group/loc"
+              className="flex items-center justify-between gap-3 px-4 py-3.5 hover:bg-gray-800/60 transition-colors group/loc"
             >
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-3">
                 <img
                   src={DC_FLAG_IMG[server.dc] ?? "/flags/usa.png"}
                   alt={server.dc}
-                  width={28}
-                  height={20}
+                  width={32}
+                  height={24}
                   className="rounded-sm object-cover shrink-0"
-                  style={{ width: 28, height: 20 }}
+                  style={{ width: 32, height: 24 }}
                 />
                 <div>
-                  <p className="text-sm font-semibold text-white leading-tight group-hover/loc:text-purple-300 transition-colors">
+                  <p className="text-base font-semibold text-white leading-tight group-hover/loc:text-purple-300 transition-colors">
                     {DC_OPTIONS.find(d => d.id === server.dc)?.label ?? server.dc}
                   </p>
-                  <p className="text-xs text-gray-500">{server.dc}</p>
+                  <p className="text-sm text-gray-500 mt-0.5">{server.dc}</p>
                 </div>
               </div>
               {isAvailable ? (
-                <span className="text-xs font-semibold text-emerald-400 shrink-0">
+                <span className="text-sm font-semibold text-emerald-400 shrink-0">
                   {server.stock === "inStock" ? "In Stock" : `${server.stock} left`}
                 </span>
               ) : (
-                <span className="text-xs font-semibold text-red-400 shrink-0">OOS</span>
+                <span className="text-sm font-semibold text-red-400 shrink-0">OOS</span>
               )}
             </a>
           </motion.div>
@@ -509,9 +509,9 @@ export default function VDSPricingSection() {
           transition={{ duration: 0.6, delay: 0.35 }}
         >
           {displayed.length > 0 ? (
-            <div className="rounded-xl overflow-hidden border border-secondary bg-white/80 dark:bg-[#0d0e1a]/80 backdrop-blur-sm shadow-xl">
+            <div className="rounded-xl border border-secondary bg-white/80 dark:bg-[#0d0e1a]/80 backdrop-blur-sm shadow-xl">
               {/* Table header */}
-              <div className="hidden md:grid grid-cols-[2fr_1fr_2fr_1fr_1.2fr_1.2fr_1.8fr] gap-2 px-5 py-3 bg-gray-100/80 dark:bg-[#13141f]/90 border-b border-secondary">
+              <div className="hidden md:grid grid-cols-[2fr_1fr_2fr_1fr_1.2fr_1.2fr_1.8fr] gap-2 px-5 py-3 bg-gray-100/80 dark:bg-[#13141f]/90 border-b border-secondary rounded-t-xl">
                 {[
                   { label: "CPU", field: "cpuName" as SortField },
                   { label: "RAM", field: "ram" as SortField },
@@ -543,26 +543,26 @@ export default function VDSPricingSection() {
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: 12 }}
                       transition={{ duration: 0.2, delay: index * 0.025 }}
-                      className="group hover:bg-gray-50/80 dark:hover:bg-[#13141f]/80 transition-colors duration-150"
+                      className="group hover:bg-gray-50/80 dark:hover:bg-[#13141f]/80 transition-colors duration-150 last:rounded-b-xl"
                     >
                       {/* Desktop row */}
                       <div className="hidden md:grid grid-cols-[2fr_1fr_2fr_1fr_1.2fr_1.2fr_1.8fr] gap-2 px-5 py-4 items-center">
                         {/* CPU */}
                         <div>
-                          <p className="font-semibold text-gray-900 dark:text-white text-base leading-tight">{server.cpuName}</p>
-                          <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">{server.cpuCores}</p>
+                          <p className="font-semibold text-gray-900 dark:text-white text-lg leading-tight">{server.cpuName}</p>
+                          <p className="text-base text-gray-500 dark:text-gray-400 mt-0.5">{server.cpuCores}</p>
                         </div>
                         {/* RAM */}
-                        <div className="text-base font-medium text-gray-700 dark:text-gray-200">
-                          {server.ram} <span className="text-sm text-gray-500">GB</span>
+                        <div className="text-lg font-medium text-gray-700 dark:text-gray-200">
+                          {server.ram} <span className="text-base text-gray-500">GB</span>
                         </div>
                         {/* Storage */}
-                        <div className="text-sm text-gray-700 dark:text-gray-200 leading-tight">
+                        <div className="text-base text-gray-700 dark:text-gray-200 leading-tight">
                           {server.storage}
                         </div>
                         {/* Brand */}
                         <div>
-                          <span className={`inline-flex items-center px-2.5 py-1 rounded text-xs font-bold border ${server.cpuBrand === "AMD"
+                          <span className={`inline-flex items-center px-3 py-1.5 rounded-md text-sm font-bold border ${server.cpuBrand === "AMD"
                               ? "bg-orange-500/10 text-orange-400 border-orange-500/30"
                               : "bg-blue-500/10 text-blue-400 border-blue-500/30"
                             }`}>
@@ -575,38 +575,38 @@ export default function VDSPricingSection() {
                         </div>
                         {/* Price */}
                         <div>
-                          <span className="text-base font-bold text-gray-900 dark:text-white">
+                          <span className="text-xl font-bold text-gray-900 dark:text-white">
                             {convertPrice(server.price.toFixed(2))}
                           </span>
-                          <span className="text-sm text-gray-500 dark:text-gray-400">/mo</span>
+                          <span className="text-base text-gray-500 dark:text-gray-400">/mo</span>
                         </div>
                         {/* Action — location dropdown */}
                         <div>
-                          <OrderDropdown server={server} />
+                          <OrderDropdown server={server} isLast={index >= displayed.length - 2} />
                         </div>
                       </div>
 
                       {/* Mobile card */}
-                      <div className="md:hidden p-4 space-y-3">
+                      <div className="md:hidden p-4 space-y-4">
                         <div className="flex items-start justify-between gap-3">
                           <div>
-                            <p className="font-semibold text-gray-900 dark:text-white text-base">{server.cpuName}</p>
-                            <p className="text-sm text-gray-500 dark:text-gray-400">{server.cpuCores}</p>
+                            <p className="font-semibold text-gray-900 dark:text-white text-lg">{server.cpuName}</p>
+                            <p className="text-base text-gray-500 dark:text-gray-400">{server.cpuCores}</p>
                           </div>
                           <StockBadge server={server} />
                         </div>
-                        <div className="grid grid-cols-3 gap-2 text-sm">
+                        <div className="grid grid-cols-3 gap-2 text-base">
                           <div>
-                            <p className="text-xs text-gray-400 uppercase tracking-wide mb-0.5">RAM</p>
-                            <p className="font-medium text-gray-800 dark:text-gray-200 text-sm">{server.ram} GB</p>
+                            <p className="text-sm text-gray-400 uppercase tracking-wide mb-0.5">RAM</p>
+                            <p className="font-medium text-gray-800 dark:text-gray-200 text-lg">{server.ram} GB</p>
                           </div>
                           <div>
-                            <p className="text-xs text-gray-400 uppercase tracking-wide mb-0.5">Storage</p>
-                            <p className="font-medium text-gray-800 dark:text-gray-200 text-sm leading-tight">{server.storage}</p>
+                            <p className="text-sm text-gray-400 uppercase tracking-wide mb-0.5">Storage</p>
+                            <p className="font-medium text-gray-800 dark:text-gray-200 text-base leading-tight">{server.storage}</p>
                           </div>
                           <div>
-                            <p className="text-xs text-gray-400 uppercase tracking-wide mb-0.5">Brand</p>
-                            <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-bold border ${server.cpuBrand === "AMD"
+                            <p className="text-sm text-gray-400 uppercase tracking-wide mb-0.5">Brand</p>
+                            <span className={`inline-flex items-center px-3 py-1 rounded-md text-sm font-bold border ${server.cpuBrand === "AMD"
                                 ? "bg-orange-500/10 text-orange-400 border-orange-500/30"
                                 : "bg-blue-500/10 text-blue-400 border-blue-500/30"
                               }`}>
@@ -614,14 +614,14 @@ export default function VDSPricingSection() {
                             </span>
                           </div>
                         </div>
-                        <div className="flex items-center justify-between pt-1">
+                        <div className="flex items-center justify-between pt-2">
                           <div>
-                            <span className="text-lg font-bold text-gray-900 dark:text-white">
+                            <span className="text-2xl font-bold text-gray-900 dark:text-white">
                               {convertPrice(server.price.toFixed(2))}
                             </span>
-                            <span className="text-sm text-gray-500 dark:text-gray-400">/mo</span>
+                            <span className="text-base text-gray-500 dark:text-gray-400">/mo</span>
                           </div>
-                          <OrderDropdown server={server} />
+                          <OrderDropdown server={server} isLast={index === displayed.length - 1} />
                         </div>
                       </div>
                     </motion.div>
