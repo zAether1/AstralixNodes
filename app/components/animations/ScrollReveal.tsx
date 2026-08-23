@@ -12,7 +12,7 @@ interface ScrollRevealProps {
   duration?: number;
   stagger?: number;
   className?: string;
-  as?: keyof JSX.IntrinsicElements;
+  as?: React.ElementType;
   once?: boolean;
   scrub?: boolean | number;
   start?: string;
