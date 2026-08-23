@@ -5,7 +5,7 @@ import { gsap, useGSAP, ScrollTrigger, MOTION, prefersReducedMotion } from '@/li
 
 interface AnimatedHeadingProps {
   children: string;
-  as?: React.ElementType;
+  as?: 'h1' | 'h2' | 'h3' | 'h4';
   className?: string;
   splitBy?: 'words' | 'chars';
   stagger?: number;
