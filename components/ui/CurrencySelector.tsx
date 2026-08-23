@@ -4,8 +4,8 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
-import uiConfig from "../../config/sections/ui.json";
-import type { UIConfig, Currency } from "../../types/ui";
+import uiConfig from "../../app/config/sections/ui.json";
+import type { UIConfig, Currency } from "../../app/types/ui";
 
 const config = uiConfig as UIConfig;
 
@@ -100,6 +100,24 @@ export function CurrencySelector({
           <ChevronDown className="w-4 h-4" />
         </motion.div>
       </motion.button>
+       {uiConfig.christmasTheme.enabled && (
+        <>
+          <Image
+            src="/christmas/button-deco-up.png"
+            alt="Christmas decoration"
+            width={28}
+            height={28}
+            className="absolute -top-2 -right-2 pointer-events-none"
+          />
+          <Image
+            src="/christmas/button-deco-down.png"
+            alt="Christmas decoration"
+            width={28}
+            height={28}
+            className="absolute -bottom-2 -left-2 pointer-events-none"
+          />
+        </>
+      )}
 
       <AnimatePresence>
         {isDropdownOpen && (

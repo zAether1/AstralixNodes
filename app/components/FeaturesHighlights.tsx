@@ -1,13 +1,13 @@
 'use client';
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useCurrency } from '../contexts/CurrencyContext';
-import { gsap, useGSAP, ScrollTrigger, MOTION, prefersReducedMotion } from '@/lib/gsap';
-import GlowCard from './animations/GlowCard';
-import MagneticButton from './animations/MagneticButton';
-import ScrollReveal from './animations/ScrollReveal';
-import AnimatedHeading from './animations/AnimatedHeading';
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const games = [
   { id: 'minecraft', name: 'Minecraft', image: '/assets/images/minecraft.jpeg', desc: 'Nuestros planes de Hosting para Servidores de Minecraft comienzan en un precio inigualable, son compatibles con todos los mods y plugins. ¡Comienza tu aventura de Minecraft ahora!' },
@@ -23,218 +23,190 @@ export default function FeaturesHighlights() {
   const [activeIndex, setActiveIndex] = useState(0);
   const { formatPrice } = useCurrency();
 
-  const gameImageRef = useRef<HTMLDivElement>(null);
-  const gameTextRef = useRef<HTMLDivElement>(null);
+  useGSAP(() => {
+    // Reveal animations on scroll with Stagger
+    gsap.fromTo('.reveal', 
+      { opacity: 0, y: 30 },
+      { 
+        opacity: 1, 
+        y: 0, 
+        duration: 0.8, 
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: container.current,
+          start: 'top 80%',
+        }
+      }
+    );
 
-  const nextGame = () => {
-    animateSlideChange(() => {
-      setActiveIndex((prev) => (prev + 1) % games.length);
-    });
-  };
+    // Animación de los planes (Left Panel)
+    gsap.fromTo('.plan-card',
+      { opacity: 0, x: -30 },
+      {
+        opacity: 1,
+        x: 0,
+        duration: 0.6,
+        stagger: 0.15,
+        ease: 'back.out(1.2)',
+        scrollTrigger: {
+          trigger: '.plan-card',
+          start: 'top 85%'
+        }
+      }
+    );
 
-  const prevGame = () => {
-    animateSlideChange(() => {
-      setActiveIndex((prev) => (prev - 1 + games.length) % games.length);
-    });
-  };
-
-  const selectGame = (index: number) => {
-    if (index === activeIndex) return;
-    animateSlideChange(() => {
-      setActiveIndex(index);
-    });
-  };
-
-  const animateSlideChange = (updateState: () => void) => {
-    if (prefersReducedMotion()) {
-      updateState();
-      return;
-    }
-
-    const tl = gsap.timeline({
-      onComplete: updateState,
-    });
-
-    tl.to([gameImageRef.current, gameTextRef.current], {
-      opacity: 0,
-      scale: 0.98,
-      y: 5,
-      filter: 'blur(4px)',
-      duration: 0.25,
-      ease: 'power2.in',
-    });
-  };
-
-  useEffect(() => {
-    if (prefersReducedMotion()) return;
-    
-    gsap.fromTo([gameImageRef.current, gameTextRef.current],
-      { opacity: 0, scale: 1.02, y: -5, filter: 'blur(4px)' },
+    // Animación del panel derecho (Game Display)
+    gsap.fromTo('.game-panel',
+      { opacity: 0, scale: 0.95, filter: 'blur(10px)' },
       {
         opacity: 1,
         scale: 1,
-        y: 0,
         filter: 'blur(0px)',
-        duration: 0.45,
-        ease: MOTION.ease.out,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.game-panel',
+          start: 'top 85%'
+        }
       }
     );
-  }, [activeIndex]);
+
+  }, { scope: container });
+
+  const nextGame = () => setActiveIndex((prev) => (prev + 1) % games.length);
+  const prevGame = () => setActiveIndex((prev) => (prev - 1 + games.length) % games.length);
 
   const activeGame = games[activeIndex];
 
   return (
-    <section ref={container} className="bg-[#0e0320] py-20 md:py-28 px-6 relative overflow-hidden section-glow-top">
-      {/* Background ambient light */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[500px] bg-[#9000FA]/5 blur-[120px] rounded-full pointer-events-none"></div>
-
-      <div className="max-w-[87.5rem] mx-auto relative z-10">
+    <section ref={container} className="bg-[#101010] py-16 md:py-20 px-4">
+      <div className="reveal max-w-6xl mx-auto">
         
-        {/* Title Section */}
-        <div className="mb-14 text-center">
-          <ScrollReveal variant="fade-down" className="inline-block">
-            <div style={{ transform: 'skewX(-12deg)' }} className="bg-[#9000FA]/10 border border-[#9000FA]/30 px-10 md:px-14 py-3 md:py-4 rounded-lg shadow-[0_0_30px_rgba(144,0,250,0.1)]">
-              <h2 style={{ transform: 'skewX(12deg)' }} className="text-3xl md:text-5xl font-black text-white uppercase tracking-wider glow-text">
-                DESTACADOS
-              </h2>
-            </div>
-          </ScrollReveal>
+        <div className="mb-10 flex justify-center">
+          <div style={{ transform: 'skewX(-12deg)' }} className="inline-block bg-[#282828]/60 px-10 md:px-14 py-3 md:py-4">
+            <h2 style={{ transform: 'skewX(12deg)' }} className="text-3xl md:text-5xl font-black text-white uppercase tracking-wide">
+              DESTACADOS
+            </h2>
+          </div>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 items-stretch">
           
           {/* Left Panel: Plans/Coupons */}
-          <div className="w-full lg:w-[23.75rem] lg:min-h-[30.625rem] flex-shrink-0 order-2 lg:order-1 flex flex-col gap-4">
+          <div className="w-full lg:w-[23.75rem] lg:min-h-[30.625rem] flex-shrink-0 order-2 lg:order-1 flex flex-col gap-2.5 lg:max-h-[37.5rem] lg:overflow-y-auto lg:pr-2">
             
-            <ScrollReveal variant="fade-right" delay={0.1}>
-              <div className="bg-[#9000FA]/10 border border-[#9000FA]/30 rounded-xl px-5 py-4 flex flex-col sm:flex-row items-center justify-center gap-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_4px_20px_rgba(0,0,0,0.3)]">
-                <span className="text-white/80 text-sm font-bold uppercase tracking-wider">Usa el cupón</span>
-                <span className="text-[#9000FA] text-2xl font-black uppercase tracking-widest glow-text animate-pulse">PRIMERMES</span>
-              </div>
-            </ScrollReveal>
+            <div className="bg-[#282828]/60 border-2 border-[#282828] rounded-xl px-5 py-4 flex items-center justify-center gap-2.5 mb-1">
+              <span className="text-[#64189D] text-2xl font-black uppercase tracking-wider">AstralixNodes2026</span>
+            </div>
 
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-2.5">
               
-              <ScrollReveal variant="fade-right" delay={0.2}>
-                <GlowCard glowColor="rgba(144,0,250,0.3)" glowIntensity="normal" className="p-4 flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-lg bg-[#9000FA]/10 border border-[#9000FA]/30 flex-shrink-0 flex items-center justify-center">
-                    <svg className="w-6 h-6 text-[#9000FA]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-white font-bold text-sm">Plan Básico</div>
-                    <div className="text-white/50 text-xs">Ideal para comenzar</div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-white font-black text-sm">{formatPrice(4.24)}</div>
-                  </div>
-                </GlowCard>
-              </ScrollReveal>
+              <div className="plan-card opacity-0 bg-[#282828]/60 rounded-xl border-2 border-white/10 px-4 py-4 flex items-center gap-3">
+                <div className="w-12 h-12 rounded-lg bg-[#141414] flex-shrink-0 flex items-center justify-center">
+                  <svg className="w-6 h-6 text-[#64189D]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-white font-bold text-sm">Plan Básico</div>
+                  <div className="text-[#888] text-xs">Ideal para comenzar</div>
+                </div>
+                <div className="text-right">
+                  <div className="text-white font-bold text-sm">$52.92</div>
+                </div>
+              </div>
 
-              <ScrollReveal variant="fade-right" delay={0.3}>
-                <GlowCard glowColor="rgba(144,0,250,0.3)" glowIntensity="normal" className="p-4 flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-lg bg-[#9000FA]/10 border border-[#9000FA]/30 flex-shrink-0 flex items-center justify-center">
-                    <svg className="w-6 h-6 text-[#9000FA]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-white font-bold text-sm">Plan Pro</div>
-                    <div className="text-white/50 text-xs">Para servidores medianos</div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-white font-black text-sm">{formatPrice(8.48)}</div>
-                  </div>
-                </GlowCard>
-              </ScrollReveal>
+              <div className="plan-card opacity-0 bg-[#282828]/60 rounded-xl border-2 border-white/10 px-4 py-4 flex items-center gap-3">
+                <div className="w-12 h-12 rounded-lg bg-[#141414] flex-shrink-0 flex items-center justify-center">
+                  <svg className="w-6 h-6 text-[#64189D]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-white font-bold text-sm">Plan Pro</div>
+                  <div className="text-[#888] text-xs">Para servidores medianos</div>
+                </div>
+                <div className="text-right">
+                  <div className="text-white font-bold text-sm">$117.72</div>
+                </div>
+              </div>
 
-              <ScrollReveal variant="fade-right" delay={0.4}>
-                <GlowCard glowColor="rgba(144,0,250,0.3)" glowIntensity="normal" className="p-4 flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-lg bg-[#9000FA]/10 border border-[#9000FA]/30 flex-shrink-0 flex items-center justify-center">
-                    <svg className="w-6 h-6 text-[#9000FA]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-white font-bold text-sm">Plan Ultra</div>
-                    <div className="text-white/50 text-xs">Máximo rendimiento</div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-white font-black text-sm">{formatPrice(16.96)}</div>
-                  </div>
-                </GlowCard>
-              </ScrollReveal>
+              <div className="plan-card opacity-0 bg-[#282828]/60 rounded-xl border-2 border-white/10 px-4 py-4 flex items-center gap-3">
+                <div className="w-12 h-12 rounded-lg bg-[#141414] flex-shrink-0 flex items-center justify-center">
+                  <svg className="w-6 h-6 text-[#64189D]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-white font-bold text-sm">Plan Ultra</div>
+                  <div className="text-[#888] text-xs">Máximo rendimiento</div>
+                </div>
+                <div className="text-right">
+                  <div className="text-white font-bold text-sm">$322.92</div> 
+                </div>
+              </div>
 
-              <ScrollReveal variant="fade-right" delay={0.5}>
-                <MagneticButton as="a" href="/minecraft" className="w-full">
-                  <div className="w-full text-center bg-[#9000FA] hover:bg-[#7000C8] text-white border border-[#9000FA]/30 rounded-xl py-3.5 font-bold transition-all duration-300 shadow-[0_0_20px_rgba(144,0,250,0.2)] hover:shadow-[0_0_30px_rgba(144,0,250,0.4)] btn-shine cursor-pointer">
-                    Ver todos los planes
-                  </div>
-                </MagneticButton>
-              </ScrollReveal>
+              <Link href="/dedicado" className="plan-card opacity-0 mt-2 block w-full text-center bg-[#282828]/60 hover:bg-[#64189D] text-white border-2 border-[#282828] hover:border-[#64189D] rounded-xl py-3.5 font-bold transition-all duration-300">
+                Ver todos los planes
+              </Link>
             </div>
           </div>
 
           {/* Right Panel: Game Display */}
-          <div className="flex-1 order-1 lg:order-2 flex flex-col justify-end relative rounded-2xl overflow-hidden min-h-[420px] lg:min-h-0 bg-[#140528] border border-white/5 shadow-2xl">
-            {/* Background Image Container */}
-            <div ref={gameImageRef} className="absolute inset-0 select-none">
+          <div className="game-panel opacity-0 flex-1 order-1 lg:order-2 flex flex-col justify-end relative rounded-2xl overflow-hidden min-h-[400px] lg:min-h-0 bg-[#242424]">
+            {/* Background Image */}
+            <div className="absolute inset-0">
               <Image 
                 src={activeGame.image} 
                 alt={activeGame.name} 
                 fill 
-                className="object-cover"
-                style={{ opacity: 0.4 }}
+                className="object-cover transition-opacity duration-500"
+                style={{ opacity: 0.6 }}
               />
               {/* Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0e0320] via-[#0e0320]/80 to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-[#101010] via-[#101010]/80 to-transparent"></div>
             </div>
 
             {/* Carousel Navigation Top Right */}
-            <div className="absolute top-6 right-6 z-10 flex gap-2.5">
+            <div className="absolute top-4 right-4 z-10 flex gap-2">
               <button 
                 onClick={prevGame}
-                className="w-11 h-11 rounded-xl bg-black/40 border border-white/10 flex items-center justify-center text-white hover:text-white hover:bg-[#9000FA] hover:border-[#9000FA] transition-all duration-300 backdrop-blur-md cursor-pointer"
-                aria-label="Previous game"
+                className="w-10 h-10 rounded-lg bg-black/50 border border-white/10 flex items-center justify-center text-white hover:bg-[#64189D] hover:border-[#64189D] transition-all duration-300 backdrop-blur-sm"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 19l-7-7 7-7"></path></svg>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
               </button>
               <button 
                 onClick={nextGame}
-                className="w-11 h-11 rounded-xl bg-black/40 border border-white/10 flex items-center justify-center text-white hover:text-white hover:bg-[#9000FA] hover:border-[#9000FA] transition-all duration-300 backdrop-blur-md cursor-pointer"
-                aria-label="Next game"
+                className="w-10 h-10 rounded-lg bg-black/50 border border-white/10 flex items-center justify-center text-white hover:bg-[#64189D] hover:border-[#64189D] transition-all duration-300 backdrop-blur-sm"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7"></path></svg>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
               </button>
             </div>
 
-            {/* Bottom Content Area */}
-            <div ref={gameTextRef} className="relative z-10 p-6 lg:p-10 flex flex-col lg:flex-row gap-6 lg:gap-10 items-end justify-between">
+            <div className="relative z-10 p-6 lg:p-10 flex flex-col lg:flex-row gap-6 lg:gap-10 items-end justify-between">
               
               <div className="flex-1">
-                <h3 className="text-3xl lg:text-4xl font-black text-white uppercase tracking-wider mb-3 glow-text">
+                <h3 className="text-3xl lg:text-4xl font-black text-white uppercase tracking-tight mb-3">
                   {activeGame.name}
                 </h3>
-                <p className="text-white/70 text-sm lg:text-base leading-relaxed max-w-xl">
+                <p className="text-[#a1a1aa] text-sm lg:text-base leading-relaxed max-w-xl">
                   {activeGame.desc}
                 </p>
               </div>
 
               <div className="flex-shrink-0 w-full lg:w-auto">
-                <MagneticButton as="a" href={`/${activeGame.id}`} className="w-full lg:w-auto">
-                  <div className="group relative inline-flex items-center justify-center w-full lg:w-auto px-8 py-4 font-bold text-white transition-all duration-300 bg-[#9000FA] rounded-xl overflow-hidden shadow-[0_0_20px_rgba(144,0,250,0.3)] hover:shadow-[0_0_30px_rgba(144,0,250,0.5)] btn-shine cursor-pointer text-center">
-                    <span className="relative flex items-center justify-center gap-2">
-                      COMENZAR AHORA
-                      <svg className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
-                    </span>
-                  </div>
-                </MagneticButton>
+                <Link href={`/${activeGame.id}`} className="group relative inline-flex items-center justify-center w-full lg:w-auto px-8 py-4 font-bold text-white transition-all duration-300 bg-[#64189D] rounded-xl overflow-hidden shadow-[0_0_20px_rgba(100,24,157,0.3)] hover:shadow-[0_0_30px_rgba(100,24,157,0.5)] hover:-translate-y-1">
+                  <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-white rounded-full group-hover:w-64 group-hover:h-56 opacity-10"></span>
+                  <span className="relative flex items-center gap-2">
+                    COMENZAR AHORA
+                    <svg className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+                  </span>
+                </Link>
               </div>
 
             </div>
 
             {/* Dots */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2.5 z-10">
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
               {games.map((_, idx) => (
                 <button 
                   key={idx}
-                  onClick={() => selectGame(idx)}
-                  className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${activeIndex === idx ? 'bg-[#9000FA] w-6 shadow-[0_0_10px_rgba(144,0,250,0.5)]' : 'bg-white/30 hover:bg-white/50 w-2'}`}
+                  onClick={() => setActiveIndex(idx)}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${activeIndex === idx ? 'bg-[#64189D] w-6' : 'bg-white/30 hover:bg-white/50'}`}
                   aria-label={`Go to slide ${idx + 1}`}
                 />
               ))}

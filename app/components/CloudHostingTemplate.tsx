@@ -3,6 +3,8 @@ import React, { useEffect } from 'react';
 import Image from 'next/image';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import Price from './Price';
+import ComingSoonBlock from './ComingSoonBlock';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -16,6 +18,15 @@ interface CloudPlan {
   popular?: boolean;
 }
 
+interface ComingSoonConfig {
+  title?: string;
+  description: string;
+  note?: string;
+  hidePlans?: boolean;
+  heroCtaText?: string;
+  heroCtaHref?: string;
+}
+
 interface CloudHostingTemplateProps {
   title: string;
   subtitle: string;
@@ -23,9 +34,10 @@ interface CloudHostingTemplateProps {
   description: string;
   plans: CloudPlan[];
   benefits: { title: string; desc: string; icon: React.ReactNode }[];
+  comingSoon?: ComingSoonConfig;
 }
 
-export default function CloudHostingTemplate({ title, subtitle, bgImage, description, plans, benefits }: CloudHostingTemplateProps) {
+export default function CloudHostingTemplate({ title, subtitle, bgImage, description, plans, benefits, comingSoon }: CloudHostingTemplateProps) {
   useEffect(() => {
     gsap.fromTo('.ch-hero-text', 
       { y: 50, opacity: 0 }, 
@@ -94,75 +106,90 @@ export default function CloudHostingTemplate({ title, subtitle, bgImage, descrip
               {description}
             </p>
             <div className="ch-hero-text flex flex-wrap justify-center gap-4">
-              <a href="#planes" className="bg-[#64189D] hover:bg-[#7b1dc2] transition-colors text-white font-bold py-4 px-8 rounded-xl flex items-center gap-2">
-                Ver Planes
+              <a href={comingSoon?.hidePlans ? (comingSoon?.heroCtaHref ?? '/contacto') : (comingSoon?.heroCtaHref ?? '#planes')} className="bg-[#64189D] hover:bg-[#7b1dc2] transition-colors text-white font-bold py-4 px-8 rounded-xl flex items-center gap-2">
+                {comingSoon?.hidePlans ? (comingSoon?.heroCtaText ?? 'Contáctanos') : (comingSoon?.heroCtaText ?? 'Ver Planes')}
               </a>
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Planes Section */}
-      <section id="planes" className="py-24 px-6 relative z-20 bg-[#020202]">
-        <div className="max-w-[87.5rem] mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {plans.map((plan, idx) => (
-              <div key={idx} className="ch-plan-card bg-[#141414] border border-white/5 rounded-2xl p-8 relative overflow-hidden group hover:border-[#64189D]/50 transition-all duration-300 flex flex-col h-full">
-                {plan.popular && (
-                  <div className="absolute top-0 inset-x-0 bg-[#64189D] text-white text-xs font-black tracking-wider uppercase py-1.5 text-center z-10">
-                    Recomendado
-                  </div>
-                )}
-                
-                <div className="mb-6 mt-4">
-                  <h3 className="text-2xl font-black text-white mb-2">{plan.name}</h3>
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-4xl font-black text-white">${plan.price}</span>
-                    <span className="text-[#666] text-sm">/mes</span>
-                  </div>
-                </div>
-
-                <ul className="space-y-4 mb-8 flex-1">
-                  {plan.features.map((feat, fidx) => (
-                    <li key={fidx} className="flex items-start gap-3">
-                      <svg className="w-5 h-5 text-[#64189D] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
-                      <span className="text-[#bbb] text-sm leading-relaxed">{feat}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <a href={`https://clientes.astralixnodes.com/cart.php?a=add&pid=${plan.pid}`} className="block w-full text-center bg-white/5 hover:bg-[#64189D] border border-white/10 hover:border-transparent text-white font-bold py-3 rounded-xl transition-all mt-auto">
-                  Desplegar Ahora
-                </a>
+            {comingSoon ? (
+              <div className="mt-12 max-w-4xl mx-auto">
+                <ComingSoonBlock
+                  title={comingSoon.title}
+                  description={comingSoon.description}
+                  note={comingSoon.note}
+                />
               </div>
-            ))}
+            ) : null}
           </div>
         </div>
       </section>
 
-      {/* Benefits */}
-      <section className="py-24 px-6 bg-[#0a0a0a] border-t border-white/5 relative z-20">
-        <div className="max-w-[87.5rem] mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tight">Infraestructura <span className="text-[#64189D]">Premium</span></h2>
-            <p className="text-[#888] mt-4 max-w-2xl mx-auto text-lg">
-              Soluciones empresariales diseñadas para alta disponibilidad y máxima seguridad.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {benefits.map((feat, idx) => (
-              <div key={idx} className="ch-benefit bg-black/40 border border-white/5 rounded-2xl p-8 hover:border-[#64189D]/30 transition-all">
-                <div className="w-14 h-14 rounded-xl bg-[#64189D]/20 flex items-center justify-center mb-6 text-[#64189D]">
-                   {feat.icon}
+      {comingSoon?.hidePlans ? null : (
+        <section id="planes" className="py-24 px-6 relative z-20 bg-[#020202]">
+          <div className="max-w-[87.5rem] mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {plans.map((plan, idx) => (
+                <div key={idx} className="ch-plan-card bg-[#141414] border border-white/5 rounded-2xl p-8 relative overflow-hidden group hover:border-[#64189D]/50 transition-all duration-300 flex flex-col h-full">
+                  {plan.popular && (
+                    <div className="absolute top-0 inset-x-0 bg-[#64189D] text-white text-xs font-black tracking-wider uppercase py-1.5 text-center z-10">
+                      Recomendado
+                    </div>
+                  )}
+                  
+                  <div className="mb-6 mt-4">
+                    <h3 className="text-2xl font-black text-white mb-2">{plan.name}</h3>
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-4xl font-black text-white"><Price eur={parseFloat(String(plan.price).replace(',','.'))} /></span>
+                      <span className="text-[#666] text-sm">/mes</span>
+                    </div>
+                  </div>
+
+                  <ul className="space-y-4 mb-8 flex-1">
+                    {plan.features.map((feat, fidx) => (
+                      <li key={fidx} className="flex items-start gap-3">
+                        <svg className="w-5 h-5 text-[#64189D] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
+                        <span className="text-[#bbb] text-sm leading-relaxed">{feat}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <a href={`https://clientes.astralixnodes.com/cart.php?a=add&pid=${plan.pid}`} className="block w-full text-center bg-white/5 hover:bg-[#64189D] border border-white/10 hover:border-transparent text-white font-bold py-3 rounded-xl transition-all mt-auto">
+                    Desplegar Ahora
+                  </a>
                 </div>
-                <h4 className="text-white text-xl font-bold mb-3">{feat.title}</h4>
-                <p className="text-[#888] leading-relaxed">{feat.desc}</p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
-      
+        </section>
+      )}
+
+      {comingSoon?.hidePlans ? null : (
+        <>
+          {/* Benefits */}
+          <section className="py-24 px-6 bg-[#0a0a0a] border-t border-white/5 relative z-20">
+            <div className="max-w-[87.5rem] mx-auto">
+              <div className="text-center mb-16">
+                <h2 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tight">Infraestructura <span className="text-[#64189D]">Premium</span></h2>
+                <p className="text-[#888] mt-4 max-w-2xl mx-auto text-lg">
+                  Soluciones empresariales diseñadas para alta disponibilidad y máxima seguridad.
+                </p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {benefits.map((feat, idx) => (
+                  <div key={idx} className="ch-benefit bg-black/40 border border-white/5 rounded-2xl p-8 hover:border-[#64189D]/30 transition-all">
+                    <div className="w-14 h-14 rounded-xl bg-[#64189D]/20 flex items-center justify-center mb-6 text-[#64189D]">
+                      {feat.icon}
+                    </div>
+                    <h4 className="text-white text-xl font-bold mb-3">{feat.title}</h4>
+                    <p className="text-[#888] leading-relaxed">{feat.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        </>
+      )}
+
       <Footer />
     </div>
   );

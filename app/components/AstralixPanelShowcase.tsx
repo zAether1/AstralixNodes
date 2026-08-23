@@ -1,8 +1,10 @@
 'use client';
 import React, { useRef, useState, useEffect } from 'react';
-import { gsap, useGSAP, ScrollTrigger, MOTION, prefersReducedMotion } from '@/lib/gsap';
-import GlowCard from './animations/GlowCard';
-import ScrollReveal from './animations/ScrollReveal';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const features = [
   {
@@ -83,21 +85,18 @@ export default function AstralixPanelShowcase() {
   const container = useRef<HTMLDivElement>(null);
   const [activeFeature, setActiveFeature] = useState(0);
   const [progress, setProgress] = useState(0);
-  
-  const progressTweenRef = useRef<gsap.core.Tween | null>(null);
-  const detailPanelRef = useRef<HTMLDivElement>(null);
+  const progressInterval = 50; // ms
+  const totalDuration = 4000; // 4 seconds per feature
 
   useGSAP(() => {
-    // Scroll reveal title and header
     gsap.fromTo('.showcase-reveal', 
-      { opacity: 0, y: 30, filter: 'blur(4px)' },
+      { opacity: 0, y: 30 },
       { 
         opacity: 1, 
         y: 0, 
-        filter: 'blur(0px)',
         duration: 0.8, 
         stagger: 0.1,
-        ease: MOTION.ease.out,
+        ease: 'power3.out',
         scrollTrigger: {
           trigger: container.current,
           start: 'top 85%'
@@ -106,111 +105,68 @@ export default function AstralixPanelShowcase() {
     );
   }, { scope: container });
 
-  // Autoplay function using GSAP to animate state progress smoothly
-  const runAutoPlay = () => {
-    if (progressTweenRef.current) progressTweenRef.current.kill();
-    if (prefersReducedMotion()) return;
-
-    setProgress(0);
-
-    const obj = { val: 0 };
-    progressTweenRef.current = gsap.to(obj, {
-      val: 100,
-      duration: 4.5,
-      ease: 'none',
-      onUpdate: () => {
-        setProgress(obj.val);
-      },
-      onComplete: () => {
-        setActiveFeature((curr) => (curr + 1) % features.length);
-      }
-    });
-  };
-
   useEffect(() => {
-    runAutoPlay();
-    return () => {
-      if (progressTweenRef.current) progressTweenRef.current.kill();
-    };
-  }, [activeFeature]);
+    const timer = setInterval(() => {
+      setProgress(prev => {
+        if (prev >= 100) {
+          setActiveFeature((curr) => (curr + 1) % features.length);
+          return 0;
+        }
+        return prev + (100 / (totalDuration / progressInterval));
+      });
+    }, progressInterval);
+
+    return () => clearInterval(timer);
+  }, []);
 
   const handleSelect = (index: number) => {
-    if (index === activeFeature) return;
-
-    // Slide/Crossfade effect on panel details using GSAP
-    if (!prefersReducedMotion() && detailPanelRef.current) {
-      gsap.fromTo(detailPanelRef.current,
-        { opacity: 1, y: 0, scale: 1 },
-        {
-          opacity: 0,
-          y: 5,
-          scale: 0.99,
-          duration: 0.2,
-          ease: 'power2.in',
-          onComplete: () => {
-            setActiveFeature(index);
-            gsap.fromTo(detailPanelRef.current,
-              { opacity: 0, y: -5, scale: 0.99 },
-              { opacity: 1, y: 0, scale: 1, duration: 0.35, ease: MOTION.ease.out }
-            );
-          }
-        }
-      );
-    } else {
-      setActiveFeature(index);
-    }
+    setActiveFeature(index);
+    setProgress(0);
   };
 
   const feature = features[activeFeature];
 
   return (
-    <section id="panelshowcase" ref={container} className="bg-[#0a0118] py-24 px-6 relative overflow-hidden section-glow-top">
-      {/* Glow Orbs */}
-      <div className="absolute top-1/3 right-0 w-[500px] h-[500px] bg-[#9000FA]/5 blur-[120px] rounded-full pointer-events-none mix-blend-screen"></div>
-
-      <div className="max-w-[87.5rem] mx-auto relative z-10">
-        
-        {/* Section Header */}
+    <section id="panelshowcase" ref={container} className="bg-[#101010] py-24 px-6">
+      <div className="max-w-[87.5rem] mx-auto">
         <div className="showcase-reveal text-center mb-4">
-          <h2 className="text-4xl md:text-5xl font-black uppercase leading-tight tracking-[0.02em]">
+          <h2 className="text-4xl md:text-5xl font-black uppercase leading-tight">
             <span className="text-white">UN </span>
-            <span className="text-[#9000FA] glow-text">PANEL</span>
+            <span className="text-[#64189D]">PANEL</span>
             <span className="text-white"> QUE SIMPLEMENTE </span>
-            <span className="inline-block bg-[#9000FA] text-white px-5 py-0.5 rounded-lg ml-1 shadow-[0_0_20px_rgba(144,0,250,0.3)]">FUNCIONA</span>
+            <span className="inline-block bg-[#64189D] text-white px-5 py-0.5 rounded-md ml-1">FUNCIONA</span>
           </h2>
         </div>
         
-        <p className="showcase-reveal text-white/50 text-center text-sm max-w-3xl mx-auto mb-16">
+        <p className="showcase-reveal text-[#888] text-center text-sm max-w-3xl mx-auto mb-10">
           Un panel de control rápido, claro y potente que te simplifica todo desde el primer clic.
         </p>
 
-        {/* Content Body */}
-        <div className="showcase-reveal flex flex-col lg:flex-row gap-10 relative items-stretch">
+        <div className="showcase-reveal flex flex-col lg:flex-row gap-10 relative">
           
-          {/* Features Navigation Menu (Left) */}
-          <div className="lg:w-[21.25rem] flex-shrink-0 flex flex-col gap-2 max-h-[37.5rem] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-[#9000FA]/30 scrollbar-track-transparent">
+          <div className="lg:w-[21.25rem] flex-shrink-0 flex flex-col gap-1.5 max-h-[37.5rem] overflow-y-auto pr-2 scrollbar-thin transition-opacity duration-500 ease-in-out">
             {features.map((f, i) => {
               const isActive = i === activeFeature;
               return (
                 <button
                   key={f.id}
                   onClick={() => handleSelect(i)}
-                  className={`relative flex items-center gap-3.5 px-5 py-3.5 rounded-xl text-left transition-all duration-300 cursor-pointer overflow-hidden border ${
+                  className={`relative flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-all duration-200 cursor-pointer overflow-hidden ${
                     isActive 
-                      ? 'bg-[#9000FA]/10 border-[#9000FA]/35 shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_0_20px_rgba(144,0,250,0.1)]' 
-                      : 'bg-transparent hover:bg-white/[0.03] border-transparent hover:border-white/5'
+                      ? 'bg-[#64189D]/10 border border-[#64189D]/20' 
+                      : 'bg-transparent hover:bg-white/[0.04] border border-transparent'
                   }`}
                 >
-                  <span className={`flex-shrink-0 transition-colors duration-300 ${isActive ? 'text-[#9000FA] drop-shadow-[0_0_8px_rgba(144,0,250,0.5)]' : 'text-white/30'}`}>
+                  <span className={`flex-shrink-0 transition-colors ${isActive ? 'text-[#64189D]' : 'text-[#555]'}`}>
                     {f.icon}
                   </span>
-                  <span className={`text-sm font-bold tracking-wide transition-colors duration-300 ${isActive ? 'text-white' : 'text-white/50 hover:text-white/80'}`}>
+                  <span className={`text-sm font-semibold transition-colors ${isActive ? 'text-white' : 'text-[#777]'}`}>
                     {f.title}
                   </span>
                   {isActive && (
                     <div className="absolute bottom-0 left-0 right-0 h-[2px]">
                       <div 
-                        className="h-full bg-gradient-to-r from-[#9000FA] to-[#c084fc] origin-left" 
+                        className="h-full bg-[#64189D] origin-left" 
                         style={{ width: `${progress}%` }}
                       ></div>
                     </div>
@@ -220,14 +176,10 @@ export default function AstralixPanelShowcase() {
             })}
           </div>
 
-          {/* Details & Video (Right) */}
-          <div className="flex-1 flex flex-col justify-between">
-            <div 
-              ref={detailPanelRef}
-              className="bg-[#140528]/80 rounded-2xl p-6 md:p-8 mb-8 border border-white/5 backdrop-blur-md shadow-xl flex flex-col justify-center min-h-[170px]"
-            >
-              <div className="flex items-center gap-3.5 mb-4">
-                <span className="flex-shrink-0 text-[#9000FA] p-2 bg-[#9000FA]/10 rounded-lg border border-[#9000FA]/20 drop-shadow-[0_0_10px_rgba(144,0,250,0.3)]">
+          <div className="flex-1 flex flex-col">
+            <div className="bg-[#282828]/60 rounded-xl p-6 md:p-[25px_30px] mb-8 border border-white/5 transition-all duration-500 ease-in-out">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="flex-shrink-0 text-[#64189D]">
                   {feature.icon}
                 </span>
                 <h3 className="text-xl font-extrabold uppercase text-white tracking-[0.5px]">
@@ -235,24 +187,21 @@ export default function AstralixPanelShowcase() {
                 </h3>
               </div>
               <div className="w-full h-px bg-white/10 mb-4"></div>
-              <p className="text-white/70 text-base leading-relaxed">
+              <p className="text-[#b0b0b0] text-base leading-relaxed animate-in fade-in slide-in-from-bottom-2 duration-500" key={feature.id}>
                 {feature.description}
               </p>
             </div>
 
-            {/* Showcase Video Placeholder / Visual Block */}
-            <GlowCard 
-              glowColor="rgba(144,0,250,0.4)" 
-              glowIntensity="normal" 
-              className="relative w-full aspect-[1920/954] rounded-2xl border border-white/[0.08] bg-black/40 overflow-hidden cursor-pointer"
-            >
-              <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-[#140528]/80 to-black/80 flex items-center justify-center">
-                 <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shadow-lg hover:scale-105 hover:bg-[#9000FA]/20 hover:border-[#9000FA]/35 transition-all duration-300">
-                    <svg className="w-8 h-8 text-white/80 ml-1 drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>
+            <div className="relative w-full aspect-[1920/954] rounded-2xl overflow-hidden border border-white/[0.08] bg-black cursor-pointer">
+              {/* Here we would place a video or image. The original astralixnodes.com had an empty video player or standard video for this section. */}
+              {/* Using a placeholder gradient for the video if we don't have the exact asset mapped */}
+              <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a] flex items-center justify-center">
+                 <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center">
+                    <svg className="w-8 h-8 text-white/20 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>
                  </div>
               </div>
-              <div className="absolute inset-0 bg-[#0a0118]/20 pointer-events-none opacity-0"></div>
-            </GlowCard>
+              <div className="absolute inset-0 bg-black pointer-events-none opacity-0"></div>
+            </div>
           </div>
 
         </div>
