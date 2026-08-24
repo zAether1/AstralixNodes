@@ -2,6 +2,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { gsap, useGSAP, ScrollTrigger, MOTION, prefersReducedMotion } from '@/lib/gsap';
 import GlowCard from './animations/GlowCard';
+import ScrollReveal from './animations/ScrollReveal';
 
 const stats = [
   {

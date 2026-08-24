@@ -11,7 +11,7 @@ interface GlowCardProps {
   hoverLift?: boolean;
   borderGlow?: boolean;
   cursorGlow?: boolean;
-  as?: keyof JSX.IntrinsicElements;
+  as?: keyof React.JSX.IntrinsicElements;
 }
 
 /**

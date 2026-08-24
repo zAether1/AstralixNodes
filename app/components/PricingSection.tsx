@@ -78,12 +78,12 @@ const billingOptions = [
 
 export default function PricingSection() {
   const [billingIndex, setBillingIndex] = useState(0)
-  const { formatPrice, convertPrice } = useCurrency()
+  const { formatPrice } = useCurrency()
 
   const getPrice = (basePrice: number) => {
     const discount = billingOptions[billingIndex].discount;
     const finalPrice = basePrice * (1 - discount / 100);
-    return formatPrice(convertPrice(finalPrice));
+    return formatPrice(finalPrice);
   }
 
   return (
